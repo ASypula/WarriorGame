@@ -4,12 +4,22 @@
 class Warrior
 {
 protected:
-	int health;
-	int defense;
-	int power;
+	int health=10;
+	int defense=10;
+	int power=10;
+	int initiative = 10; // who will attack first
 public:
+	// std::vector<*Artifact> artefacts; //lista artefaktow? np. amulet dajacy wiecej zycia
+	Warrior() = default;
+	virtual ~Warrior() {};
 	int leftHealth() { return this->health; };
-
+	// nie wiem jeszcze jak atak ma wygladac wiec jest void
+	virtual void attack() = 0;
+	virtual void superAttack(int n) = 0;	// there can be many superAttacks; n - number of the chosen attack
+	virtual void speciality() = 0;			// only one, for example regeneration, poisoning
+	virtual void escape();
+	virtual bool dodge();
+	virtual bool criticAttack() = 0;
 };
 
 template <typename T>
@@ -17,6 +27,45 @@ class Army
 {
 	std::vector<T> army;
 public:
+	class WarIterator
+	{
+		friend Army;
+	private:
+		std::vector<T>::iterator current;
+		Army& collection;
+		WarIterator(Army& col, std::vector<T>::iterator const i) : collection(col)
+		{
+			current = i;
+		}
+	public:
+		T& operator*()
+		{
+			return *current;
+		}
+
+		T* operator->()
+		{
+			return current;
+		}
+
+		WarIterator& operator++()
+		{
+			int maxHealth = 0;
+			for (auto i = collection.begin(); i != collection.end(); ++i)
+				if (i->health > maxHealth)
+				{
+					maxHealth = i->health;
+					current = i;
+				}
+			if (maxHealth > 0)
+				return *this;
+			else
+			{
+				//cos trzeba wymyslic np. game over?
+			}
+		}
+	};
+
 	void addWarrior(T newWarrior)
 	{
 		army.push_back(newWarrior);
