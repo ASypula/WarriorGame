@@ -13,6 +13,7 @@ public:
 	Warrior() = default;
 	virtual ~Warrior() {};
 	int leftHealth() { return this->health; };
+	void wound(int damage);
 	// nie wiem jeszcze jak atak ma wygladac wiec jest void
 	virtual void attack() = 0;
 	virtual void superAttack(int n) = 0;	// there can be many superAttacks; n - number of the chosen attack
@@ -57,16 +58,16 @@ public:
 		{
 			int maxHealth = 0;
 			for (auto i = collection.begin(); i != collection.end(); ++i)
-				if (i->leftHealth() > maxHealth)
+				if ((*i)->leftHealth() > maxHealth)
 				{
-					maxHealth = i->leftHealth();
+					maxHealth = (*i)->leftHealth();
 					current = i;
 				}
 			if (maxHealth > 0)
 				return *this;
 			else
 			{
-				//cos trzeba wymyslic np. game over?
+				// nie do konca wiem co w przypadku gdy nie ma rycerzy z dodatnim zyciem
 			}
 		}
 	};
@@ -81,6 +82,11 @@ public:
 	{
 		WarIterator i(army, army.end());
 		return i;
+	}
+
+	T& operator[](int n)
+	{
+		return army[n];
 	}
 
 	void addWarrior(T newWarrior)

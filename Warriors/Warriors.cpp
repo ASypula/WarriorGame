@@ -2,6 +2,10 @@
 #include <ctime>
 #include "Warriors.h"
 
+void Warrior::wound(int damage)
+{
+	this->health -= damage;
+}
 
 Archer::Archer()
 {
