@@ -9,7 +9,7 @@ protected:
 	int power=10;
 	int initiative = 10; // who will attack first
 public:
-	// std::vector<*Artifact> artefacts; //lista artefaktow? np. amulet dajacy wiecej zycia
+	// std::vector<*Artifact> artifacts; //lista artefaktow? np. amulet dajacy wiecej zycia
 	Warrior() = default;
 	virtual ~Warrior() {};
 	int leftHealth() { return this->health; };
@@ -17,8 +17,8 @@ public:
 	virtual void attack() = 0;
 	virtual void superAttack(int n) = 0;	// there can be many superAttacks; n - number of the chosen attack
 	virtual void speciality() = 0;			// only one, for example regeneration, poisoning
-	virtual void escape();
-	virtual bool dodge();
+	//virtual void escape();
+	//virtual bool dodge();
 	virtual bool criticAttack() = 0;
 };
 
@@ -31,9 +31,9 @@ public:
 	{
 		friend Army;
 	private:
-		std::vector<T>::iterator current;
-		Army& collection;
-		WarIterator(Army& col, std::vector<T>::iterator const i) : collection(col)
+		typename std::vector<T>::iterator current;
+		std::vector<T>& collection;
+		WarIterator(std::vector<T>& col, typename std::vector<T>::iterator const i) : collection(col)
 		{
 			current = i;
 		}
@@ -48,13 +48,18 @@ public:
 			return current;
 		}
 
+		bool operator!=(WarIterator const& i) const
+		{
+			return current != i.current;
+		}
+
 		WarIterator& operator++()
 		{
 			int maxHealth = 0;
 			for (auto i = collection.begin(); i != collection.end(); ++i)
-				if (i->health > maxHealth)
+				if (i->leftHealth() > maxHealth)
 				{
-					maxHealth = i->health;
+					maxHealth = i->leftHealth();
 					current = i;
 				}
 			if (maxHealth > 0)
@@ -66,9 +71,36 @@ public:
 		}
 	};
 
+	WarIterator armyBegin()
+	{
+		WarIterator i(army, army.begin());
+		return i;
+	}
+
+	WarIterator armyEnd()
+	{
+		WarIterator i(army, army.end());
+		return i;
+	}
+
 	void addWarrior(T newWarrior)
 	{
 		army.push_back(newWarrior);
 	}
 
+	T getWarrior(int n)
+	{
+		if (n < army.size())
+			return army[n];
+	}
+};
+
+class Archer : public Warrior
+{
+public:
+	//Archer();
+	void attack() {};
+	void superAttack(int n) {};
+	void speciality() {};
+	bool criticAttack() { return true; };
 };
