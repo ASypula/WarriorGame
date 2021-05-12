@@ -4,9 +4,9 @@
 class Warrior
 {
 protected:
-	int health=10;
-	int defense=10;
-	int power=10;
+	int health = 10;
+	int defense = 10;
+	int power = 10;
 	int initiative = 10; // who will attack first
 public:
 	// std::vector<*Artifact> artifacts; //lista artefaktow? np. amulet dajacy wiecej zycia
@@ -98,9 +98,19 @@ public:
 class Archer : public Warrior
 {
 public:
-	//Archer();
+	Archer();
 	void attack() {};
 	void superAttack(int n) {};
 	void speciality() {};
-	bool criticAttack() { return true; };
+	bool criticAttack();	// 25% chances
+};
+
+class Paladin : public Warrior
+{
+public:
+	Paladin();
+	void attack() {};
+	void superAttack(int n) {};
+	void speciality() {};
+	bool criticAttack() { return true; };	//100% chances for a critic
 };
