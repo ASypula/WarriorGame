@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 
+enum Direction {left, right};
+
 class Statistics
 {
 public:
@@ -12,9 +14,10 @@ class Warrior
 {
 protected:
 	int health = 10;
-	int defense = 10;
 	int power = 10;
 	int initiative = 10; // who will attack first
+	int range = 10;
+	Direction direction = Direction::left;
 public:
 	Warrior() = default;
 	virtual ~Warrior() {};
@@ -119,4 +122,10 @@ public:
 	Paladin();
 	void attack() {};
 	void speciality() {};
+};
+
+class EmptyWarrior : public Warrior
+{
+public:
+	EmptyWarrior();
 };
