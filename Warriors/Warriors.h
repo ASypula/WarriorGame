@@ -1,6 +1,13 @@
 #pragma once
 #include <vector>
 
+class Statistics
+{
+public:
+
+
+};
+
 class Warrior
 {
 protected:
@@ -50,12 +57,12 @@ public:
 			return current != i.current;
 		}
 
-		// iterating through warriors with the highest initiative
+		// iterating through warriors with the highest initiative, 
 		WarIterator& operator++()
 		{
 			int maxInitiative = 0;
 			for (auto i = collection.begin(); i != collection.end(); ++i)
-				if ((*i)->getInitiative() > maxHealth)
+				if ((*i)->getInitiative() > maxInitiative)
 				{
 					maxHealth = (*i)->getInitiative();
 					current = i;
