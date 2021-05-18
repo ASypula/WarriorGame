@@ -13,6 +13,7 @@ public:
 	Warrior() = default;
 	virtual ~Warrior() {};
 	int leftHealth() { return this->health; };
+	int initiative() { return this->initiative; };
 	void wound(int damage);
 	// nie wiem jeszcze jak atak ma wygladac wiec jest void
 	virtual void attack() = 0;
@@ -54,20 +55,21 @@ public:
 			return current != i.current;
 		}
 
+		// iterating through warriors with the highest initiative
 		WarIterator& operator++()
 		{
-			int maxHealth = 0;
+			int maxInitiative = 0;
 			for (auto i = collection.begin(); i != collection.end(); ++i)
-				if ((*i)->leftHealth() > maxHealth)
+				if ((*i)->initiative() > maxHealth)
 				{
-					maxHealth = (*i)->leftHealth();
+					maxHealth = (*i)->initiative();
 					current = i;
 				}
-			if (maxHealth > 0)
+			if (maxInitiative > 0)
 				return *this;
 			else
 			{
-				// nie do konca wiem co w przypadku gdy nie ma rycerzy z dodatnim zyciem
+				// co w przypadku gdy przeszlismy po wszystkich?
 			}
 		}
 	};
