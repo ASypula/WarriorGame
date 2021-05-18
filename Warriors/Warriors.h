@@ -74,7 +74,7 @@ public:
 			for (auto i = collection.begin(); i != collection.end(); ++i)
 				if ((*i)->getInitiative() > maxInitiative)
 				{
-					maxHealth = (*i)->getInitiative();
+					maxInitiative = (*i)->getInitiative();
 					current = i;
 				}
 			if (maxInitiative > 0)
