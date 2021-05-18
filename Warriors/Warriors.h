@@ -9,19 +9,14 @@ protected:
 	int power = 10;
 	int initiative = 10; // who will attack first
 public:
-	// std::vector<*Artifact> artifacts; //lista artefaktow? np. amulet dajacy wiecej zycia
 	Warrior() = default;
 	virtual ~Warrior() {};
 	int leftHealth() { return this->health; };
-	int initiative() { return this->initiative; };
+	int getInitiative() { return this->initiative; };
 	void wound(int damage);
 	// nie wiem jeszcze jak atak ma wygladac wiec jest void
 	virtual void attack() = 0;
-	virtual void superAttack(int n) = 0;	// there can be many superAttacks; n - number of the chosen attack
-	virtual void speciality() = 0;			// only one, for example regeneration, poisoning
-	//virtual void escape();
-	//virtual bool dodge();
-	virtual bool criticAttack() = 0;
+	virtual void speciality() = 0;			// only one, for example regeneration, poisoning, double attack
 };
 
 template <typename T>
@@ -60,9 +55,9 @@ public:
 		{
 			int maxInitiative = 0;
 			for (auto i = collection.begin(); i != collection.end(); ++i)
-				if ((*i)->initiative() > maxHealth)
+				if ((*i)->getInitiative() > maxHealth)
 				{
-					maxHealth = (*i)->initiative();
+					maxHealth = (*i)->getInitiative();
 					current = i;
 				}
 			if (maxInitiative > 0)
@@ -108,9 +103,7 @@ class Archer : public Warrior
 public:
 	Archer();
 	void attack() {};
-	void superAttack(int n) {};
 	void speciality() {};
-	bool criticAttack();	// 25% chances
 };
 
 class Paladin : public Warrior
@@ -118,7 +111,5 @@ class Paladin : public Warrior
 public:
 	Paladin();
 	void attack() {};
-	void superAttack(int n) {};
 	void speciality() {};
-	bool criticAttack() { return true; };	//100% chances for a critic
 };
