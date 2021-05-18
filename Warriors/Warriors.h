@@ -6,8 +6,13 @@ enum Direction {left, right};
 class Statistics
 {
 public:
-
-
+	int health;
+	int power;
+	int initiative;
+	int range;
+	char identity;
+	Direction direction;
+	Statistics() {};
 };
 
 class Warrior
@@ -17,6 +22,7 @@ protected:
 	int power = 10;
 	int initiative = 10; // who will attack first
 	int range = 10;
+	char identity = 'W';
 	Direction direction = Direction::left;
 public:
 	Warrior() = default;
@@ -27,6 +33,7 @@ public:
 	// nie wiem jeszcze jak atak ma wygladac wiec jest void
 	virtual void attack() = 0;
 	virtual void speciality() = 0;			// only one, for example regeneration, poisoning, double attack
+	Statistics getStats();
 };
 
 template <typename T>
@@ -123,6 +130,8 @@ public:
 	void attack() {};
 	void speciality() {};
 };
+
+
 
 class EmptyWarrior : public Warrior
 {
