@@ -1,10 +1,11 @@
 #include <iostream>
 #include "../Warriors/Warriors.h"
 #include "../Warriors/Warriors.cpp"
+#include "../Warriors/Battlefield.h"
 
 int main()
 {
-	Army<Warrior*> army;
+	Battlefield<Warrior*> army;
 	Warrior* x = new Archer();
 	army.addWarrior(x);
 	army.addWarrior(x);

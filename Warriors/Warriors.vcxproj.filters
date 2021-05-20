@@ -23,5 +23,8 @@
     <ClInclude Include="Warriors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Battlefield.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
