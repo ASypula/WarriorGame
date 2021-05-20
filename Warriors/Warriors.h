@@ -24,11 +24,11 @@ std::ostream& operator<< (std::ostream& os, Statistics const& stats);
 class Warrior
 {
 protected:
-	int health = 10;
-	int power = 10;
+	int health = 1;
+	int power = 1;
 	int numberOfAttacks = 1;
-	int initiative = 10; // who will attack first
-	int range = 10;
+	int initiative = 1; // who will attack first
+	int range = 1;
 	char identity = 'W';
 	std::string name = "Warrior";
 	Direction direction = Direction::left;
@@ -40,6 +40,7 @@ public:
 	virtual ~Warrior() {};
 	int leftHealth() { return this->health; };
 	int getInitiative() { return this->initiative; };
+	Side getSide() { return this->side; };
 	void wound(int damage);
 	// nie wiem jeszcze jak atak ma wygladac wiec jest void
 	virtual void attack() = 0;

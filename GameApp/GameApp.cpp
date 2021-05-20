@@ -5,6 +5,7 @@
 
 int main()
 {
+	printf("\x1B[31mTexting\033[0m");
 	Battlefield<Warrior*> army;
 	Warrior* x = new Archer();
 	//Warrior* y = new Paladin();

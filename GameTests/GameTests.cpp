@@ -10,16 +10,10 @@ namespace GameTests
 	{
 	public:
 		
-		TEST_METHOD(ArcherHealth)
+		TEST_METHOD(ArcherCreation)
 		{
-			Warrior* archer = new Archer();
+			Warrior* warrior = new Archer();
 			Assert::AreEqual(20, archer->leftHealth());
-		}
-
-		TEST_METHOD(PaladinCritic)
-		{
-			Warrior* paladin = new Paladin();
-			Assert::IsTrue(paladin->criticAttack());
 		}
 	};
 }

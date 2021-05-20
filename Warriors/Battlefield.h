@@ -154,13 +154,20 @@ public:
 	friend std::ostream& operator<< (std::ostream& os, Battlefield const& field)
 	{
 		char sign;
+		std::string colour;
 		for (auto warrior = field.army.begin(); warrior != field.army.end(); warrior++) 
 		{
 			if ((*warrior)->identify() == 'E')
 				sign = '_';
 			else
 				sign = (*warrior)->identify();
-			os << std::left<<std::setw(3) << sign;
+			if ((*warrior)->getSide() == Side::civilian)
+				colour = "37m"; //white czy to jest nam potrzebne bo w sumie z defaultu jest biale
+			else if ((*warrior)->getSide() == Side::enemy)
+				colour = "31m"; //red
+			else
+				colour = "32m"; //green
+			os << "\x1B["<<colour<< std::left << std::setw(3) << sign<<"\033[0m";
 		}
 		os << "\n";
 		return os;

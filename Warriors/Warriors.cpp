@@ -42,9 +42,9 @@ std::ostream& operator<< (std::ostream& os, Statistics const& stats)
 
 Archer::Archer()
 {
-	this->health = 20;
-	this->initiative = 9;
-	this->power = 15;
+	this->health = 1;
+	this->initiative = 3;
+	this->power = 1;
 	this->identity = 'A';
 	this->name = "Archer";
 	this->range = 2;
@@ -53,9 +53,9 @@ Archer::Archer()
 
 Paladin::Paladin()
 {
-	this->health = 40;
-	this->initiative = 11;
-	this->power = 50;
+	this->health = 2;
+	this->initiative = 2;
+	this->power = 1;
 	this->identity = 'P';
 	this->name = "Paladin";
 	this->range = 1;
