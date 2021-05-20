@@ -10,9 +10,9 @@ int main()
 	Warrior* y = new Paladin();
 	Warrior* z = new MegaPaladin();
 	army.addWarrior(x);
-	army.addWarrior(z);
 	army.addWarrior(y);
-	for (auto i = army.armyBegin(); i != army.armyEnd(); ++i)
+	army.addWarrior(z);
+	for (auto i = army.turnBegin(); i != army.turnEnd(); ++i)
 	{
 		std::cout << (*i)->identify() << std::endl;
 	}

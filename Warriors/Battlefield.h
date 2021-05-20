@@ -60,12 +60,56 @@ public:
 					current = collection.end();
 				}
 			}
-			
+
 			return *this;
 		}
 	};
 
-	WarIterator armyBegin()
+	class OrderIterator
+	{
+		friend Battlefield;
+	private:
+		typename std::vector<T>::iterator current;
+		std::vector<T>& collection;
+		OrderIterator(std::vector<T>& col, typename std::vector<T>::iterator const i) : collection(col)
+		{
+			current = i;
+		}
+	public:
+		T& operator*()
+		{
+			return *current;
+		}
+
+		T* operator->()
+		{
+			return current;
+		}
+
+		bool operator!=(OrderIterator const& i) const
+		{
+			return current != i.current;
+		}
+
+		// iterating through warriors with the highest initiative, 
+		OrderIterator& operator++()
+		{
+			++current;
+			return *this;
+		}
+	};
+
+	OrderIterator queueBegin()
+	{
+		return OrderIterator(army, army.begin());
+	}
+
+	OrderIterator queueEnd()
+	{
+		return OrderIterator(army, army.end());
+	}
+
+	WarIterator turnBegin()
 	{
 		typename std::vector<T>::iterator it = army.begin();
 		for (auto i = army.begin(); i != army.end(); ++i)
@@ -79,7 +123,7 @@ public:
 		return i;
 	}
 
-	WarIterator armyEnd()
+	WarIterator turnEnd()
 	{
 		WarIterator i(army, army.end());
 		return i;
