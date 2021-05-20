@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <iostream>
 #include "Warriors.h"
 
 template <typename T>
@@ -18,6 +19,11 @@ public:
 			current = i;
 		}
 	public:
+		typename std::vector<T>::iterator getVectIter()
+		{
+			return current;
+		}
+
 		T& operator*()
 		{
 			return *current;
@@ -150,4 +156,45 @@ public:
 			return army[n];
 	}
 
+	void Turn(WarIterator attacker)
+	{
+		typename std::vector<T>::iterator it = attacker.getVectIter();
+		int maxDist = 0;
+		if ((*attacker)->getDirection() == Direction::left)
+		{
+			maxDist = std::distance(army.begin(), it);
+		}
+		else if ((*attacker)->getDirection() == Direction::right)
+		{
+			maxDist = std::distance(it, army.end()) - 1;
+		}
+		if ((*attacker)->getRange() <= maxDist)
+		{
+			typename std::vector<T>::iterator attacked = it + (*attacker)->getDirection() * (*attacker)->getRange();
+			Side attackResult = (*attacked)->wound((*attacker)->getPower());
+		}
+
+	}
+
+	friend std::ostream& operator<< (std::ostream& os, Battlefield const& field)
+	{
+		char sign;
+		std::string colour;
+		for (auto warrior = field.army.begin(); warrior != field.army.end(); warrior++) 
+		{
+			if ((*warrior)->identify() == 'E')
+				sign = '_';
+			else
+				sign = (*warrior)->identify();
+			if ((*warrior)->getSide() == Side::civilian)
+				colour = "37m"; //white czy to jest nam potrzebne bo w sumie z defaultu jest biale
+			else if ((*warrior)->getSide() == Side::enemy)
+				colour = "31m"; //red
+			else
+				colour = "32m"; //green
+			os << "\x1B["<<colour<< std::left << std::setw(3) << sign<<"\033[0m";
+		}
+		os << "\n";
+		return os;
+	}
 };

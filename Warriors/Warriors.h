@@ -2,8 +2,8 @@
 #include <vector>
 #include <iostream>
 
-enum Direction {left = -1, right = 1};
-enum Side {player = 1, enemy = 2, cyvilian = 3};
+enum Direction {left = -1, right = 1}; //proszê nie usuwaæ tym razem, bo jebnie funkcja
+enum Side {alive, player, enemy, civilian};
 
 class Statistics
 {
@@ -12,34 +12,44 @@ public:
 	int power;
 	int initiative;
 	int range;
-	std::string identity;
+	char identity;
+	std::string name;
 	Direction direction;
 	Statistics() {};
+	friend std::ostream& operator<< (std::ostream& os, Statistics const& stats);
+
 };
+std::ostream& operator<< (std::ostream& os, Statistics const& stats);
 
 class Warrior
 {
 protected:
-	int health = 10;
-	int power = 10;
+	int health = 1;
+	int power = 1;
 	int numberOfAttacks = 1;
-	int initiative = 10; // who will attack first
-	int range = 10;
-	std::string identity = "W";
+	int initiative = 1; // who will attack first
+	int range = 1;
+	char identity = 'W';
+	std::string name = "Warrior";
 	Direction direction = Direction::left;
 	Side side;
 public:
 	//powinniœmy przenieœæ definicje tych funkcji do cpp
-	Warrior() { side = Side::cyvilian; };
+	Warrior() { side = Side::civilian; };
 	Warrior(Side s) { side = s; };	//to decide whether it is a friend or an enemy
 	virtual ~Warrior() {};
 	int leftHealth() { return this->health; };
 	int getInitiative() { return this->initiative; };
-	void wound(int damage);
-	// nie wiem jeszcze jak atak ma wygladac wiec jest void
+	Side getSide() { return this->side; };
+	int getPower() { return this->power; };
+	int getRange() { return this->range; };
+	Direction getDirection() { return this->direction; };
+	Side wound(int damage);
+	// zmieni³em na Side by informowa³ battlefield czy prze¿y³, a jesli nie to jaki typ zmar³ (to warunku koñca gry)
 	virtual void attack() = 0;
 	virtual void speciality() = 0;			// only one, for example regeneration, poisoning, double attack
-	virtual std::string identify() { return identity; };
+	virtual char identify() { return identity; };
+	virtual std::string getName() { return name; };
 	Statistics getStats();
 };
 
@@ -75,4 +85,6 @@ class EmptyWarrior : public Warrior
 {
 public:
 	EmptyWarrior();
+	void attack() {};
+	void speciality() {};
 };

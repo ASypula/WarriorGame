@@ -7,7 +7,8 @@ int main()
 {
 	Battlefield<Warrior*> army;
 	Warrior* x = new Archer();
-	Warrior* y = new Paladin();
+	//Warrior* y = new Paladin();
+	Warrior* y = new EmptyWarrior();
 	Warrior* z = new MegaPaladin();
 	army.addWarrior(x);
 	army.addWarrior(y);
@@ -16,18 +17,11 @@ int main()
 	{
 		std::cout << (*i)->identify() << std::endl;
 	}
-	delete x, y, z;
-	/*Warrior* c = army[1];
-	std::cout << c->leftHealth() << std::endl;
-	auto i = army.armyBegin();
-	std::cout << (*i)->leftHealth() << std::endl;*/
-	// uwaga idzie w nieskonczonosc
-	/*
-	for (auto i = army.armyBegin(); i != army.armyEnd(); ++i)
-	{
-		std::cout << (*i)->leftHealth() << ", ";
-		(*i)->wound(20);
-	}
-	*/
+	std::cout << army;
+	delete y, z;
+	Statistics s;
+	s = x->getStats();
+	std::cout << s;
+	delete x;
 	return 0;
 }
