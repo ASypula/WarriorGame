@@ -3,7 +3,7 @@
 #include <iostream>
 
 enum Direction {left, right};
-enum Side {player, enemy, cyvilian};
+enum Side {player, enemy, civilian};
 
 class Statistics
 {
@@ -15,7 +15,10 @@ public:
 	std::string identity;
 	Direction direction;
 	Statistics() {};
+	friend std::ostream& operator<< (std::ostream& os, Statistics const& stats);
+
 };
+std::ostream& operator<< (std::ostream& os, Statistics const& stats);
 
 class Warrior
 {
@@ -30,7 +33,7 @@ protected:
 	Side side;
 public:
 	//powinniœmy przenieœæ definicje tych funkcji do cpp
-	Warrior() { side = Side::cyvilian; };
+	Warrior() { side = Side::civilian; };
 	Warrior(Side s) { side = s; };	//to decide whether it is a friend or an enemy
 	virtual ~Warrior() {};
 	int leftHealth() { return this->health; };

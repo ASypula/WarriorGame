@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <ctime>
+#include <iomanip>
 #include "Warriors.h"
 
 void Warrior::wound(int damage)
@@ -18,6 +19,24 @@ Statistics Warrior::getStats()
 	newStats.direction = this->direction;
 	return newStats;
 }
+
+std::ostream& operator<< (std::ostream& os, Statistics const& stats)
+{
+	os << std::left << "Statistics for warrior " << stats.identity<<"\n";
+	os << std::setw(15) << "Statistic" << std::setw(10) << "Value" << "\n";
+	os<< std::setw(15) << "Health" << std::setw(10) << stats.health << "\n";
+	os << std::setw(15) << "Power" << std::setw(10) << stats.power << "\n";
+	os << std::setw(15) << "Initiative" << std::setw(10) << stats.initiative << "\n";
+	os << std::setw(15) << "Range" << std::setw(10) << stats.range << "\n";
+	std::string dir;
+	if (stats.direction == Direction::left)
+		dir = "left";
+	else
+		dir = "right";
+	os << std::setw(15) << "Direction" << std::setw(10) << dir << "\n";
+	return os;
+}
+
 
 Archer::Archer()
 {
