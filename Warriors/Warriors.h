@@ -2,6 +2,7 @@
 #include <vector>
 
 enum Direction {left, right};
+enum Side {player, enemy, cyvilian};
 
 class Statistics
 {
@@ -20,12 +21,16 @@ class Warrior
 protected:
 	int health = 10;
 	int power = 10;
+	int numberOfAttacks = 1;
 	int initiative = 10; // who will attack first
 	int range = 10;
 	char identity = 'W';
 	Direction direction = Direction::left;
+	Side side;
 public:
-	Warrior() = default;
+	//powinniœmy przenieœæ definicje tych funkcji do cpp
+	Warrior() { side = Side::cyvilian; };
+	Warrior(Side s) { side = s; };	//to decide whether it is a friend or an enemy
 	virtual ~Warrior() {};
 	int leftHealth() { return this->health; };
 	int getInitiative() { return this->initiative; };
@@ -37,13 +42,13 @@ public:
 };
 
 template <typename T>
-class Army
+class Battlefield
 {
 	std::vector<T> army;
 public:
 	class WarIterator
 	{
-		friend Army;
+		friend Battlefield;
 	private:
 		typename std::vector<T>::iterator current;
 		std::vector<T>& collection;
@@ -70,25 +75,45 @@ public:
 		// iterating through warriors with the highest initiative, 
 		WarIterator& operator++()
 		{
-			int maxInitiative = 0;
-			for (auto i = collection.begin(); i != collection.end(); ++i)
-				if ((*i)->getInitiative() > maxInitiative)
+			int maxInitiative = (*current)->getInitiative();
+			auto previous = current;
+			for (auto i = current; i != collection.end(); ++i)
+				if ((*i)->getInitiative() == maxInitiative)
 				{
-					maxInitiative = (*i)->getInitiative();
 					current = i;
+					break;
 				}
-			if (maxInitiative > 0)
-				return *this;
-			else
+			if (current == previous)
 			{
-				// co w przypadku gdy przeszlismy po wszystkich?
+				int smallest = 0;
+				for (auto i = collection.begin(); i != collection.end(); ++i)
+				{
+					int ini = (*i)->getInitiative();
+					if (ini > smallest && ini < (*previous)->getInitiative())
+					{
+						current = i;
+					}
+				}
 			}
+			if (current == previous)
+			{
+				return WarIterator(collection, collection.end());
+			}
+			return this;
 		}
 	};
 
 	WarIterator armyBegin()
 	{
-		WarIterator i(army, army.begin());
+		std::vector<T>::iterator it = army.begin();
+		for (auto i = army.begin(); i != army.end(), ++i)
+		{
+			if ((*i)->getInitiative() >= (*it)->getInitiative())
+			{
+				it = i;
+			}
+		}
+		WarIterator i(army, it);
 		return i;
 	}
 
@@ -101,6 +126,11 @@ public:
 	T& operator[](int n)
 	{
 		return army[n];
+	}
+
+	void addWarrior(int position, T newWarrior)
+	{
+		army.insert(army.begin() + position, newWarrior);
 	}
 
 	void addWarrior(T newWarrior)
