@@ -12,7 +12,8 @@ public:
 	int power;
 	int initiative;
 	int range;
-	std::string identity;
+	char identity;
+	std::string name;
 	Direction direction;
 	Statistics() {};
 	friend std::ostream& operator<< (std::ostream& os, Statistics const& stats);
@@ -28,7 +29,8 @@ protected:
 	int numberOfAttacks = 1;
 	int initiative = 10; // who will attack first
 	int range = 10;
-	std::string identity = "W";
+	char identity = 'W';
+	std::string name = "Warrior";
 	Direction direction = Direction::left;
 	Side side;
 public:
@@ -42,7 +44,8 @@ public:
 	// nie wiem jeszcze jak atak ma wygladac wiec jest void
 	virtual void attack() = 0;
 	virtual void speciality() = 0;			// only one, for example regeneration, poisoning, double attack
-	virtual std::string identify() { return identity; };
+	virtual char identify() { return identity; };
+	virtual std::string getName() { return name; };
 	Statistics getStats();
 };
 
@@ -78,4 +81,6 @@ class EmptyWarrior : public Warrior
 {
 public:
 	EmptyWarrior();
+	void attack() {};
+	void speciality() {};
 };

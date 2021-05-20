@@ -7,7 +7,8 @@ int main()
 {
 	Battlefield<Warrior*> army;
 	Warrior* x = new Archer();
-	Warrior* y = new Paladin();
+	//Warrior* y = new Paladin();
+	Warrior* y = new EmptyWarrior();
 	Warrior* z = new MegaPaladin();
 	army.addWarrior(x);
 	army.addWarrior(y);
@@ -16,6 +17,7 @@ int main()
 	{
 		std::cout << (*i)->identify() << std::endl;
 	}
+	std::cout << army;
 	delete y, z;
 	Statistics s;
 	s = x->getStats();

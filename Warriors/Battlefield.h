@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <iostream>
 #include "Warriors.h"
 
 template <typename T>
@@ -148,5 +149,20 @@ public:
 	{
 		if (n < army.size())
 			return army[n];
+	}
+
+	friend std::ostream& operator<< (std::ostream& os, Battlefield const& field)
+	{
+		char sign;
+		for (auto warrior = field.army.begin(); warrior != field.army.end(); warrior++) 
+		{
+			if ((*warrior)->identify() == 'E')
+				sign = '_';
+			else
+				sign = (*warrior)->identify();
+			os << std::left<<std::setw(3) << sign;
+		}
+		os << "\n";
+		return os;
 	}
 };
