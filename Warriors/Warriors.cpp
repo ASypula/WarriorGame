@@ -22,9 +22,9 @@ Statistics Warrior::getStats()
 Archer::Archer()
 {
 	this->health = 20;
-	this->initiative = 20;
+	this->initiative = 9;
 	this->power = 15;
-	this->identity = 'A';
+	this->identity = "A";
 	this->range = 2;
 	this->direction = Direction::right;
 }
@@ -32,11 +32,18 @@ Archer::Archer()
 Paladin::Paladin()
 {
 	this->health = 40;
-	this->initiative = 10;
+	this->initiative = 11;
 	this->power = 50;
-	this->identity = 'P';
+	this->identity = "P";
 	this->range = 1;
 	this->direction = Direction::left;
+}
+
+MegaPaladin::MegaPaladin() : Paladin()
+{
+
+	this->identity = "MP";
+
 }
 
 EmptyWarrior::EmptyWarrior()

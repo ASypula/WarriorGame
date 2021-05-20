@@ -38,7 +38,7 @@ public:
 		{
 			int maxInitiative = (*current)->getInitiative();
 			auto previous = current;
-			for (auto i = current; i != collection.end(); ++i)
+			for (auto i = current + 1; i != collection.end(); ++i)
 				if ((*i)->getInitiative() == maxInitiative)
 				{
 					current = i;
@@ -55,12 +55,13 @@ public:
 						current = i;
 					}
 				}
+				if (current == previous)
+				{
+					current = collection.end();
+				}
 			}
-			if (current == previous)
-			{
-				return WarIterator(collection, collection.end());
-			}
-			return this;
+			
+			return *this;
 		}
 	};
 
@@ -69,7 +70,7 @@ public:
 		typename std::vector<T>::iterator it = army.begin();
 		for (auto i = army.begin(); i != army.end(); ++i)
 		{
-			if ((*i)->getInitiative() >= (*it)->getInitiative())
+			if ((*i)->getInitiative() > (*it)->getInitiative())
 			{
 				it = i;
 			}

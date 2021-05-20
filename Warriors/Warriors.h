@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <iostream>
 
 enum Direction {left, right};
 enum Side {player, enemy, cyvilian};
@@ -11,7 +12,7 @@ public:
 	int power;
 	int initiative;
 	int range;
-	char identity;
+	std::string identity;
 	Direction direction;
 	Statistics() {};
 };
@@ -24,7 +25,7 @@ protected:
 	int numberOfAttacks = 1;
 	int initiative = 10; // who will attack first
 	int range = 10;
-	char identity = 'W';
+	std::string identity = "W";
 	Direction direction = Direction::left;
 	Side side;
 public:
@@ -38,6 +39,7 @@ public:
 	// nie wiem jeszcze jak atak ma wygladac wiec jest void
 	virtual void attack() = 0;
 	virtual void speciality() = 0;			// only one, for example regeneration, poisoning, double attack
+	virtual std::string identify() { return identity; };
 	Statistics getStats();
 };
 
@@ -55,6 +57,14 @@ class Paladin : public Warrior
 {
 public:
 	Paladin();
+	void attack() {};
+	void speciality() {};
+};
+
+class MegaPaladin : public Paladin
+{
+public:
+	MegaPaladin();
 	void attack() {};
 	void speciality() {};
 };
