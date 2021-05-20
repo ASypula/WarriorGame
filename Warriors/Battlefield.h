@@ -149,4 +149,5 @@ public:
 		if (n < army.size())
 			return army[n];
 	}
+
 };

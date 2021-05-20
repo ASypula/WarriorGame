@@ -2,8 +2,8 @@
 #include <vector>
 #include <iostream>
 
-enum Direction {left, right};
-enum Side {player, enemy, cyvilian};
+enum Direction {left = -1, right = 1};
+enum Side {player = 1, enemy = 2, cyvilian = 3};
 
 class Statistics
 {
