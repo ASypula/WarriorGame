@@ -6,7 +6,7 @@
 int main()
 {
 	Battlefield<Warrior*> army;
-	Warrior* x = new Archer();
+	Warrior* x = new Viking();
 	//Warrior* y = new Paladin();
 	Warrior* y = new EmptyWarrior();
 	Warrior* z = new MegaPaladin();
@@ -19,9 +19,9 @@ int main()
 	}
 	std::cout << army;
 	delete y, z;
-	Statistics s;
-	s = x->getStats();
-	std::cout << s;
+	//Statistics s;
+	//s = x->getStats();
+	std::cout << (*x);
 	delete x;
 	return 0;
 }

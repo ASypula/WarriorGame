@@ -5,6 +5,7 @@
 enum Direction {left = -1, right = 1}; //proszê nie usuwaæ tym razem, bo jebnie funkcja
 enum Side {alive, player, enemy, civilian};
 
+/*
 class Statistics
 {
 public:
@@ -20,6 +21,7 @@ public:
 
 };
 std::ostream& operator<< (std::ostream& os, Statistics const& stats);
+*/
 
 class Warrior
 {
@@ -50,8 +52,12 @@ public:
 	virtual void speciality() = 0;			// only one, for example regeneration, poisoning, double attack
 	virtual char identify() { return identity; };
 	virtual std::string getName() { return name; };
-	Statistics getStats();
+	//Statistics getStats();
+	friend std::ostream& operator<< (std::ostream& os, Warrior const& warrior);
+
 };
+std::ostream& operator<< (std::ostream& os, Warrior const& warrior);
+
 
 
 
@@ -79,7 +85,13 @@ public:
 	void speciality() {};
 };
 
-
+class Viking : public Warrior
+{
+public:
+	Viking();
+	void attack() {};
+	void speciality() {};
+};
 
 class EmptyWarrior : public Warrior
 {

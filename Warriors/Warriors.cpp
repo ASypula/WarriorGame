@@ -16,6 +16,7 @@ Side Warrior::wound(int damage)
 	}
 }
 
+/*
 Statistics Warrior::getStats()
 {
 	Statistics newStats;
@@ -28,18 +29,19 @@ Statistics Warrior::getStats()
 	newStats.direction = this->direction;
 	return newStats;
 }
+*/
 
-std::ostream& operator<< (std::ostream& os, Statistics const& stats)
+std::ostream& operator<< (std::ostream& os, Warrior const& warrior)
 {
-	os << std::left << "Statistics for warrior " << stats.name<<"\n";
+	os << std::left << "Statistics for warrior " << warrior.name<<"\n";
 	os << std::setw(15) << "Statistic" << std::setw(10) << "Value" << "\n";
-	os << std::setw(15) << "Identifier" << std::setw(10) << stats.identity << "\n";
-	os<< std::setw(15) << "Health" << std::setw(10) << stats.health << "\n";
-	os << std::setw(15) << "Power" << std::setw(10) << stats.power << "\n";
-	os << std::setw(15) << "Initiative" << std::setw(10) << stats.initiative << "\n";
-	os << std::setw(15) << "Range" << std::setw(10) << stats.range << "\n";
+	os << std::setw(15) << "Identifier" << std::setw(10) << warrior.identity << "\n";
+	os<< std::setw(15) << "Health" << std::setw(10) << warrior.health << "\n";
+	os << std::setw(15) << "Power" << std::setw(10) << warrior.power << "\n";
+	os << std::setw(15) << "Initiative" << std::setw(10) << warrior.initiative << "\n";
+	os << std::setw(15) << "Range" << std::setw(10) << warrior.range << "\n";
 	std::string dir;
-	if (stats.direction == Direction::left)
+	if (warrior.direction == Direction::left)
 		dir = "left";
 	else
 		dir = "right";
@@ -73,9 +75,20 @@ Paladin::Paladin()
 MegaPaladin::MegaPaladin() : Paladin()
 {
 
-	this->identity = 'MP';
+	this->identity = 'M';
 	this->name = "Mega Paladin";
 
+}
+
+Viking::Viking()
+{
+	this->health = 2;
+	this->initiative = 1;
+	this->power = 2;
+	this->identity = 'V';
+	this->name = "Viking";
+	this->range = 1;
+	this->direction = Direction::right;
 }
 
 EmptyWarrior::EmptyWarrior()
