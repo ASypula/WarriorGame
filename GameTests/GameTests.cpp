@@ -61,22 +61,42 @@ namespace GameTests
 			Assert::AreEqual(std::string("civilian"), isAlive);
 		}
 
-		TEST_METHOD(ShowFieldWithEmptyPlace)
+		TEST_METHOD(ShowField)
 		{
 			std::stringstream ss1;
 			std::stringstream ss2;
 			Battlefield<Warrior*> army;
 			Warrior* x = new Viking();
-			Warrior* y = new EmptyWarrior();
+			Warrior* y = new Archer();
 			Warrior* z = new MegaPaladin();
 			army.addWarrior(x);
 			army.addWarrior(y);
 			army.addWarrior(z);
 			ss1 << army;
 			ss2 << "\x1B[37m"<<std::left<<"V  "<<"\033[0m";
-			ss2 << "\x1B[37m" << std::left << "_  " << "\033[0m";
+			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
 			ss2 << "\x1B[37m" << std::left << "M  " << "\033[0m"<<"\n";
 			Assert::AreEqual(ss1.str(), ss2.str());
+		}
+
+		TEST_METHOD(ShowFieldForChoosing)
+		{
+			std::string ss1;
+			std::stringstream ss2;
+			Battlefield<Warrior*> army;
+			Warrior* x = new Viking();
+			Warrior* y = new Archer();
+			Warrior* z = new MegaPaladin();
+			army.addWarrior(x);
+			army.addWarrior(y);
+			army.addWarrior(z);
+			ss1 = army.showFieldForChoosing();
+			ss2 << "\x1B[37m" << std::left << "V  " << "\033[0m";
+			ss2 << std::left << "1  ";
+			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
+			ss2 << std::left << "2  ";
+			ss2 << "\x1B[37m" << std::left << "M  " << "\033[0m" << "\n";
+			Assert::AreEqual(ss1, ss2.str());
 		}
 
 		TEST_METHOD(ShowFieldWith4Archers)
@@ -98,6 +118,30 @@ namespace GameTests
 			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
 			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m" << "\n";
 			Assert::AreEqual(ss1.str(), ss2.str());
+		}
+
+		TEST_METHOD(ShowFieldWith4ArchersForChoosing)
+		{
+			std::string ss1;
+			std::stringstream ss2;
+			Battlefield<Warrior*> army;
+			Warrior* x = new Archer();
+			Warrior* y = new Archer();
+			Warrior* z = new Archer();
+			Warrior* w = new Archer();
+			army.addWarrior(x);
+			army.addWarrior(y);
+			army.addWarrior(z);
+			army.addWarrior(w);
+			ss1 = army.showFieldForChoosing();
+			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
+			ss2 << std::left << "1  ";
+			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
+			ss2 << std::left << "2  ";
+			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
+			ss2 << std::left << "3  ";
+			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m" << "\n";
+			Assert::AreEqual(ss1, ss2.str());
 		}
 
 		TEST_METHOD(ArcherHealSpecialty)

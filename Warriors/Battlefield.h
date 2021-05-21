@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
+#include <sstream>
 #include "Warriors.h"
 
 template <typename T>
@@ -178,23 +179,48 @@ public:
 
 	friend std::ostream& operator<< (std::ostream& os, Battlefield const& field)
 	{
-		char sign;
 		std::string colour;
-		for (auto warrior = field.army.begin(); warrior != field.army.end(); warrior++) 
+		for (auto warrior = field.army.begin(); warrior != field.army.end(); warrior++)
 		{
-			if ((*warrior)->identify() == 'E')
-				sign = '_';
-			else
-				sign = (*warrior)->identify();
 			if ((*warrior)->getSide() == Side::civilian)
-				colour = "37m"; //white czy to jest nam potrzebne bo w sumie z defaultu jest biale
+				colour = "37m"; //white
 			else if ((*warrior)->getSide() == Side::enemy)
-				colour = "31m"; //red
+				colour = "31;1m"; //red
 			else
-				colour = "32m"; //green
-			os << "\x1B["<<colour<< std::left << std::setw(3) << sign<<"\033[0m";
+				colour = "36;1m"; //blue
+			os << "\x1B["<<colour<< std::left << std::setw(3) << (*warrior)->identify() <<"\033[0m";
 		}
 		os << "\n";
 		return os;
+	}
+	std::string showFieldForChoosing ()
+	{
+		std::stringstream ss;
+		std::string colour;
+		auto warrior = army.begin();
+		if ((*warrior)->getSide() == Side::civilian)
+			colour = "37m";
+		else if ((*warrior)->getSide() == Side::enemy)
+			colour = "31;1m";
+		else
+			colour = "36;1m";
+		ss << "\x1B[" << colour << std::left << std::setw(3) << (*warrior)->identify() << "\033[0m";
+		
+		warrior++;
+		int count = 1;
+		for (warrior; warrior != army.end(); warrior++)
+		{
+			ss << std::left << std::setw(3) << count;
+			if ((*warrior)->getSide() == Side::civilian)
+				colour = "37m";
+			else if ((*warrior)->getSide() == Side::enemy)
+				colour = "31;1m";
+			else
+				colour = "36;1m";
+			ss << "\x1B[" << colour << std::left << std::setw(3) << (*warrior)->identify() << "\033[0m";
+			count++;
+		}
+		ss << "\n";
+		return ss.str();
 	}
 };

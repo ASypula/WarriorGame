@@ -7,8 +7,7 @@ int main()
 {
 	Battlefield<Warrior*> army;
 	Warrior* x = new Viking();
-	//Warrior* y = new Paladin();
-	Warrior* y = new EmptyWarrior();
+	Warrior* y = new Paladin();
 	Warrior* z = new MegaPaladin();
 	army.addWarrior(x);
 	army.addWarrior(y);
@@ -17,6 +16,7 @@ int main()
 	{
 		std::cout << (*i)->identify() << std::endl;
 	}
+	std::cout << army.showFieldForChoosing();
 	std::cout << army;
 	delete y, z;
 	//Statistics s;
