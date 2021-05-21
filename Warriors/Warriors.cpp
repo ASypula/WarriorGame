@@ -61,6 +61,11 @@ Archer::Archer()
 	this->direction = Direction::right;
 }
 
+void Archer::speciality()
+{
+	this->health += 1;
+}
+
 Paladin::Paladin()
 {
 	this->health = 2;

@@ -59,14 +59,12 @@ public:
 std::ostream& operator<< (std::ostream& os, Warrior const& warrior);
 
 
-
-
 class Archer : public Warrior
 {
 public:
 	Archer();
 	void attack() {};
-	void speciality() {};
+	void speciality();
 };
 
 class Paladin : public Warrior

@@ -99,5 +99,13 @@ namespace GameTests
 			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m" << "\n";
 			Assert::AreEqual(ss1.str(), ss2.str());
 		}
+
+		TEST_METHOD(ArcherHealSpecialty)
+		{
+			Warrior* warrior = new Archer();
+			Assert::AreEqual(1, warrior->leftHealth());
+			warrior->speciality();
+			Assert::AreEqual(2, warrior->leftHealth());
+		}
 	};
 }
