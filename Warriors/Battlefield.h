@@ -40,7 +40,7 @@ public:
 			return current != i.current;
 		}
 
-		// iterating through warriors with the highest initiative, 
+		// iterating through warriors with the highest initiative 
 		WarIterator& operator++()
 		{
 			int maxInitiative = (*current)->getInitiative();
@@ -100,7 +100,6 @@ public:
 			return current != i.current;
 		}
 
-		// iterating through warriors with the highest initiative, 
 		OrderIterator& operator++()
 		{
 			++current;

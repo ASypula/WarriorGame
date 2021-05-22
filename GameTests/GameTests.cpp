@@ -151,5 +151,103 @@ namespace GameTests
 			warrior->speciality();
 			Assert::AreEqual(2, warrior->leftHealth());
 		}
+
+		TEST_METHOD(AddWarriorEndArcher)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* warrior1 = new Archer();
+			army.addWarrior(warrior1);
+			Warrior* warrior2 = army.getWarrior(0);
+			Assert::AreEqual('A', warrior2->identify());
+		}
+
+		TEST_METHOD(AddWarriorEndViking)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* warrior1 = new Archer();
+			Warrior* warrior2 = new Viking();
+			army.addWarrior(warrior1);
+			army.addWarrior(warrior2);
+			Warrior* warrior3 = army.getWarrior(1);
+			Assert::AreEqual('V', warrior2->identify());
+		}
+
+		TEST_METHOD(AddWarriorAtPosition)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* warrior1 = new Archer();
+			Warrior* warrior2 = new Viking();
+			Warrior* warrior3 = new Paladin();
+			army.addWarrior(warrior1);
+			army.addWarrior(warrior2);
+			Assert::AreEqual('V', army.getWarrior(1)->identify());
+			army.addWarrior(1, warrior3);
+			Assert::AreEqual('P', army.getWarrior(1)->identify());
+			Assert::AreEqual('V', army.getWarrior(2)->identify());
+		}
+
+		TEST_METHOD(TurnBegin)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* x = new Viking();
+			Warrior* y = new Paladin();
+			Warrior* z = new MegaPaladin();
+			Warrior* a = new Archer();
+			army.addWarrior(x);
+			army.addWarrior(y);
+			army.addWarrior(z);
+			army.addWarrior(a);
+			auto i = army.turnBegin();
+			Assert::AreEqual('A', (*i)->identify());
+			++i;
+			Assert::AreEqual('P', (*i)->identify());
+		}
+		TEST_METHOD(WarIteratorIncrement)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* x = new Archer();
+			Warrior* y = new Viking();
+			Warrior* z = new MegaPaladin();
+			Warrior* a = new Archer();
+			army.addWarrior(x);
+			army.addWarrior(y);
+			army.addWarrior(z);
+			army.addWarrior(a);
+			auto i = army.turnBegin();
+			Assert::AreEqual('A', (*i)->identify());
+			++i;
+			Assert::AreEqual('A', (*i)->identify());
+			++i;
+			Assert::AreEqual('M', (*i)->identify());
+		}
+
+		TEST_METHOD(OrderQueueBegin)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* x = new Viking();
+			Warrior* y = new Paladin();
+			Warrior* z = new MegaPaladin();
+			army.addWarrior(x);
+			army.addWarrior(y);
+			army.addWarrior(z);
+			auto i = army.queueBegin();
+			Assert::AreEqual('V', (*i)->identify());
+		}
+
+		TEST_METHOD(OrderOperatorIncrement)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* x = new Viking();
+			Warrior* y = new Paladin();
+			Warrior* z = new MegaPaladin();
+			army.addWarrior(x);
+			army.addWarrior(y);
+			army.addWarrior(z);
+			auto i = army.queueBegin();
+			Assert::AreEqual('V', (*i)->identify());
+			++i;
+			Assert::AreEqual('P', (*i)->identify());
+		}
+
 	};
 }
