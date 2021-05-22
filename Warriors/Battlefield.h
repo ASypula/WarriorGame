@@ -54,11 +54,13 @@ public:
 			if (current == previous)
 			{
 				int smallest = 0;
+				int highestNextInitiative = 0;
 				for (auto i = collection.begin(); i != collection.end(); ++i)
 				{
 					int ini = (*i)->getInitiative();
-					if (ini > smallest && ini < (*previous)->getInitiative())
+					if (ini > smallest && ini < maxInitiative && ini > highestNextInitiative)
 					{
+						highestNextInitiative = ini;
 						current = i;
 					}
 				}
