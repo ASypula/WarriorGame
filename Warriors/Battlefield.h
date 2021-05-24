@@ -9,6 +9,13 @@ class Battlefield
 {
 	std::vector<T> army;
 public:
+	~Battlefield()
+	{
+		for (auto i = army.rbegin(); i != army.rend(); ++i)
+		{
+			delete *i;
+		}
+	}
 	class WarIterator
 	{
 		friend Battlefield;

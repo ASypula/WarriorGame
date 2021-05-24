@@ -21,10 +21,10 @@ int main()
 	
 	std::cout << army.showFieldForChoosing();
 	std::cout << army;
-	delete y, z;
+	//delete y, z;
 	//Statistics s;
 	//s = x->getStats();
 	std::cout << (*x);
-	delete x;
+	//delete x;
 	return 0;
 }
