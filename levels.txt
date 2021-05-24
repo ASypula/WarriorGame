@@ -1,0 +1,10 @@
+W zagadkach trzeba umieścić wszystkich wojowników z puli na planszy. Można wstawiać wojowników tylko pomiędzy.
+(zmieniłem w pliku, że paladyn atakuje w prawo, chyba i tak nikt nie był przywiązany do porzedniej wersji)
+
+Poziom dla stack <paladin>
+	Plansza:
+	M C M P C
+	Jednostki do ustawienia:
+	M C
+	Rozwiązanie:
+	M M C P M P C	

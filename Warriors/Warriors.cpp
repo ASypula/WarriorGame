@@ -82,6 +82,7 @@ MegaPaladin::MegaPaladin() : Paladin()
 
 	this->identity = 'M';
 	this->name = "Mega Paladin";
+	this->power = 2;
 
 }
 
