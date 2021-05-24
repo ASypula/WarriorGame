@@ -2,7 +2,7 @@
 #include <ctime>
 #include <iomanip>
 #include "Warriors.h"
-#define defSide Side::enemy
+#define defSide Side::enemy		//every class has default Side in constructor, here we can change it for every class at once
 
 Side Warrior::wound(int damage)
 {
