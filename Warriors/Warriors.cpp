@@ -50,7 +50,8 @@ std::ostream& operator<< (std::ostream& os, Warrior const& warrior)
 }
 
 
-Archer::Archer()
+
+Archer::Archer(Side s = civilian) : Warrior(s)
 {
 	this->health = 1;
 	this->initiative = 2;
@@ -66,7 +67,8 @@ void Archer::speciality()
 	this->health += 1;
 }
 
-Paladin::Paladin()
+
+Paladin::Paladin(Side s = civilian) : Warrior(s)
 {
 	this->health = 2;
 	this->initiative = 3;
@@ -77,7 +79,9 @@ Paladin::Paladin()
 	this->direction = Direction::right;
 }
 
-MegaPaladin::MegaPaladin() : Paladin()
+
+
+MegaPaladin::MegaPaladin(Side s = civilian) : Paladin(s)
 {
 
 	this->identity = 'M';
@@ -86,7 +90,8 @@ MegaPaladin::MegaPaladin() : Paladin()
 
 }
 
-Viking::Viking()
+
+Viking::Viking(Side s = civilian) : Warrior(s)
 {
 	this->health = 2;
 	this->initiative = 1;

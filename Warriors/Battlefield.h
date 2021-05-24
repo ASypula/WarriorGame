@@ -11,6 +11,7 @@ class Battlefield
 public:
 	~Battlefield()
 	{
+		//std::cout << "Adios" << std::endl;
 		for (auto i = army.rbegin(); i != army.rend(); ++i)
 		{
 			delete *i;

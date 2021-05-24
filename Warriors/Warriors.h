@@ -62,7 +62,7 @@ std::ostream& operator<< (std::ostream& os, Warrior const& warrior);
 class Archer : public Warrior
 {
 public:
-	Archer();
+	Archer(Side s);
 	void attack() {};
 	void speciality();
 };
@@ -70,7 +70,7 @@ public:
 class Paladin : public Warrior
 {
 public:
-	Paladin();
+	Paladin(Side s);
 	void attack() {};
 	void speciality() {};
 };
@@ -78,7 +78,7 @@ public:
 class MegaPaladin : public Paladin
 {
 public:
-	MegaPaladin();
+	MegaPaladin(Side s);
 	void attack() {};
 	void speciality() {};
 };
@@ -86,7 +86,7 @@ public:
 class Viking : public Warrior
 {
 public:
-	Viking();
+	Viking(Side s);
 	void attack() {};
 	void speciality() {};
 };
