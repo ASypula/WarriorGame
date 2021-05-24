@@ -53,12 +53,12 @@ std::ostream& operator<< (std::ostream& os, Warrior const& warrior)
 Archer::Archer()
 {
 	this->health = 1;
-	this->initiative = 3;
+	this->initiative = 2;
 	this->power = 1;
 	this->identity = 'A';
 	this->name = "Archer";
 	this->range = 2;
-	this->direction = Direction::right;
+	this->direction = Direction::left;
 }
 
 void Archer::speciality()
@@ -69,12 +69,12 @@ void Archer::speciality()
 Paladin::Paladin()
 {
 	this->health = 2;
-	this->initiative = 2;
+	this->initiative = 3;
 	this->power = 1;
 	this->identity = 'P';
 	this->name = "Paladin";
 	this->range = 1;
-	this->direction = Direction::left;
+	this->direction = Direction::right;
 }
 
 MegaPaladin::MegaPaladin() : Paladin()
@@ -94,7 +94,7 @@ Viking::Viking()
 	this->identity = 'V';
 	this->name = "Viking";
 	this->range = 1;
-	this->direction = Direction::right;
+	this->direction = Direction::left;
 }
 
 EmptyWarrior::EmptyWarrior()

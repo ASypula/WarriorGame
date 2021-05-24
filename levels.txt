@@ -1,10 +1,22 @@
 W zagadkach trzeba umieścić wszystkich wojowników z puli na planszy. Można wstawiać wojowników tylko pomiędzy.
-(zmieniłem w pliku, że paladyn atakuje w prawo, chyba i tak nikt nie był przywiązany do porzedniej wersji)
+(zmieniłem w pliku statsy wrogów, chyba i tak nikt nie był przywiązany do porzedniej wersji)
 
 Poziom dla stack <paladin>
+	Cel:
+		Ochronić cywili (nasze jednostki mogą ginąć)
 	Plansza:
-	M C M P C
+		M C M P C
 	Jednostki do ustawienia:
-	M C
+		M C
 	Rozwiązanie:
-	M M C P M P C	
+		M M C P M P C
+
+Poziom dla stack <warrior>
+	Cel:
+		Pokonać wszystkich wrogów (w jedną turę. Nasze jednostki mogą ginąć)
+	Plansza:
+		P P A V A
+	Jednostki do ustawienia:
+		P V
+	Rozwiązanie:
+		P P V A V P A
