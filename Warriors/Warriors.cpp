@@ -2,6 +2,7 @@
 #include <ctime>
 #include <iomanip>
 #include "Warriors.h"
+#define defSide Side::enemy
 
 Side Warrior::wound(int damage)
 {
@@ -15,6 +16,19 @@ Side Warrior::wound(int damage)
 		return Side::alive;
 	}
 }
+
+void Warrior::isSpecial()
+{
+	if (side == special)
+	{
+		this->health = 1;
+		this->initiative = 0;
+		this->power = 0;
+		this->identity = 'C';
+		this->name = "Civilian";
+	}
+}
+
 
 /*
 Statistics Warrior::getStats()
@@ -51,7 +65,7 @@ std::ostream& operator<< (std::ostream& os, Warrior const& warrior)
 
 
 
-Archer::Archer(Side s = civilian) : Warrior(s)
+Archer::Archer(Side s = defSide)
 {
 	this->health = 1;
 	this->initiative = 2;
@@ -60,6 +74,20 @@ Archer::Archer(Side s = civilian) : Warrior(s)
 	this->name = "Archer";
 	this->range = 2;
 	this->direction = Direction::left;
+	side = s;
+	this->isSpecial();
+}
+
+void Archer::isSpecial()
+{
+	if (side == special)
+	{
+		this->health = 1;
+		this->initiative = 0;
+		this->power = 0;
+		this->identity = 'C';
+		this->name = "Commander";
+	}
 }
 
 void Archer::speciality()
@@ -68,7 +96,7 @@ void Archer::speciality()
 }
 
 
-Paladin::Paladin(Side s = civilian) : Warrior(s)
+Paladin::Paladin(Side s = defSide)
 {
 	this->health = 2;
 	this->initiative = 3;
@@ -77,21 +105,34 @@ Paladin::Paladin(Side s = civilian) : Warrior(s)
 	this->name = "Paladin";
 	this->range = 1;
 	this->direction = Direction::right;
+	side = s;
+	this->isSpecial();
 }
 
+void Paladin::isSpecial()
+{
+	if (side == special)
+	{
+		this->health = 1;
+		this->initiative = 0;
+		this->power = 0;
+		this->identity = 'C';
+		this->name = "Chapter Master";
+	}
+}
 
-
-MegaPaladin::MegaPaladin(Side s = civilian) : Paladin(s)
+MegaPaladin::MegaPaladin(Side s = defSide) : Paladin(s)
 {
 
 	this->identity = 'M';
 	this->name = "Mega Paladin";
 	this->power = 2;
-
+	side = s;
+	this->isSpecial();
 }
 
 
-Viking::Viking(Side s = civilian) : Warrior(s)
+Viking::Viking(Side s = defSide)
 {
 	this->health = 2;
 	this->initiative = 1;
@@ -100,6 +141,20 @@ Viking::Viking(Side s = civilian) : Warrior(s)
 	this->name = "Viking";
 	this->range = 1;
 	this->direction = Direction::left;
+	side = s;
+	this->isSpecial();
+}
+
+void Viking::isSpecial()
+{
+	if (side == special)
+	{
+		this->health = 1;
+		this->initiative = 0;
+		this->power = 0;
+		this->identity = 'C';
+		this->name = "Capitan";
+	}
 }
 
 EmptyWarrior::EmptyWarrior()

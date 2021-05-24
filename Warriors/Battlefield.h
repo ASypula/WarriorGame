@@ -191,7 +191,7 @@ public:
 		std::string colour;
 		for (auto warrior = field.army.begin(); warrior != field.army.end(); warrior++)
 		{
-			if ((*warrior)->getSide() == Side::civilian)
+			if ((*warrior)->getSide() == Side::special)
 				colour = "37m"; //white
 			else if ((*warrior)->getSide() == Side::enemy)
 				colour = "31;1m"; //red
@@ -207,7 +207,7 @@ public:
 		std::stringstream ss;
 		std::string colour;
 		auto warrior = army.begin();
-		if ((*warrior)->getSide() == Side::civilian)
+		if ((*warrior)->getSide() == Side::special)
 			colour = "37m";
 		else if ((*warrior)->getSide() == Side::enemy)
 			colour = "31;1m";
@@ -220,7 +220,7 @@ public:
 		for (warrior; warrior != army.end(); warrior++)
 		{
 			ss << std::left << std::setw(3) << count;
-			if ((*warrior)->getSide() == Side::civilian)
+			if ((*warrior)->getSide() == Side::special)
 				colour = "37m";
 			else if ((*warrior)->getSide() == Side::enemy)
 				colour = "31;1m";
