@@ -151,7 +151,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Levels.cpp" />
     <ClCompile Include="Warriors.cpp" />
   </ItemGroup>
   <ItemGroup>
