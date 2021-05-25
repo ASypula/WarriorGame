@@ -70,17 +70,22 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 						break;
 					}
 					if ((warriorOptions == "I") || (warriorOptions == "Info")) {
-						std::cout << *w << std::endl;
+						std::cout << std::endl << *w << std::endl;
 					}
 					else {
-						int i = stoi(warriorOptions);
-						if ((i > 0) && (i < army.size())) {
-							T newWarrior = dynamic_cast<T>(w)->copy();
-							newWarrior->setSide(s);
-							army.addWarrior(i, newWarrior);
-							warriorChosen = true;
+						int i = 0;
+						try {
+							i = stoi(warriorOptions);
+							if ((i > 0) && (i < army.size())) {
+								T newWarrior = dynamic_cast<T>(w)->copy();
+								newWarrior->setSide(s);
+								army.addWarrior(i, newWarrior);
+								warriorChosen = true;
+								break;
+							}
 						}
-						break;
+						catch (std::invalid_argument) {
+						}
 					}
 				}
 			}
