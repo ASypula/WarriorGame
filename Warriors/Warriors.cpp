@@ -92,11 +92,11 @@ void Paladin::isSpecial()
 	}
 }
 
-MegaPaladin::MegaPaladin(Side s = defSide) : Paladin(s)
+HolyPaladin::HolyPaladin(Side s = defSide) : Paladin(s)
 {
 
-	this->identity = 'M';
-	this->name = "Mega Paladin";
+	this->identity = 'H';
+	this->name = "Holy Paladin";
 	this->power = 2;
 	side = s;
 	this->isSpecial();

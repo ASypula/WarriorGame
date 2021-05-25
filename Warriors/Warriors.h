@@ -77,10 +77,10 @@ public:
 	void isSpecial();
 };
 
-class MegaPaladin : public Paladin
+class HolyPaladin : public Paladin
 {
 public:
-	MegaPaladin(Side s);
+	HolyPaladin(Side s);
 	void speciality() {};
 	//void isSpecial();
 };

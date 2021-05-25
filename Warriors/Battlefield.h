@@ -170,11 +170,6 @@ public:
 	{
 		typename std::vector<T>::iterator it = attacker.getVectIter();
 		int maxDist = 0;
-		//Jeœli nie usuwamy martwych wojowników
-		/*
-		if ((*attacker)->leftHealth() <= 0)
-			return Side::alive;
-		*/
 		std::string attackerName = (*attacker)->getName();
 		Side attackerSide = (*attacker)->getSide();
 		if ((*attacker)->getDirection() == Direction::left)
@@ -235,17 +230,17 @@ public:
 				std::cout << *this;
 			if (s == Side::enemy) {
 				--enemyNumber;
-				if (enemyNumber == 0) {
-					std::cout << "Player wins" << std::endl;
-					return;
-				}
+			}
+			if (enemyNumber == 0) {
+				std::cout << "Player wins" << std::endl;
+				return;
 			}
 			if (s == Side::player) {
 				--allyNumber;
-				if (allyNumber == 0) {
-					std::cout << "Player loses" << std::endl;
-					return;
-				}
+			}
+			if (allyNumber == 0) {
+				std::cout << "Player loses" << std::endl;
+				return;
 			}
 		}
 		std::cout << "Draw" << std::endl;
@@ -261,11 +256,10 @@ public:
 				std::cout << *this;
 			if (s == Side::special) {
 				--specialNumber;
-				
-				if (specialNumber == 0) {
-					std::cout << "Player loses" << std::endl;
-					return;
-				}
+			}
+			if (specialNumber == 0) {
+				std::cout << "Player loses" << std::endl;
+				return;
 			}
 		}
 		std::cout << "Player wins" << std::endl;
@@ -287,7 +281,7 @@ public:
 		os << "\n";
 		return os;
 	}
-	std::string showFieldForChoosing ()
+	std::string fieldForChoosing ()
 	{
 		std::stringstream ss;
 		std::string colour;
