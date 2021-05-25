@@ -32,7 +32,7 @@ template <typename T> void displayWarriorList() {
 }
 
 
-template <typename T> void placeWarrior(Battlefield<T>& army, Side s = Side::player) {
+template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlacementsLeft, Side s = Side::player) {
 	std::string userInput;
 	bool warriorChosen = false;
 	while (!warriorChosen) {
@@ -40,6 +40,7 @@ template <typename T> void placeWarrior(Battlefield<T>& army, Side s = Side::pla
 		if (!std::cin)
 			break;
 		if ((userInput == "List") || (userInput == "L")) {
+			std::cout << std::endl;
 			displayWarriorList<T>();
 			std::cout << std::endl;
 		}
@@ -50,6 +51,7 @@ template <typename T> void placeWarrior(Battlefield<T>& army, Side s = Side::pla
 			shortcut.push_back(w->identify());
 			if ((userInput == w->getName()) || (shortcut == userInput)) {
 				system("CLS");
+				std::cout << "You have chosen " << w->getName() << std::endl << std::endl;
 				std::cout << "\"Info\" or \"I\" - info on " << w->getName() << std::endl;
 				std::cout << "*number* - put " << w->getName() << " in desired place" << std::endl;
 				std::cout << "\"q\" - choose another warrior" << std::endl << std::endl;
@@ -61,10 +63,14 @@ template <typename T> void placeWarrior(Battlefield<T>& army, Side s = Side::pla
 					if (!std::cin)
 						break;
 					if ((warriorOptions == "q")) {
+						system("CLS");
+						std::cout << "\"L\" or \"List\" - display warrior list\n*warrior name* or *warrior name first letter* - choose warrior\n";
+						std::cout << std::endl << army.fieldForChoosing();
+						std::cout << "Warriors left to place: " << warriorPlacementsLeft << std::endl << std::endl;
 						break;
 					}
 					if ((warriorOptions == "I") || (warriorOptions == "Info")) {
-						std::cout << *w;
+						std::cout << *w << std::endl;
 					}
 					else {
 						int i = stoi(warriorOptions);
@@ -80,18 +86,17 @@ template <typename T> void placeWarrior(Battlefield<T>& army, Side s = Side::pla
 			}
 		}
 	}
-		
-	
 }
 
 
 template <typename T> void managePlayersTeam(Battlefield<T> & army, int maxWarriorsNumber) {
 	int warriorPlacementsLeft = maxWarriorsNumber;
-	std::cout << "\"L\" or \"List\" - display warrior list\n*warrior name* or *warrior name first letter* - choose warrior\n";
 	while (warriorPlacementsLeft != 0) {
+		std::cout << "\"L\" or \"List\" - display warrior list\n*warrior name* or *warrior name first letter* - choose warrior\n";
 		std::cout << std::endl << army.fieldForChoosing();
-		std::cout << "Warriors left to place: " << warriorPlacementsLeft << std::endl;
-		placeWarrior(army);
+		std::cout << "Warriors left to place: " << warriorPlacementsLeft << std::endl << std::endl;
+		placeWarrior(army, warriorPlacementsLeft);
+		system("CLS");
 		--warriorPlacementsLeft;
 	}
 	std::cout << std::flush;
