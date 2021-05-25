@@ -7,7 +7,7 @@ Poziom dla stack <paladin>
 	Plansza:
 		M C M P C
 	Jednostki do ustawienia:
-		M C
+		M P
 	Rozwiązanie:
 		M M C P M P C
 
