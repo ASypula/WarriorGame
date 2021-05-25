@@ -4,18 +4,6 @@
 #include "Warriors.h"
 #define defSide Side::enemy		//every class has default Side in constructor, here we can change it for every class at once
 
-Side Warrior::wound(int damage)
-{
-	this->health -= damage;
-	if (this->health <= 0)
-	{
-		return this->side;
-	}
-	else
-	{
-		return Side::alive;
-	}
-}
 
 void Warrior::isSpecial()
 {

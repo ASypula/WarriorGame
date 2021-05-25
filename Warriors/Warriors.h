@@ -66,9 +66,10 @@ public:
 	int getPower() { return this->power; };
 	int getRange() { return this->range; };
 	Direction getDirection() { return this->direction; };
-	Side wound(int damage);
-	// zmieni³em na Side by informowa³ battlefield czy prze¿y³, a jesli nie to jaki typ zmar³ (to warunku koñca gry)
-	virtual void attack() = 0;
+	virtual void wound(int damage) { this->health -= damage; };
+	// zmieni³em to tak, ¿eby Turn w battlefield przekazywa³o to, czy ktoœ umar³ czy nie i ustawi³em wound na wirtualne, ¿eby ewentualnie póŸniej mo¿na by³o zmieniæ to tak, ¿eby ró¿ni wojownicy przyjmowali obra¿enia w ró¿ny sposób
+	virtual void attack(Warrior& w) { w.wound(power); };
+	//doda³em tutaj funkcjê attack, ¿eby móc ewentualnie jakoœ pokazaæ te funkcje wirtualne, ale w bazowej wersji, dzieje siê to samo, co poprzednio, tylko mo¿na to ewentualnie póŸniej dodatkowo jakoœ rozwijaæ
 	virtual void speciality() = 0;			// only one, for example regeneration, poisoning, double attack
 	virtual char identify() { return identity; };
 	virtual std::string getName() { return name; };
@@ -84,7 +85,6 @@ class Archer : public Warrior
 {
 public:
 	Archer(Side s);
-	void attack() {};
 	void speciality();
 	void isSpecial();
 };
@@ -93,7 +93,6 @@ class Paladin : public Warrior
 {
 public:
 	Paladin(Side s);
-	void attack() {};
 	void speciality() {};
 	void isSpecial();
 };
@@ -102,7 +101,6 @@ class MegaPaladin : public Paladin
 {
 public:
 	MegaPaladin(Side s);
-	void attack() {};
 	void speciality() {};
 	//void isSpecial();
 };
@@ -111,7 +109,6 @@ class Viking : public Warrior
 {
 public:
 	Viking(Side s);
-	void attack() {};
 	void speciality() {};
 	void isSpecial();
 };
@@ -120,6 +117,5 @@ class EmptyWarrior : public Warrior
 {
 public:
 	EmptyWarrior();
-	void attack() {};
 	void speciality() {};
 };

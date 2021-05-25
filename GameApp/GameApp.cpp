@@ -13,11 +13,14 @@ int main()
 	Warrior* y = new Paladin();
 	Warrior* z = new MegaPaladin();
 	Warrior* a = new Archer();
+	Warrior* b = new Archer(Side::special);
 	army.addWarrior(a);
+	army.addWarrior(b);
 	army.addWarrior(x);
 	army.addWarrior(y);
 	army.addWarrior(z);
 	army.deathmatch();
+	army.protect();
 	for (auto i = army.turnBegin(); i != army.turnEnd(); ++i)
 	{
 		std::cout << (*i)->identify() << std::endl;
