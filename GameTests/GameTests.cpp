@@ -39,12 +39,8 @@ namespace GameTests
 			Warrior* warrior = new Viking();
 			Assert::AreEqual(2, warrior->leftHealth());
 			Assert::AreEqual('V', warrior->identify());
-			Side side;
-			side = warrior->wound(1);
+			warrior->wound(1);
 			Assert::AreEqual(1, warrior->leftHealth());
-			if (side == Side::alive)
-				isAlive = "alive";
-			Assert::AreEqual(std::string("alive"), isAlive);
 		}
 
 		TEST_METHOD(WoundAndDead)
@@ -54,11 +50,8 @@ namespace GameTests
 			Assert::AreEqual(1, warrior->leftHealth());
 			Assert::AreEqual('A', warrior->identify());
 			Side side;
-			side = warrior->wound(1);
+			warrior->wound(1);
 			Assert::AreEqual(0, warrior->leftHealth());
-			if (side == Side::enemy)
-				isAlive = "enemy";
-			Assert::AreEqual(std::string("enemy"), isAlive);
 		}
 
 		TEST_METHOD(ShowField)

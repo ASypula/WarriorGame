@@ -17,22 +17,6 @@ void Warrior::isSpecial()
 	}
 }
 
-
-/*
-Statistics Warrior::getStats()
-{
-	Statistics newStats;
-	newStats.health = this->health;
-	newStats.power = this->power;
-	newStats.initiative = this->initiative;
-	newStats.range = this->range;
-	newStats.identity = this->identity;
-	newStats.name = this->name;
-	newStats.direction = this->direction;
-	return newStats;
-}
-*/
-
 std::ostream& operator<< (std::ostream& os, Warrior const& warrior)
 {
 	os << std::left << "Statistics for warrior " << warrior.name<<"\n";
@@ -50,7 +34,6 @@ std::ostream& operator<< (std::ostream& os, Warrior const& warrior)
 	os << std::setw(15) << "Direction" << std::setw(10) << dir << "\n";
 	return os;
 }
-
 
 
 Archer::Archer(Side s = defSide)
@@ -143,10 +126,4 @@ void Viking::isSpecial()
 		this->identity = 'C';
 		this->name = "Capitan";
 	}
-}
-
-EmptyWarrior::EmptyWarrior()
-{
-	this->identity = 'E';
-	this->initiative = -1;
 }
