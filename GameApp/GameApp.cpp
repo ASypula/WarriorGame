@@ -3,6 +3,9 @@
 #include "../Warriors/Warriors.cpp"
 #include "../Warriors/Battlefield.h"
 
+
+
+
 int main()
 {
 	Battlefield<Warrior*> army;
@@ -14,11 +17,13 @@ int main()
 	army.addWarrior(x);
 	army.addWarrior(y);
 	army.addWarrior(z);
+	army.deathmatch();
 	for (auto i = army.turnBegin(); i != army.turnEnd(); ++i)
 	{
 		std::cout << (*i)->identify() << std::endl;
 	}
-	
+	std::cout << army.getSideCount(player) << std::endl;
+	std::cout << army.getSideCount(enemy) << std::endl;
 	std::cout << army.showFieldForChoosing();
 	std::cout << army;
 	//delete y, z;

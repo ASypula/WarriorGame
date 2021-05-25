@@ -166,10 +166,14 @@ public:
 			return army[n];
 	}
 
-	void Turn(WarIterator attacker)
+	Side Turn(WarIterator attacker)
 	{
 		typename std::vector<T>::iterator it = attacker.getVectIter();
 		int maxDist = 0;
+		//Jeœli nie usuwamy martwych wojowników
+		if ((*attacker)->leftHealth() <= 0)
+			return Side::alive;
+
 		if ((*attacker)->getDirection() == Direction::left)
 		{
 			maxDist = std::distance(army.begin(), it);
@@ -181,9 +185,68 @@ public:
 		if ((*attacker)->getRange() <= maxDist)
 		{
 			typename std::vector<T>::iterator attacked = it + (*attacker)->getDirection() * (*attacker)->getRange();
-			Side attackResult = (*attacked)->wound((*attacker)->getPower());
+			int attackPower = (*attacker)->getPower();
+			Side attackResult = (*attacked)->wound(attackPower);
+			std::cout << (*attacker)->getSide() << " " << (*attacker)->getName() << " attacks ";
+			std::cout << (*attacked)->getSide() << " " << (*attacked)->getName() << " for " << attackPower << " damage" << std::endl;
+			if (attackResult != Side::alive) {
+				std::cout << (*attacked)->getSide() << " " << (*attacked)->getName() << " dies" << std::endl;
+				//army.erase(attacked);		//jeœli usuwamy wojowników jak umieraj¹  //jeœli chcemy go usuwaæ wystêpuj¹ problemy z przesuniêciem iteratora, wiêc na razie testujê  bez usuwania
+			}
+			return attackResult;
 		}
+		std::cout << (*attacker)->getName() << " misses" << std::endl;
+		return Side::alive;
+	}
 
+	int getSideCount(Side s)
+	{
+		int sideCount = 0;
+		for (auto i = queueBegin(); i != queueEnd(); ++i) {
+			if ((*i)->getSide() == s)
+				++sideCount;
+		}
+		return sideCount;
+	}
+
+	void deathmatch()
+	{
+		int enemyNumber = getSideCount(Side::enemy);
+		int allyNumber = getSideCount(Side::player);
+		for (auto i = turnBegin(); i != turnEnd(); ++i) {
+			Side s = Turn(i);
+			if (s == Side::enemy) {
+				--enemyNumber;
+				if (enemyNumber == 0) {
+					std::cout << "Player wins" << std::endl;
+					return;
+				}
+			}
+			if (s == Side::player) {
+				--allyNumber;
+				if (allyNumber == 0) {
+					std::cout << "Player loses" << std::endl;
+					return;
+				}
+			}
+		}
+		std::cout << "Draw" << std::endl;
+	}
+
+	void protect()
+	{
+		int specialNumber = getSideCount(Side::special);
+		for (auto i = turnBegin(); i != turnEnd(); ++i) {
+			Side s = Turn(i);
+			if (s == Side::special) {
+				--specialNumber;
+				if (specialNumber == 0) {
+					std::cout << "Player loses" << std::endl;
+					return;
+				}
+			}
+		}
+		std::cout << "Player wins" << std::endl;
 	}
 
 	friend std::ostream& operator<< (std::ostream& os, Battlefield const& field)

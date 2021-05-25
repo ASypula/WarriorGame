@@ -2,8 +2,28 @@
 #include <vector>
 #include <iostream>
 
+
 enum Direction {left = -1, right = 1}; //proszê nie usuwaæ tym razem, bo jebnie funkcja
 enum Side {alive, player, enemy, special};
+
+std::ostream& operator<<(std::ostream& os, Side s)
+{
+	switch (s) {
+	case alive:
+		os << "Alive";
+		break;
+	case player:
+		os << "Ally";
+		break;
+	case enemy:
+		os << "Enemy";
+		break;
+	case special:
+		os << "Crucial";
+	}
+	return os;
+}
+
 
 /*
 class Statistics
