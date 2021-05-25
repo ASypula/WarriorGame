@@ -61,6 +61,21 @@ void Archer::isSpecial()
 	}
 }
 
+
+Archer::Archer(Archer& a)
+{
+	this->health = a.health;
+	this->initiative = a.initiative;
+	this->power = a.power;
+	this->identity = a.identity;
+	this->name = a.name;
+	this->range = a.range;
+	this->direction = a.direction;
+	side = a.side;
+	this->isSpecial();
+}
+
+
 void Archer::speciality()
 {
 	this->health += 1;
@@ -79,6 +94,21 @@ Paladin::Paladin(Side s = defSide)
 	side = s;
 	this->isSpecial();
 }
+
+
+Paladin::Paladin(Paladin& p)
+{
+	this->health = p.health;
+	this->initiative = p.initiative;
+	this->power = p.power;
+	this->identity = p.identity;
+	this->name = p.name;
+	this->range = p.range;
+	this->direction = p.direction;
+	side = p.side;
+	this->isSpecial();
+}
+
 
 void Paladin::isSpecial()
 {
@@ -103,6 +133,20 @@ HolyPaladin::HolyPaladin(Side s = defSide) : Paladin(s)
 }
 
 
+HolyPaladin::HolyPaladin(HolyPaladin& hp)
+{
+	this->health = hp.health;
+	this->initiative = hp.initiative;
+	this->power = hp.power;
+	this->identity = hp.identity;
+	this->name = hp.name;
+	this->range = hp.range;
+	this->direction = hp.direction;
+	side = hp.side;
+	this->isSpecial();
+}
+
+
 Viking::Viking(Side s = defSide)
 {
 	this->health = 2;
@@ -113,6 +157,19 @@ Viking::Viking(Side s = defSide)
 	this->range = 1;
 	this->direction = Direction::left;
 	side = s;
+	this->isSpecial();
+}
+
+Viking::Viking(Viking& v)
+{
+	this->health = v.health;
+	this->initiative = v.initiative;
+	this->power = v.power;
+	this->identity = v.identity;
+	this->name = v.name;
+	this->range = v.range;
+	this->direction = v.direction;
+	side = v.side;
 	this->isSpecial();
 }
 

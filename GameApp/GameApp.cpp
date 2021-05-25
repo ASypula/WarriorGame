@@ -49,7 +49,34 @@ template <typename T> void placeWarrior(Battlefield<T>& army, Side s = Side::pla
 			std::string shortcut;
 			shortcut.push_back(w->identify());
 			if ((userInput == w->getName()) || (shortcut == userInput)) {
-				warriorChosen = true;
+				system("CLS");
+				std::cout << "\"Info\" or \"I\" - info on " << w->getName() << std::endl;
+				std::cout << "*number* - put " << w->getName() << " in desired place" << std::endl;
+				std::cout << "\"q\" - choose another warrior" << std::endl << std::endl;
+				
+				std::cout << army.fieldForChoosing() << std::endl;
+				std::string warriorOptions;
+				while (true) {
+					std::cin >> warriorOptions;
+					if (!std::cin)
+						break;
+					if ((warriorOptions == "q")) {
+						break;
+					}
+					if ((warriorOptions == "I") || (warriorOptions == "Info")) {
+						std::cout << *w;
+					}
+					else {
+						int i = stoi(warriorOptions);
+						if ((i > 0) && (i < army.size())) {
+							T newWarrior = dynamic_cast<T>(w)->copy();
+							newWarrior->setSide(s);
+							army.addWarrior(i, newWarrior);
+							warriorChosen = true;
+						}
+						break;
+					}
+				}
 			}
 		}
 	}
@@ -67,7 +94,7 @@ template <typename T> void managePlayersTeam(Battlefield<T> & army, int maxWarri
 		placeWarrior(army);
 		--warriorPlacementsLeft;
 	}
-		std::cout << std::flush;
+	std::cout << std::flush;
 	system("CLS");
 }
 
@@ -75,9 +102,6 @@ template <typename T> void managePlayersTeam(Battlefield<T> & army, int maxWarri
 
 int main()
 {
-	auto w = new Paladin();
-	Warrior * j = w;
-	j->wound(1);
 	std::cout << "Placeholder Game Name" << std::endl << std::endl;
 	std::cout << "Choose puzzle" << std::endl;
 	std::cout << "1. Civillian protection" << std::endl;
@@ -106,9 +130,9 @@ int main()
 		army.addWarrior(new HolyPaladin());
 		army.addWarrior(new HolyPaladin(Side::special));
 		army.addWarrior(new Paladin());
-		army.addWarrior(new Paladin(Side::special));
 		army.addWarrior(new Paladin());
-		managePlayersTeam(army, 2);
+		army.addWarrior(new Paladin(Side::special));
+		managePlayersTeam<Paladin*>(army, 2);
 		army.protect();
 		break;
 	}
@@ -120,7 +144,7 @@ int main()
 		army.addWarrior(new Archer());
 		army.addWarrior(new Viking());
 		army.addWarrior(new Archer());
-		managePlayersTeam(army, 2);
+		managePlayersTeam<Warrior*>(army, 2);
 		army.deathmatch();
 		break;
 	}

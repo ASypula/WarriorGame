@@ -160,6 +160,11 @@ public:
 		army.push_back(newWarrior);
 	}
 
+	int size()
+	{
+		return army.size();
+	}
+
 	T getWarrior(int n)
 	{
 		if (n < army.size())
