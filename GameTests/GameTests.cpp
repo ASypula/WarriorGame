@@ -260,8 +260,29 @@ namespace GameTests
 			army.addWarrior(y);
 			army.addWarrior(z);
 			army.addWarrior(w);
-			int countEnemies = army.getSideCount(Side::special);
-			Assert::AreEqual(3, countEnemies);
+			int countEnemies = army.getSideCount(Side::enemy);
+			int countCivil = army.getSideCount(Side::special);
+			Assert::AreEqual(1, countEnemies);
+			Assert::AreEqual(3, countCivil);
+		}
+
+		TEST_METHOD(CountEnemiesAndPlayers)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* x = new Viking(Side::special);
+			Warrior* y = new Paladin(Side::special);
+			Warrior* z = new MegaPaladin(Side::player);
+			Warrior* q = new MegaPaladin(Side::player);
+			Warrior* w = new Viking(Side::special);
+			army.addWarrior(x);
+			army.addWarrior(y);
+			army.addWarrior(z);
+			army.addWarrior(w);
+			army.addWarrior(q);
+			int countPlayers = army.getSideCount(Side::player);
+			int countCivil = army.getSideCount(Side::special);
+			Assert::AreEqual(2, countPlayers);
+			Assert::AreEqual(3, countCivil);
 		}
 
 	};
