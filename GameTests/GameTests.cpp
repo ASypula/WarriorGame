@@ -17,7 +17,7 @@ namespace GameTests
 			Assert::AreEqual(1, warrior->leftHealth());
 			Assert::AreEqual('A', warrior->identify());
 			Assert::AreEqual(std::string ("Archer"), warrior->getName());
-			Assert::AreEqual(3, warrior->getInitiative());
+			Assert::AreEqual(2, warrior->getInitiative());
 			Assert::AreEqual(1, warrior->getPower());
 			Assert::AreEqual(2, warrior->getRange());
 		}
@@ -56,9 +56,9 @@ namespace GameTests
 			Side side;
 			side = warrior->wound(1);
 			Assert::AreEqual(0, warrior->leftHealth());
-			if (side == Side::civilian)
-				isAlive = "civilian";
-			Assert::AreEqual(std::string("civilian"), isAlive);
+			if (side == Side::enemy)
+				isAlive = "enemy";
+			Assert::AreEqual(std::string("enemy"), isAlive);
 		}
 
 		TEST_METHOD(ShowField)
@@ -66,16 +66,16 @@ namespace GameTests
 			std::stringstream ss1;
 			std::stringstream ss2;
 			Battlefield<Warrior*> army;
-			Warrior* x = new Viking();
-			Warrior* y = new Archer();
-			Warrior* z = new MegaPaladin();
+			Warrior* x = new Viking(Side::special);
+			Warrior* y = new Archer(Side::special);
+			Warrior* z = new MegaPaladin(Side::special);
 			army.addWarrior(x);
 			army.addWarrior(y);
 			army.addWarrior(z);
 			ss1 << army;
-			ss2 << "\x1B[37m"<<std::left<<"V  "<<"\033[0m";
-			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
-			ss2 << "\x1B[37m" << std::left << "M  " << "\033[0m"<<"\n";
+			ss2 << "\x1B[37m"<<std::left<<"C  "<<"\033[0m";
+			ss2 << "\x1B[37m" << std::left << "C  " << "\033[0m";
+			ss2 << "\x1B[37m" << std::left << "C  " << "\033[0m"<<"\n";
 			Assert::AreEqual(ss1.str(), ss2.str());
 		}
 
@@ -91,11 +91,11 @@ namespace GameTests
 			army.addWarrior(y);
 			army.addWarrior(z);
 			ss1 = army.showFieldForChoosing();
-			ss2 << "\x1B[37m" << std::left << "V  " << "\033[0m";
+			ss2 << "\x1B[31;1m" << std::left << "V  " << "\033[0m";
 			ss2 << std::left << "1  ";
-			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
+			ss2 << "\x1B[31;1m" << std::left << "A  " << "\033[0m";
 			ss2 << std::left << "2  ";
-			ss2 << "\x1B[37m" << std::left << "M  " << "\033[0m" << "\n";
+			ss2 << "\x1B[31;1m" << std::left << "M  " << "\033[0m" << "\n";
 			Assert::AreEqual(ss1, ss2.str());
 		}
 
@@ -113,10 +113,10 @@ namespace GameTests
 			army.addWarrior(z);
 			army.addWarrior(w);
 			ss1 << army;
-			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
-			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
-			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
-			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m" << "\n";
+			ss2 << "\x1B[31;1m" << std::left << "A  " << "\033[0m";
+			ss2 << "\x1B[31;1m" << std::left << "A  " << "\033[0m";
+			ss2 << "\x1B[31;1m" << std::left << "A  " << "\033[0m";
+			ss2 << "\x1B[31;1m" << std::left << "A  " << "\033[0m" << "\n";
 			Assert::AreEqual(ss1.str(), ss2.str());
 		}
 
@@ -125,22 +125,22 @@ namespace GameTests
 			std::string ss1;
 			std::stringstream ss2;
 			Battlefield<Warrior*> army;
-			Warrior* x = new Archer();
-			Warrior* y = new Archer();
-			Warrior* z = new Archer();
-			Warrior* w = new Archer();
+			Warrior* x = new Archer(Side::enemy);
+			Warrior* y = new Archer(Side::enemy);
+			Warrior* z = new Archer(Side::enemy);
+			Warrior* w = new Archer(Side::enemy);
 			army.addWarrior(x);
 			army.addWarrior(y);
 			army.addWarrior(z);
 			army.addWarrior(w);
 			ss1 = army.showFieldForChoosing();
-			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
+			ss2 << "\x1B[31;1m" << std::left << "A  " << "\033[0m";
 			ss2 << std::left << "1  ";
-			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
+			ss2 << "\x1B[31;1m" << std::left << "A  " << "\033[0m";
 			ss2 << std::left << "2  ";
-			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m";
+			ss2 << "\x1B[31;1m" << std::left << "A  " << "\033[0m";
 			ss2 << std::left << "3  ";
-			ss2 << "\x1B[37m" << std::left << "A  " << "\033[0m" << "\n";
+			ss2 << "\x1B[31;1m" << std::left << "A  " << "\033[0m" << "\n";
 			Assert::AreEqual(ss1, ss2.str());
 		}
 
@@ -198,9 +198,9 @@ namespace GameTests
 			army.addWarrior(z);
 			army.addWarrior(a);
 			auto i = army.turnBegin();
-			Assert::AreEqual('A', (*i)->identify());
-			++i;
 			Assert::AreEqual('P', (*i)->identify());
+			++i;
+			Assert::AreEqual('M', (*i)->identify());
 		}
 		TEST_METHOD(WarIteratorIncrement)
 		{
@@ -214,11 +214,11 @@ namespace GameTests
 			army.addWarrior(z);
 			army.addWarrior(a);
 			auto i = army.turnBegin();
-			Assert::AreEqual('A', (*i)->identify());
-			++i;
-			Assert::AreEqual('A', (*i)->identify());
-			++i;
 			Assert::AreEqual('M', (*i)->identify());
+			++i;
+			Assert::AreEqual('A', (*i)->identify());
+			++i;
+			Assert::AreEqual('A', (*i)->identify());
 		}
 
 		TEST_METHOD(OrderQueueBegin)
@@ -247,6 +247,21 @@ namespace GameTests
 			Assert::AreEqual('V', (*i)->identify());
 			++i;
 			Assert::AreEqual('P', (*i)->identify());
+		}
+
+		TEST_METHOD(CountEnemiesAndCivilians)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* x = new Viking(Side::special);
+			Warrior* y = new Paladin(Side::special);
+			Warrior* z = new MegaPaladin(Side::enemy);
+			Warrior* w = new Viking(Side::special);
+			army.addWarrior(x);
+			army.addWarrior(y);
+			army.addWarrior(z);
+			army.addWarrior(w);
+			int countEnemies = army.getSideCount(Side::special);
+			Assert::AreEqual(3, countEnemies);
 		}
 
 	};
