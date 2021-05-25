@@ -175,6 +175,8 @@ public:
 		if ((*attacker)->leftHealth() <= 0)
 			return Side::alive;
 		*/
+		std::string attackerName = (*attacker)->getName();
+		Side attackerSide = (*attacker)->getSide();
 		if ((*attacker)->getDirection() == Direction::left)
 		{
 			maxDist = std::distance(army.begin(), it);
@@ -185,22 +187,30 @@ public:
 		}
 		if ((*attacker)->getRange() <= maxDist)
 		{
-			typename std::vector<T>::iterator attacked = it + (*attacker)->getDirection() * (*attacker)->getRange();
+			int attackDirection = (*attacker)->getDirection();
+			int attackRange = (*attacker)->getRange();
+			typename std::vector<T>::iterator attacked = it + attackDirection * attackRange;
 			int attackPower = (*attacker)->getPower();
 			(*attacker)->attack(**attacked);
-			Side attackerSide = (*attacker)->getSide();
+			
 			Side attackedSide = (*attacked)->getSide();
-			std::cout << attackerSide << " " << (*attacker)->getName() << " attacks ";
-			std::cout << attackedSide << " " << (*attacked)->getName() << " for " << attackPower << " damage" << std::endl;
+			std::string attackedName = (*attacked)->getName();
+			std::cout << attackerSide << " " << attackerName << " attacks ";
+			std::cout << attackedSide << " " << attackedName << " for " << attackPower << " damage" << std::endl;
 			if ((*attacked)->leftHealth() <= 0) {
-				std::cout << (*attacked)->getSide() << " " << (*attacked)->getName() << " dies" << std::endl;
-				attacker.current = army.erase(attacked);
+				std::cout << attackedSide << " " << attackedName << " dies" << std::endl;
+				if (attackDirection == -1) {
+					attacker.current = army.erase(attacked) + attackRange - 1;
+				}
+				if (attackDirection == 1) {
+					attacker.current = army.erase(attacked) - attackRange;
+				}
 				return attackedSide;
 			}
 			
 			return Side::alive;
 		}
-		std::cout << (*attacker)->getName() << " misses" << std::endl;
+		std::cout << attackerSide << " " << attackerName << " misses" << std::endl;
 		return Side::alive;
 	}
 
@@ -221,6 +231,8 @@ public:
 		std::cout << *this;
 		for (auto i = turnBegin(); i != turnEnd(); ++i) {
 			Side s = Turn(i);
+			if (s != Side::alive)
+				std::cout << *this;
 			if (s == Side::enemy) {
 				--enemyNumber;
 				if (enemyNumber == 0) {
@@ -245,8 +257,11 @@ public:
 		int specialNumber = getSideCount(Side::special);
 		for (auto i = turnBegin(); i != turnEnd(); ++i) {
 			Side s = Turn(i);
+			if (s != Side::alive)
+				std::cout << *this;
 			if (s == Side::special) {
 				--specialNumber;
+				
 				if (specialNumber == 0) {
 					std::cout << "Player loses" << std::endl;
 					return;

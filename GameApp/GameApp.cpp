@@ -19,21 +19,14 @@ int main()
 	army.addWarrior(x);
 	army.addWarrior(y);
 	army.addWarrior(z);
-	army.deathmatch();
 	army.protect();
+	army.deathmatch();
 	for (auto i = army.turnBegin(); i != army.turnEnd(); ++i)
 	{
 		std::cout << (*i)->identify() << std::endl;
 	}
-	std::cout << army.getSideCount(player) << std::endl;
-	std::cout << army.getSideCount(enemy) << std::endl;
 	std::cout << army.showFieldForChoosing();
 	std::cout << army;
-	std::vector<int> vect (4, 7);
-	auto bg = vect.begin();
-	++bg;
-	auto nbg = vect.erase(bg);
-	++nbg;
 	//delete y, z;
 	//Statistics s;
 	//s = x->getStats();
