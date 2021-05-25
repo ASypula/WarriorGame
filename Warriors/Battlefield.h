@@ -171,8 +171,10 @@ public:
 		typename std::vector<T>::iterator it = attacker.getVectIter();
 		int maxDist = 0;
 		//Jeœli nie usuwamy martwych wojowników
+		/*
 		if ((*attacker)->leftHealth() <= 0)
 			return Side::alive;
+		*/
 		if ((*attacker)->getDirection() == Direction::left)
 		{
 			maxDist = std::distance(army.begin(), it);
@@ -192,8 +194,8 @@ public:
 			std::cout << attackedSide << " " << (*attacked)->getName() << " for " << attackPower << " damage" << std::endl;
 			if ((*attacked)->leftHealth() <= 0) {
 				std::cout << (*attacked)->getSide() << " " << (*attacked)->getName() << " dies" << std::endl;
+				attacker.current = army.erase(attacked);
 				return attackedSide;
-				//army.erase(attacked);		//jeœli usuwamy wojowników jak umieraj¹  //jeœli chcemy go usuwaæ wystêpuj¹ problemy z przesuniêciem iteratora, wiêc na razie testujê bez usuwania
 			}
 			
 			return Side::alive;

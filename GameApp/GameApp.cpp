@@ -29,6 +29,11 @@ int main()
 	std::cout << army.getSideCount(enemy) << std::endl;
 	std::cout << army.showFieldForChoosing();
 	std::cout << army;
+	std::vector<int> vect (4, 7);
+	auto bg = vect.begin();
+	++bg;
+	auto nbg = vect.erase(bg);
+	++nbg;
 	//delete y, z;
 	//Statistics s;
 	//s = x->getStats();
