@@ -290,6 +290,8 @@ public:
 	{
 		std::stringstream ss;
 		std::string colour;
+		if (army.empty())
+			return "";
 		auto warrior = army.begin();
 		if ((*warrior)->getSide() == Side::special)
 			colour = "37m";

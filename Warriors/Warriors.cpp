@@ -22,7 +22,7 @@ std::ostream& operator<< (std::ostream& os, Warrior const& warrior)
 	os << std::left << "Statistics for warrior " << warrior.name<<"\n";
 	os << std::setw(15) << "Statistic" << std::setw(10) << "Value" << "\n";
 	os << std::setw(15) << "Identifier" << std::setw(10) << warrior.identity << "\n";
-	os<< std::setw(15) << "Health" << std::setw(10) << warrior.health << "\n";
+	os << std::setw(15) << "Health" << std::setw(10) << warrior.health << "\n";
 	os << std::setw(15) << "Power" << std::setw(10) << warrior.power << "\n";
 	os << std::setw(15) << "Initiative" << std::setw(10) << warrior.initiative << "\n";
 	os << std::setw(15) << "Range" << std::setw(10) << warrior.range << "\n";

@@ -34,6 +34,9 @@ template <typename T> void displayWarriorList() {
 
 template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlacementsLeft, Side s = Side::player) {
 	std::string userInput;
+	std::cout << "\"L\" or \"List\" - display warrior list\n*warrior name* or *warrior name first letter* - choose warrior\n";
+	std::cout << std::endl << army.fieldForChoosing();
+	std::cout << "Warriors left to place: " << warriorPlacementsLeft << std::endl << std::endl;
 	bool warriorChosen = false;
 	while (!warriorChosen) {
 		std::getline(std::cin, userInput);
@@ -76,6 +79,20 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 						int i = 0;
 						try {
 							i = stoi(warriorOptions);
+							if ((army.size() == 0) && (i == 0)) {
+								T newWarrior = dynamic_cast<T>(w)->copy();
+								newWarrior->setSide(s);
+								army.addWarrior(i, newWarrior);
+								warriorChosen = true;
+								break;
+							}
+							if ((army.size() == 1) && ((i == 0) || (i == 1))) {
+								T newWarrior = dynamic_cast<T>(w)->copy();
+								newWarrior->setSide(s);
+								army.addWarrior(i, newWarrior);
+								warriorChosen = true;
+								break;
+							}
 							if ((i > 0) && (i < army.size())) {
 								T newWarrior = dynamic_cast<T>(w)->copy();
 								newWarrior->setSide(s);
@@ -97,9 +114,6 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 template <typename T> void managePlayersTeam(Battlefield<T> & army, int maxWarriorsNumber) {
 	int warriorPlacementsLeft = maxWarriorsNumber;
 	while (warriorPlacementsLeft != 0) {
-		std::cout << "\"L\" or \"List\" - display warrior list\n*warrior name* or *warrior name first letter* - choose warrior\n";
-		std::cout << std::endl << army.fieldForChoosing();
-		std::cout << "Warriors left to place: " << warriorPlacementsLeft << std::endl << std::endl;
 		placeWarrior(army, warriorPlacementsLeft);
 		system("CLS");
 		--warriorPlacementsLeft;
@@ -110,12 +124,43 @@ template <typename T> void managePlayersTeam(Battlefield<T> & army, int maxWarri
 
 
 
+template <typename T> void battleMode(Battlefield<T>& army) {
+	std::string teamChoice;
+	int warriorPlacementsLeft = 99;
+	while (true) {
+		std::cout << "\"Enemy\" or \"E\"- place enemy warrior" << std::endl;
+		std::cout << "\"Player\" or \"P\"- place ally warrior" << std::endl;
+		std::cout << "\"Fight\" or \"F\"- begin battle" << std::endl;
+		std::cout << std::endl << army.fieldForChoosing() << std::endl << std::endl;
+		std::cin >> teamChoice;
+		if (!std::cin)
+			break;
+		if ((teamChoice == "P") || (teamChoice == "Player")) {
+			std::cout << std::flush;
+			system("CLS");
+			placeWarrior(army, warriorPlacementsLeft, Side::player);
+		}
+			
+		if ((teamChoice == "E") || (teamChoice == "Enemy")) {
+			std::cout << std::flush;
+			system("CLS");
+			placeWarrior(army, warriorPlacementsLeft, Side::enemy);
+		}
+		if ((teamChoice == "F") || (teamChoice == "Fight"))
+			break;
+		system("CLS");
+	}
+	system("CLS");
+}
+
+
 int main()
 {
 	std::cout << "Placeholder Game Name" << std::endl << std::endl;
 	std::cout << "Choose puzzle" << std::endl;
 	std::cout << "1. Civillian protection" << std::endl;
 	std::cout << "2. Enemy raid" << std::endl;
+	std::cout << "3. Battle mode" << std::endl << std::endl;
 	int puzzleNumber;
 	while (true) {
 		char c;
@@ -126,7 +171,7 @@ int main()
 			continue;
 		std::cin.unget();
 		std::cin >> puzzleNumber;
-		if (puzzleNumber > 2) 
+		if (puzzleNumber > 3) 
 			continue;
 		else 
 			break;
@@ -157,6 +202,12 @@ int main()
 		managePlayersTeam<Warrior*>(army, 2);
 		army.deathmatch();
 		break;
+	}
+	case 3:
+	{
+		Battlefield<Warrior*> army;
+		battleMode(army);
+		army.deathmatch();
 	}
 	}
 	
