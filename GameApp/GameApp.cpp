@@ -35,7 +35,7 @@ template <typename T> void displayWarriorList() {
 template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlacementsLeft, Side s = Side::player) {
 	std::string userInput;
 	std::cout << "\"L\" or \"List\" - display warrior list\n*warrior name* or *warrior name first letter* - choose warrior\n";
-	std::cout << std::endl << army.fieldForChoosing();
+	std::cout << std::endl << army;
 	std::cout << "Warriors left to place: " << warriorPlacementsLeft << std::endl << std::endl;
 	bool warriorChosen = false;
 	while (!warriorChosen) {
@@ -131,7 +131,7 @@ template <typename T> void battleMode(Battlefield<T>& army) {
 		std::cout << "\"Enemy\" or \"E\"- place enemy warrior" << std::endl;
 		std::cout << "\"Player\" or \"P\"- place ally warrior" << std::endl;
 		std::cout << "\"Fight\" or \"F\"- begin battle" << std::endl;
-		std::cout << std::endl << army.fieldForChoosing() << std::endl << std::endl;
+		std::cout << std::endl << army << std::endl << std::endl;
 		std::cin >> teamChoice;
 		if (!std::cin)
 			break;
