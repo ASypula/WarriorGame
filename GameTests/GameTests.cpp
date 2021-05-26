@@ -324,5 +324,73 @@ namespace GameTests
 			Assert::AreEqual(civil, std::string("Alive"));
 		}
 
+		TEST_METHOD(Turn2CivilsDie)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* e1 = new Paladin(Side::enemy);
+			Warrior* c1 = new Archer(Side::special);
+			Warrior* c2 = new Archer(Side::special);
+			army.addWarrior(e1);
+			army.addWarrior(c1);
+			army.addWarrior(c2);
+			int countEnemies = army.getSideCount(Side::enemy);
+			int countCivils = army.getSideCount(Side::special);
+			Assert::AreEqual(1, countEnemies);
+			Assert::AreEqual(2, countCivils);
+			std::string deadCivil1;
+			std::string deadCivil2;
+			auto i = army.turnBegin();
+			Side s = army.Turn(i);
+			if (s == Side::special)
+				deadCivil1 = "Special";
+			int countEnemiesAfter1 = army.getSideCount(Side::enemy);
+			int countCivilsAfter1 = army.getSideCount(Side::special);
+			Assert::AreEqual(1, countEnemiesAfter1);
+			Assert::AreEqual(1, countCivilsAfter1);
+			Assert::AreEqual(deadCivil1, std::string("Special"));
+			Side s2 = army.Turn(i);
+			if (s2 == Side::special)
+				deadCivil2 = "Special";
+			int countEnemiesAfter2 = army.getSideCount(Side::enemy);
+			int countCivilsAfter2 = army.getSideCount(Side::special);
+			Assert::AreEqual(1, countEnemiesAfter2);
+			Assert::AreEqual(0, countCivilsAfter2);
+			Assert::AreEqual(deadCivil2, std::string("Special"));
+		}
+
+		TEST_METHOD(TurnCivilAndEnemyDies)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* p1 = new Paladin(Side::player);
+			Warrior* c1 = new Archer(Side::special);
+			Warrior* e1 = new Archer(Side::enemy);
+			army.addWarrior(p1);
+			army.addWarrior(c1);
+			army.addWarrior(e1);
+			int countEnemies = army.getSideCount(Side::enemy);
+			int countCivils = army.getSideCount(Side::special);
+			Assert::AreEqual(1, countEnemies);
+			Assert::AreEqual(1, countCivils);
+			std::string deadCivil;
+			std::string deadEnemy;
+			auto i = army.turnBegin();
+			Side s = army.Turn(i);
+			if (s == Side::special)
+				deadCivil = "Special";
+			int countEnemiesAfter1 = army.getSideCount(Side::enemy);
+			int countCivilsAfter1 = army.getSideCount(Side::special);
+			Assert::AreEqual(1, countEnemiesAfter1);
+			Assert::AreEqual(0, countCivilsAfter1);
+			Assert::AreEqual(deadCivil, std::string("Special"));
+			Side s2 = army.Turn(i);
+			if (s2 == Side::enemy)
+				deadEnemy = "Enemy";
+			int countEnemiesAfter2 = army.getSideCount(Side::enemy);
+			int countCivilsAfter2 = army.getSideCount(Side::special);
+			Assert::AreEqual(0, countEnemiesAfter2);
+			Assert::AreEqual(0, countCivilsAfter2);
+			Assert::AreEqual(deadEnemy, std::string("Enemy"));
+		}
+
 	};
 }

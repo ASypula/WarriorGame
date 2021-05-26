@@ -254,18 +254,22 @@ public:
 	void protect()
 	{
 		std::cout << *this;
-		int specialNumber = getSideCount(Side::special);
+		//int specialNumber = getSideCount(Side::special);
 		for (auto i = turnBegin(); i != turnEnd(); ++i) {
 			Side s = Turn(i);
 			if (s != Side::alive)
 				std::cout << *this;
 			if (s == Side::special) {
-				--specialNumber;
+				std::cout << "Player loses" << std::endl;
+				return;
+				//--specialNumber;
 			}
+			/*
 			if (specialNumber == 0) {
 				std::cout << "Player loses" << std::endl;
 				return;
 			}
+			*/
 		}
 		std::cout << "Player wins" << std::endl;
 	}
