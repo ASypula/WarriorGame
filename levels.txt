@@ -17,6 +17,6 @@ Poziom dla stack <warrior>
 	Plansza:
 		P P A V A
 	Jednostki do ustawienia:
-		P V
+		P V V
 	Rozwiązanie:
-		P P V A V P A
+		P P V A V V P A
