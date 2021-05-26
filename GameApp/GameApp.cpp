@@ -68,7 +68,7 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 					if ((warriorOptions == "q")) {
 						system("CLS");
 						std::cout << "\"L\" or \"List\" - display warrior list\n*warrior name* or *warrior name first letter* - choose warrior to place\n";
-						std::cout << std::endl << army.fieldForChoosing();
+						std::cout << std::endl << army;
 						std::cout << "Warriors left to place: " << warriorPlacementsLeft << std::endl << std::endl;
 						break;
 					}
