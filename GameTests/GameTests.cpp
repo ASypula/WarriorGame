@@ -61,7 +61,7 @@ namespace GameTests
 			Battlefield<Warrior*> army;
 			Warrior* x = new Viking(Side::special);
 			Warrior* y = new Archer(Side::special);
-			Warrior* z = new MegaPaladin(Side::special);
+			Warrior* z = new HolyPaladin(Side::special);
 			army.addWarrior(x);
 			army.addWarrior(y);
 			army.addWarrior(z);
@@ -79,16 +79,16 @@ namespace GameTests
 			Battlefield<Warrior*> army;
 			Warrior* x = new Viking();
 			Warrior* y = new Archer();
-			Warrior* z = new MegaPaladin();
+			Warrior* z = new HolyPaladin();
 			army.addWarrior(x);
 			army.addWarrior(y);
 			army.addWarrior(z);
-			ss1 = army.showFieldForChoosing();
+			ss1 = army.fieldForChoosing();
 			ss2 << "\x1B[31;1m" << std::left << "V  " << "\033[0m";
 			ss2 << std::left << "1  ";
 			ss2 << "\x1B[31;1m" << std::left << "A  " << "\033[0m";
 			ss2 << std::left << "2  ";
-			ss2 << "\x1B[31;1m" << std::left << "M  " << "\033[0m" << "\n";
+			ss2 << "\x1B[31;1m" << std::left << "H  " << "\033[0m" << "\n";
 			Assert::AreEqual(ss1, ss2.str());
 		}
 
@@ -126,7 +126,7 @@ namespace GameTests
 			army.addWarrior(y);
 			army.addWarrior(z);
 			army.addWarrior(w);
-			ss1 = army.showFieldForChoosing();
+			ss1 = army.fieldForChoosing();
 			ss2 << "\x1B[31;1m" << std::left << "A  " << "\033[0m";
 			ss2 << std::left << "1  ";
 			ss2 << "\x1B[31;1m" << std::left << "A  " << "\033[0m";
@@ -184,7 +184,7 @@ namespace GameTests
 			Battlefield<Warrior*> army;
 			Warrior* x = new Viking();
 			Warrior* y = new Paladin();
-			Warrior* z = new MegaPaladin();
+			Warrior* z = new HolyPaladin();
 			Warrior* a = new Archer();
 			army.addWarrior(x);
 			army.addWarrior(y);
@@ -193,21 +193,21 @@ namespace GameTests
 			auto i = army.turnBegin();
 			Assert::AreEqual('P', (*i)->identify());
 			++i;
-			Assert::AreEqual('M', (*i)->identify());
+			Assert::AreEqual('H', (*i)->identify());
 		}
 		TEST_METHOD(WarIteratorIncrement)
 		{
 			Battlefield<Warrior*> army;
 			Warrior* x = new Archer();
 			Warrior* y = new Viking();
-			Warrior* z = new MegaPaladin();
+			Warrior* z = new HolyPaladin();
 			Warrior* a = new Archer();
 			army.addWarrior(x);
 			army.addWarrior(y);
 			army.addWarrior(z);
 			army.addWarrior(a);
 			auto i = army.turnBegin();
-			Assert::AreEqual('M', (*i)->identify());
+			Assert::AreEqual('H', (*i)->identify());
 			++i;
 			Assert::AreEqual('A', (*i)->identify());
 			++i;
@@ -219,7 +219,7 @@ namespace GameTests
 			Battlefield<Warrior*> army;
 			Warrior* x = new Viking();
 			Warrior* y = new Paladin();
-			Warrior* z = new MegaPaladin();
+			Warrior* z = new HolyPaladin();
 			army.addWarrior(x);
 			army.addWarrior(y);
 			army.addWarrior(z);
@@ -232,7 +232,7 @@ namespace GameTests
 			Battlefield<Warrior*> army;
 			Warrior* x = new Viking();
 			Warrior* y = new Paladin();
-			Warrior* z = new MegaPaladin();
+			Warrior* z = new HolyPaladin();
 			army.addWarrior(x);
 			army.addWarrior(y);
 			army.addWarrior(z);
@@ -247,7 +247,7 @@ namespace GameTests
 			Battlefield<Warrior*> army;
 			Warrior* x = new Viking(Side::special);
 			Warrior* y = new Paladin(Side::special);
-			Warrior* z = new MegaPaladin(Side::enemy);
+			Warrior* z = new HolyPaladin(Side::enemy);
 			Warrior* w = new Viking(Side::special);
 			army.addWarrior(x);
 			army.addWarrior(y);
@@ -264,8 +264,8 @@ namespace GameTests
 			Battlefield<Warrior*> army;
 			Warrior* x = new Viking(Side::special);
 			Warrior* y = new Paladin(Side::special);
-			Warrior* z = new MegaPaladin(Side::player);
-			Warrior* q = new MegaPaladin(Side::player);
+			Warrior* z = new HolyPaladin(Side::player);
+			Warrior* q = new HolyPaladin(Side::player);
 			Warrior* w = new Viking(Side::special);
 			army.addWarrior(x);
 			army.addWarrior(y);
