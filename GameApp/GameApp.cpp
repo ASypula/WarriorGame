@@ -199,7 +199,7 @@ int main()
 		army.addWarrior(new Archer());
 		army.addWarrior(new Viking());
 		army.addWarrior(new Archer());
-		managePlayersTeam<Warrior*>(army, 2);
+		managePlayersTeam<Warrior*>(army, 3);
 		army.deathmatch();
 		break;
 	}
