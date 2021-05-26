@@ -358,7 +358,7 @@ namespace GameTests
 			Assert::AreEqual(deadCivil2, std::string("Special"));
 		}
 
-		TEST_METHOD(TurnCivilAndEnemyDies)
+		TEST_METHOD(Protect1)
 		{
 			Battlefield<Warrior*> army;
 			Warrior* p1 = new Paladin(Side::player);
@@ -367,30 +367,90 @@ namespace GameTests
 			army.addWarrior(p1);
 			army.addWarrior(c1);
 			army.addWarrior(e1);
-			int countEnemies = army.getSideCount(Side::enemy);
 			int countCivils = army.getSideCount(Side::special);
-			Assert::AreEqual(1, countEnemies);
 			Assert::AreEqual(1, countCivils);
-			std::string deadCivil;
-			std::string deadEnemy;
-			auto i = army.turnBegin();
-			Side s = army.Turn(i);
-			if (s == Side::special)
-				deadCivil = "Special";
-			int countEnemiesAfter1 = army.getSideCount(Side::enemy);
-			int countCivilsAfter1 = army.getSideCount(Side::special);
-			Assert::AreEqual(1, countEnemiesAfter1);
-			Assert::AreEqual(0, countCivilsAfter1);
-			Assert::AreEqual(deadCivil, std::string("Special"));
-			Side s2 = army.Turn(i);
-			if (s2 == Side::enemy)
-				deadEnemy = "Enemy";
-			int countEnemiesAfter2 = army.getSideCount(Side::enemy);
-			int countCivilsAfter2 = army.getSideCount(Side::special);
-			Assert::AreEqual(0, countEnemiesAfter2);
-			Assert::AreEqual(0, countCivilsAfter2);
-			Assert::AreEqual(deadEnemy, std::string("Enemy"));
+			Assert::AreEqual(army[0]->identify(), 'P');
+			Assert::AreEqual(army[1]->identify(), 'C');
+			Assert::AreEqual(army[2]->identify(), 'A');
+			army.protect();
+			int countCivilsAfter = army.getSideCount(Side::special);
+			Assert::AreEqual(0, countCivilsAfter);
+			Assert::AreEqual(army[0]->identify(), 'P');
+			Assert::AreEqual(army[1]->identify(), 'A');
 		}
 
+		TEST_METHOD(Protect2)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* e1 = new Viking(Side::enemy);
+			Warrior* p1 = new Viking(Side::player);
+			Warrior* c1 = new Archer(Side::special);
+			army.addWarrior(e1);
+			army.addWarrior(p1);
+			army.addWarrior(c1);
+			int countCivils = army.getSideCount(Side::special);
+			Assert::AreEqual(1, countCivils);
+			Assert::AreEqual(army[0]->identify(), 'V');
+			Assert::AreEqual(army[1]->identify(), 'V');
+			Assert::AreEqual(army[2]->identify(), 'C');
+			army.protect();
+			int countCivilsAfter = army.getSideCount(Side::special);
+			Assert::AreEqual(1, countCivilsAfter);
+			Assert::AreEqual(army[0]->identify(), 'V');
+			Assert::AreEqual(army[1]->identify(), 'C');
+		}
+
+		TEST_METHOD(Protect3)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* e1 = new Viking(Side::enemy);
+			Warrior* e2 = new Paladin(Side::enemy);
+			Warrior* p1 = new Viking(Side::player);
+			Warrior* c1 = new Archer(Side::special);
+			army.addWarrior(e1);
+			army.addWarrior(e2);
+			army.addWarrior(p1);
+			army.addWarrior(c1);
+			int countCivils = army.getSideCount(Side::special);
+			Assert::AreEqual(1, countCivils);
+			Assert::AreEqual(army[0]->identify(), 'V');
+			Assert::AreEqual(army[1]->identify(), 'P');
+			Assert::AreEqual(army[2]->identify(), 'V');
+			Assert::AreEqual(army[3]->identify(), 'C');
+			army.protect();
+			int countCivilsAfter = army.getSideCount(Side::special);
+			Assert::AreEqual(1, countCivilsAfter);
+			Assert::AreEqual(army[0]->identify(), 'V');
+			Assert::AreEqual(army[1]->identify(), 'V');
+			Assert::AreEqual(army[2]->identify(), 'C');
+		}
+
+		TEST_METHOD(Protect4)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* e1 = new Viking(Side::enemy);
+			Warrior* e2 = new Paladin(Side::enemy);
+			Warrior* p1 = new Archer(Side::player);
+			Warrior* c1 = new Archer(Side::special);
+			Warrior* e3 = new Viking(Side::enemy);
+			army.addWarrior(e1);
+			army.addWarrior(e2);
+			army.addWarrior(p1);
+			army.addWarrior(c1);
+			army.addWarrior(e3);
+			Assert::AreEqual(army[0]->identify(), 'V');
+			Assert::AreEqual(army[1]->identify(), 'P');
+			Assert::AreEqual(army[2]->identify(), 'A');
+			Assert::AreEqual(army[3]->identify(), 'C');
+			Assert::AreEqual(army[4]->identify(), 'V');
+			int countCivils = army.getSideCount(Side::special);
+			Assert::AreEqual(1, countCivils);
+			army.protect();
+			int countCivilsAfter = army.getSideCount(Side::special);
+			Assert::AreEqual(0, countCivilsAfter);
+			Assert::AreEqual(army[0]->identify(), 'V');
+			Assert::AreEqual(army[1]->identify(), 'P');
+			Assert::AreEqual(army[2]->identify(), 'V');
+		}
 	};
 }
