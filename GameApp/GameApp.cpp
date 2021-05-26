@@ -68,7 +68,7 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 					if ((warriorOptions == "q")) {
 						system("CLS");
 						std::cout << "\"L\" or \"List\" - display warrior list\n*warrior name* or *warrior name first letter* - choose warrior to place\n";
-						std::cout << std::endl << army.fieldForChoosing();
+						std::cout << std::endl << army;
 						std::cout << "Warriors left to place: " << warriorPlacementsLeft << std::endl << std::endl;
 						break;
 					}
@@ -199,7 +199,7 @@ int main()
 		army.addWarrior(new Archer());
 		army.addWarrior(new Viking());
 		army.addWarrior(new Archer());
-		managePlayersTeam<Warrior*>(army, 2);
+		managePlayersTeam<Warrior*>(army, 3);
 		army.deathmatch();
 		break;
 	}
