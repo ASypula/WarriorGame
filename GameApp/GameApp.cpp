@@ -184,7 +184,7 @@ int main()
 		Battlefield<Paladin*> army;
 		army.addWarrior(new HolyPaladin());
 		army.addWarrior(new HolyPaladin(Side::special));
-		army.addWarrior(new Paladin());
+		army.addWarrior(new HolyPaladin());
 		army.addWarrior(new Paladin());
 		army.addWarrior(new Paladin(Side::special));
 		managePlayersTeam<Paladin*>(army, 2);
