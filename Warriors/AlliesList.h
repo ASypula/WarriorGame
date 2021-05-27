@@ -1,18 +1,18 @@
 #pragma once
 #include <iostream>
+#include "Warriors.h"
 
-template<typename T>
 struct soldier
 {
-	T* type;
+	Warrior* type;
 	int amount;
 };
 
-template <typename T>
+
 class AlliesList
 {
 public:
-	std::vector<soldier<T>> soldiers;
+	std::vector<soldier> soldiers;
 	~AlliesList()
 	{
 		for (auto s : this->soldiers)
@@ -20,8 +20,11 @@ public:
 			delete s.type;
 		}
 	}
-	addUnit(T* unit, int quantity)
+	void addUnit(Warrior* unit, int quantity)
 	{
-		this->soldiers
+		soldier s;
+		s.type = unit;
+		s.amount = quantity;
+		this->soldiers.push_back(s);
 	}
 };
