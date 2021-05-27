@@ -87,6 +87,7 @@ Archer::Archer(Archer& a)
 
 void Archer::speciality()
 {
+	std::cout << "Archer uses his speciality and heals himself." << std::endl;
 	this->health += 1;
 }
 

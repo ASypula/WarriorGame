@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "../Warriors/Warriors.h"
 #include "../Warriors/Warriors.cpp"
 #include "../Warriors/Battlefield.h"
@@ -22,9 +23,9 @@ template <typename T> void displayWarriorList(AlliesList& playersWarriors) {
 		if (!isSubclass<T>(w) or so.amount < 1)
 			continue;
 		if (w->getDirection() == -1)
-			leftAttack.append(w->getName()).append(", ");
+			leftAttack.append(w->getName()).append(": ").append(std::to_string(so.amount)).append(", ");
 		if (w->getDirection() == 1)
-			rightAttack.append(w->getName()).append(", ");
+			rightAttack.append(w->getName()).append(": ").append(std::to_string(so.amount)).append(", ");
 	}
 	leftAttack.pop_back();
 	leftAttack.pop_back();
