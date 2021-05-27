@@ -154,6 +154,7 @@
     <ClCompile Include="Warriors.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AlliesList.h" />
     <ClInclude Include="Battlefield.h" />
     <ClInclude Include="Warriors.h" />
   </ItemGroup>

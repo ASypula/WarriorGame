@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
-
+#define defSide Side::enemy
 
 enum Direction {left = -1, right = 1};
 enum Side {alive, player, enemy, special};
@@ -67,7 +67,7 @@ std::ostream& operator<< (std::ostream& os, Warrior const& warrior);
 class Archer : public Warrior
 {
 public:
-	Archer(Side s);
+	Archer(Side s = defSide);
 	Archer(Archer& a);
 	Archer* copy() { return new Archer(side); };
 	void speciality();
@@ -77,7 +77,7 @@ public:
 class Paladin : public Warrior
 {
 public:
-	Paladin(Side s);
+	Paladin(Side s = defSide);
 	Paladin(Paladin& p);
 	Paladin* copy() { return new Paladin(side); };
 	void speciality() {};
@@ -87,7 +87,7 @@ public:
 class HolyPaladin : public Paladin
 {
 public:
-	HolyPaladin(Side s);
+	HolyPaladin(Side s = defSide);
 	HolyPaladin(HolyPaladin& hp);
 	Paladin* copy() { return new HolyPaladin(side); };
 	void speciality() {};
@@ -97,7 +97,7 @@ public:
 class Viking : public Warrior
 {
 public:
-	Viking(Side s);
+	Viking(Side s = defSide);
 	Viking(Viking& v);
 	Viking* copy() { return new Viking(side); };
 	void speciality() {};

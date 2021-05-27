@@ -2,6 +2,7 @@
 #include <vector>
 #include <iostream>
 #include <sstream>
+#include <iomanip>
 #include "Warriors.h"
 
 template <typename T>

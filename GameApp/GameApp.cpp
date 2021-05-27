@@ -156,7 +156,6 @@ template <typename T> void battleMode(Battlefield<T>& army, std::vector<T>& play
 
 int main()
 {
-	int* a = new int[2];
 	std::cout << "Placeholder Game Name" << std::endl << std::endl;
 	std::cout << "Choose puzzle" << std::endl;
 	std::cout << "1. Civillian protection" << std::endl;

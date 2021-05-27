@@ -36,7 +36,7 @@ std::ostream& operator<< (std::ostream& os, Warrior const& warrior)
 }
 
 
-Archer::Archer(Side s = defSide)
+Archer::Archer(Side s)
 {
 	this->health = 1;
 	this->initiative = 2;
@@ -82,7 +82,7 @@ void Archer::speciality()
 }
 
 
-Paladin::Paladin(Side s = defSide)
+Paladin::Paladin(Side s)
 {
 	this->health = 2;
 	this->initiative = 3;
@@ -122,7 +122,7 @@ void Paladin::isSpecial()
 	}
 }
 
-HolyPaladin::HolyPaladin(Side s = defSide) : Paladin(s)
+HolyPaladin::HolyPaladin(Side s) : Paladin(s)
 {
 
 	this->identity = 'H';
@@ -147,7 +147,7 @@ HolyPaladin::HolyPaladin(HolyPaladin& hp)
 }
 
 
-Viking::Viking(Side s = defSide)
+Viking::Viking(Side s)
 {
 	this->health = 2;
 	this->initiative = 1;

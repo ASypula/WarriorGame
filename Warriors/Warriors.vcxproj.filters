@@ -26,5 +26,8 @@
     <ClInclude Include="Battlefield.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AlliesList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
