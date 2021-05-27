@@ -19,7 +19,7 @@ template <typename T> void displayWarriorList(AlliesList& playersWarriors) {
 	std::string rightAttack = "Right attacking warriors: ";
 	for (auto so : playersWarriors.soldiers) {
 		Warrior* w = so.type;
-		if (!isSubclass<T>(w))
+		if (!isSubclass<T>(w) or so.amount < 1)
 			continue;
 		if (w->getDirection() == -1)
 			leftAttack.append(w->getName()).append(", ");
@@ -49,9 +49,9 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 			displayWarriorList<T>(playersWarriors);
 			std::cout << std::endl;
 		}
-		for (auto so : playersWarriors.soldiers) {
-			Warrior* w = so.type;
-			if (!isSubclass<T>(w))
+		for (auto so = playersWarriors.soldiers.begin(); so != playersWarriors.soldiers.end(); ++so) {
+			Warrior* w = so->type;
+			if (!isSubclass<T>(w) or so->amount < 1)
 				continue;
 			std::string shortcut;
 			shortcut.push_back(w->identify());
@@ -86,6 +86,7 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 								T newWarrior = dynamic_cast<T>(w)->copy();
 								newWarrior->setSide(s);
 								army.addWarrior(i, newWarrior);
+								so->amount--;
 								warriorChosen = true;
 								break;
 							}
@@ -93,6 +94,7 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 								T newWarrior = dynamic_cast<T>(w)->copy();
 								newWarrior->setSide(s);
 								army.addWarrior(i, newWarrior);
+								so->amount--;
 								warriorChosen = true;
 								break;
 							}
@@ -100,6 +102,7 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 								T newWarrior = dynamic_cast<T>(w)->copy();
 								newWarrior->setSide(s);
 								army.addWarrior(i, newWarrior);
+								so->amount--;
 								warriorChosen = true;
 								break;
 							}
