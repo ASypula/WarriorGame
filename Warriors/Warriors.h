@@ -41,6 +41,7 @@ public:
 	Warrior() { side = Side::special; };
 	Warrior(Side s) { side = s; };	//to decide whether it is a friend or an enemy
 	Warrior(Warrior& w) { side = w.side; };
+	std::string specialPower = "None";
 	virtual ~Warrior() {};
 	int leftHealth() { return this->health; };
 	int getInitiative() { return this->initiative; };
@@ -70,6 +71,7 @@ public:
 	Archer(Side s = defSide);
 	Archer(Archer& a);
 	Archer* copy() { return new Archer(side); };
+	void attack(Warrior& w);
 	void speciality();
 	void isSpecial();
 };

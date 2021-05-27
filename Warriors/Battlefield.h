@@ -201,11 +201,11 @@ public:
 			if ((*attacked)->leftHealth() <= 0) {
 				std::cout << attackedSide << " " << attackedName << " dies" << std::endl;
 				if (attackDirection == -1) {
-					delete* attacked;
+					delete *attacked;
 					attacker.current = army.erase(attacked) + attackRange - 1;
 				}
 				if (attackDirection == 1) {
-					delete* attacked;
+					delete *attacked;
 					attacker.current = army.erase(attacked) - attackRange;
 				}
 				return attackedSide;

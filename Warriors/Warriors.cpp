@@ -32,6 +32,7 @@ std::ostream& operator<< (std::ostream& os, Warrior const& warrior)
 	else
 		dir = "right";
 	os << std::setw(15) << "Direction" << std::setw(10) << dir << "\n";
+	os << std::setw(15) << "Speciality" << std::setw(10) << warrior.specialPower << "\n";
 	return os;
 }
 
@@ -46,8 +47,15 @@ Archer::Archer(Side s)
 	this->range = 2;
 	this->direction = Direction::left;
 	side = s;
+	this->specialPower = "Heals himself by 1 point when he attacks.";
 	this->isSpecial();
 }
+void Archer::attack(Warrior& w) 
+{ 
+	w.wound(power); 
+	this->speciality();
+}
+
 
 void Archer::isSpecial()
 {
@@ -71,6 +79,7 @@ Archer::Archer(Archer& a)
 	this->name = a.name;
 	this->range = a.range;
 	this->direction = a.direction;
+	this->specialPower = a.specialPower;
 	side = a.side;
 	this->isSpecial();
 }

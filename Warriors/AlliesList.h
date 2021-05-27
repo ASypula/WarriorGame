@@ -15,6 +15,7 @@ public:
 	std::vector<soldier> soldiers;
 	~AlliesList()
 	{
+		std::cout << "auf Wiederzehn" << std::endl;;
 		for (auto s : this->soldiers)
 		{
 			delete s.type;
