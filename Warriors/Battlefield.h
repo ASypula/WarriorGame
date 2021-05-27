@@ -11,7 +11,7 @@ class Battlefield
 public:
 	~Battlefield()
 	{
-		//std::cout << "Adios" << std::endl;
+		std::cout << "Adios" << std::endl;
 		for (auto i = army.rbegin(); i != army.rend(); ++i)
 		{
 			delete *i;
@@ -200,9 +200,11 @@ public:
 			if ((*attacked)->leftHealth() <= 0) {
 				std::cout << attackedSide << " " << attackedName << " dies" << std::endl;
 				if (attackDirection == -1) {
+					delete* attacked;
 					attacker.current = army.erase(attacked) + attackRange - 1;
 				}
 				if (attackDirection == 1) {
+					delete* attacked;
 					attacker.current = army.erase(attacked) - attackRange;
 				}
 				return attackedSide;

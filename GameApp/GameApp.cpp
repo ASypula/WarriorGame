@@ -2,7 +2,7 @@
 #include "../Warriors/Warriors.h"
 #include "../Warriors/Warriors.cpp"
 #include "../Warriors/Battlefield.h"
-std::vector<Warrior*> classRepresentationsVector = {new Archer(), new Paladin(), new HolyPaladin(), new Viking()};
+//std::vector<Warrior*> classRepresentationsVector = {new Archer(), new Paladin(), new HolyPaladin(), new Viking()};
 
 template <typename T> bool isSubclass(Warrior* w) {
 	if (dynamic_cast<T>(w)) {
@@ -12,11 +12,11 @@ template <typename T> bool isSubclass(Warrior* w) {
 }
 
 
-template <typename T> void displayWarriorList() {
+template <typename T> void displayWarriorList(std::vector<T>& playersWarriors) {
 	std::cout << "Warrior list" << std::endl << std::endl;
 	std::string leftAttack = "Left attacking warriors: ";
 	std::string rightAttack = "Right attacking warriors: ";
-	for (auto w : classRepresentationsVector) {
+	for (auto w : playersWarriors) {
 		if (!isSubclass<T>(w))
 			continue;
 		if (w->getDirection() == -1)
@@ -32,7 +32,7 @@ template <typename T> void displayWarriorList() {
 }
 
 
-template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlacementsLeft, Side s = Side::player) {
+template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlacementsLeft, std::vector<T>& playersWarriors, Side s = Side::player) {
 	std::string userInput;
 	std::cout << "\"L\" or \"List\" - display warrior list\n*warrior name* or *warrior name first letter* - choose warrior to place\n";
 	std::cout << std::endl << army;
@@ -44,10 +44,10 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 			break;
 		if ((userInput == "List") || (userInput == "L")) {
 			std::cout << std::endl;
-			displayWarriorList<T>();
+			displayWarriorList<T>(playersWarriors);
 			std::cout << std::endl;
 		}
-		for (auto w : classRepresentationsVector) {
+		for (auto w : playersWarriors) {
 			if (!isSubclass<T>(w))
 				continue;
 			std::string shortcut;
@@ -111,10 +111,10 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 }
 
 
-template <typename T> void managePlayersTeam(Battlefield<T> & army, int maxWarriorsNumber) {
+template <typename T> void managePlayersTeam(Battlefield<T> & army, int maxWarriorsNumber, std::vector<T>& playersWarriors) {
 	int warriorPlacementsLeft = maxWarriorsNumber;
 	while (warriorPlacementsLeft != 0) {
-		placeWarrior(army, warriorPlacementsLeft);
+		placeWarrior(army, warriorPlacementsLeft, playersWarriors);
 		system("CLS");
 		--warriorPlacementsLeft;
 	}
@@ -124,7 +124,7 @@ template <typename T> void managePlayersTeam(Battlefield<T> & army, int maxWarri
 
 
 
-template <typename T> void battleMode(Battlefield<T>& army) {
+template <typename T> void battleMode(Battlefield<T>& army, std::vector<T>& playersWarriors) {
 	std::string teamChoice;
 	int warriorPlacementsLeft = 99;
 	while (true) {
@@ -138,13 +138,13 @@ template <typename T> void battleMode(Battlefield<T>& army) {
 		if ((teamChoice == "P") || (teamChoice == "Player")) {
 			std::cout << std::flush;
 			system("CLS");
-			placeWarrior(army, warriorPlacementsLeft, Side::player);
+			placeWarrior(army, warriorPlacementsLeft, playersWarriors, Side::player);
 		}
 			
 		if ((teamChoice == "E") || (teamChoice == "Enemy")) {
 			std::cout << std::flush;
 			system("CLS");
-			placeWarrior(army, warriorPlacementsLeft, Side::enemy);
+			placeWarrior(army, warriorPlacementsLeft, playersWarriors, Side::enemy);
 		}
 		if ((teamChoice == "F") || (teamChoice == "Fight"))
 			break;
@@ -156,6 +156,7 @@ template <typename T> void battleMode(Battlefield<T>& army) {
 
 int main()
 {
+	int* a = new int[2];
 	std::cout << "Placeholder Game Name" << std::endl << std::endl;
 	std::cout << "Choose puzzle" << std::endl;
 	std::cout << "1. Civillian protection" << std::endl;
@@ -187,7 +188,12 @@ int main()
 		army.addWarrior(new HolyPaladin());
 		army.addWarrior(new Paladin());
 		army.addWarrior(new Paladin(Side::special));
-		managePlayersTeam<Paladin*>(army, 2);
+		std::vector<Paladin*> playersWarriors = {new Paladin(), new HolyPaladin()};
+		managePlayersTeam<Paladin*>(army, 2, playersWarriors);
+		for (auto w : playersWarriors)
+		{
+			delete w;
+		}
 		army.protect();
 		break;
 	}
@@ -199,14 +205,24 @@ int main()
 		army.addWarrior(new Archer());
 		army.addWarrior(new Viking());
 		army.addWarrior(new Archer());
-		managePlayersTeam<Warrior*>(army, 3);
+		std::vector<Warrior*> playersWarriors = { new Archer(), new Paladin(), new HolyPaladin(), new Viking() };
+		managePlayersTeam<Warrior*>(army, 3, playersWarriors);
+		for (auto w : playersWarriors)
+		{
+			delete w;
+		}
 		army.deathmatch();
 		break;
 	}
 	case 3:
 	{
 		Battlefield<Warrior*> army;
-		battleMode(army);
+		std::vector<Warrior*> playersWarriors = { new Archer(), new Paladin(), new HolyPaladin(), new Viking() };
+		battleMode(army, playersWarriors);
+		for (auto w : playersWarriors)
+		{
+			delete w;
+		}
 		army.deathmatch();
 	}
 	}
