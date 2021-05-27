@@ -452,5 +452,65 @@ namespace GameTests
 			Assert::AreEqual(army[1]->identify(), 'P');
 			Assert::AreEqual(army[2]->identify(), 'V');
 		}
+
+		TEST_METHOD(Deathmatch1)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* e1 = new Viking(Side::enemy);
+			Warrior* e2 = new Paladin(Side::enemy);
+			Warrior* e3 = new Viking(Side::enemy);
+			Warrior* p1 = new Archer(Side::player);
+			army.addWarrior(e1);
+			army.addWarrior(p1);
+			army.addWarrior(e2);
+			army.addWarrior(e3);
+			Assert::AreEqual(army[0]->identify(), 'V');
+			Assert::AreEqual(army[1]->identify(), 'A');
+			Assert::AreEqual(army[2]->identify(), 'P');
+			Assert::AreEqual(army[3]->identify(), 'V');
+			Assert::AreEqual(2, army[3]->leftHealth());
+			int countPlayers = army.getSideCount(Side::player);
+			Assert::AreEqual(1, countPlayers);
+			int countEnemies = army.getSideCount(Side::enemy);
+			Assert::AreEqual(3, countEnemies);
+			army.deathmatch();
+			int countPlayersAfter = army.getSideCount(Side::player);
+			Assert::AreEqual(1, countPlayersAfter);
+			int countEnemiesAfter = army.getSideCount(Side::enemy);
+			Assert::AreEqual(2, countEnemiesAfter);
+			Assert::AreEqual(army[0]->identify(), 'V');
+			Assert::AreEqual(army[1]->identify(), 'A');
+			Assert::AreEqual(army[2]->identify(), 'V');
+			Assert::AreEqual(1, army[2]->leftHealth());
+		}
+
+		TEST_METHOD(Deathmatch2)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* p1 = new Archer(Side::player);
+			Warrior* p2 = new Archer(Side::player);
+			Warrior* p3 = new Viking(Side::player);
+			Warrior* e1 = new Paladin(Side::enemy);
+			army.addWarrior(p1);
+			army.addWarrior(p2);
+			army.addWarrior(e1);
+			army.addWarrior(p3);
+			Assert::AreEqual(army[0]->identify(), 'A');
+			Assert::AreEqual(army[1]->identify(), 'A');
+			Assert::AreEqual(army[2]->identify(), 'P');
+			Assert::AreEqual(army[3]->identify(), 'V');
+			int countPlayers = army.getSideCount(Side::player);
+			Assert::AreEqual(3, countPlayers);
+			int countEnemies = army.getSideCount(Side::enemy);
+			Assert::AreEqual(1, countEnemies);
+			army.deathmatch();
+			int countPlayersAfter = army.getSideCount(Side::player);
+			Assert::AreEqual(3, countPlayersAfter);
+			int countEnemiesAfter = army.getSideCount(Side::enemy);
+			Assert::AreEqual(0, countEnemiesAfter);
+			Assert::AreEqual(army[0]->identify(), 'A');
+			Assert::AreEqual(army[1]->identify(), 'A');
+			Assert::AreEqual(army[2]->identify(), 'V');
+		}
 	};
 }
