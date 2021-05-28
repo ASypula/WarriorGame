@@ -542,5 +542,38 @@ namespace GameTests
 			Assert::AreEqual(army[1]->identify(), 'A');
 			Assert::AreEqual(2, e1->leftHealth());
 		}
+
+		TEST_METHOD(Deathmatch4ArcherNotHealing)
+		{
+			Battlefield<Warrior*> army;
+			Warrior* p1 = new HolyPaladin(Side::player);
+			Warrior* p2 = new Archer(Side::player);
+			Warrior* p3 = new Archer(Side::player);
+			Warrior* e1 = new Archer(Side::enemy);
+			army.addWarrior(p1);
+			army.addWarrior(p3);
+			army.addWarrior(p2);
+			army.addWarrior(e1);
+			Assert::AreEqual(army[0]->identify(), 'H');
+			Assert::AreEqual(army[1]->identify(), 'A');
+			Assert::AreEqual(army[2]->identify(), 'A');
+			Assert::AreEqual(army[3]->identify(), 'A');
+			int countPlayers = army.getSideCount(Side::player);
+			Assert::AreEqual(3, countPlayers);
+			int countEnemies = army.getSideCount(Side::enemy);
+			Assert::AreEqual(1, countEnemies);
+			Assert::AreEqual(1, e1->leftHealth());
+			Assert::AreEqual(1, p2->leftHealth());
+			army.deathmatch();
+			int countPlayersAfter = army.getSideCount(Side::player);
+			Assert::AreEqual(2, countPlayersAfter);
+			int countEnemiesAfter = army.getSideCount(Side::enemy);
+			Assert::AreEqual(1, countEnemiesAfter);
+			Assert::AreEqual(army[0]->identify(), 'H');
+			Assert::AreEqual(army[1]->identify(), 'A');
+			Assert::AreEqual(army[2]->identify(), 'A');
+			Assert::AreEqual(2, e1->leftHealth());
+			Assert::AreEqual(1, p2->leftHealth());
+		}
 	};
 }
