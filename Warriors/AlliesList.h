@@ -2,14 +2,14 @@
 #include <iostream>
 #include "Warriors.h"
 
-struct soldier
+struct soldier		//struct to hold amount and type of warriors
 {
 	Warrior* type;
 	int amount;
 };
 
 
-class AlliesList
+class AlliesList	//class to hold heroes avaliable for placing on battlefield
 {
 public:
 	std::vector<soldier> soldiers;

@@ -10,14 +10,14 @@ class Battlefield
 {
 	std::vector<T> army;
 public:
-	~Battlefield()
+	~Battlefield()			//frees allocated warriors
 	{
 		for (auto i = army.rbegin(); i != army.rend(); ++i)
 		{
 			delete *i;
 		}
 	}
-	class WarIterator
+	class WarIterator		// iterator iterating from higher innitiative to lowest
 	{
 		friend Battlefield;
 	private:
@@ -82,7 +82,7 @@ public:
 		}
 	};
 
-	WarIterator turnBegin()
+	WarIterator turnBegin()		//returns iterator to warrior with highest innitiative (if multiple share innitiative return the leftmost warrior)
 	{
 		typename std::vector<T>::iterator it = army.begin();
 		for (auto i = army.begin(); i != army.end(); ++i)
@@ -96,7 +96,7 @@ public:
 		return i;
 	}
 
-	WarIterator turnEnd()
+	WarIterator turnEnd() //return iterator to element after the last warrior
 	{
 		WarIterator i(army, army.end());
 		return i;
@@ -107,12 +107,12 @@ public:
 		return army[n];
 	}
 
-	void addWarrior(int position, T newWarrior)
+	void addWarrior(int position, T newWarrior)	//puts new warrior in desired position
 	{
 		army.insert(army.begin() + position, newWarrior);
 	}
 
-	void addWarrior(T newWarrior)
+	void addWarrior(T newWarrior) //puts warrior at the end of army
 	{
 		army.push_back(newWarrior);
 	}
@@ -128,7 +128,7 @@ public:
 			return army[n];
 	}
 
-	Side Turn(WarIterator & attacker)
+	Side Turn(WarIterator & attacker) //manages single turn - attacking, taking damage and displaying info
 	{
 		typename std::vector<T>::iterator it = attacker.getVectIter();
 		int maxDist = 0;
@@ -173,7 +173,7 @@ public:
 		return Side::alive;
 	}
 
-	int getSideCount(Side s)
+	int getSideCount(Side s)		//counts enemies and allies left on battlefield
 	{
 		int sideCount = 0;
 		for (auto i = army.begin(); i != army.end(); ++i) {
@@ -183,7 +183,7 @@ public:
 		return sideCount;
 	}
 
-	void deathmatch()
+	void deathmatch()		//manages single game with deathmatch rules
 	{
 		int enemyNumber = getSideCount(Side::enemy);
 		int allyNumber = getSideCount(Side::player);
@@ -210,7 +210,7 @@ public:
 		std::cout << "Draw" << std::endl;
 	}
 
-	void protect()
+	void protect()		//manages single game witch VIP protection rules
 	{
 		std::cout << *this;
 		for (auto i = turnBegin(); i != turnEnd(); ++i) {
@@ -225,7 +225,7 @@ public:
 		std::cout << "Player wins" << std::endl;
 	}
 
-	friend std::ostream& operator<< (std::ostream& os, Battlefield const& field)
+	friend std::ostream& operator<< (std::ostream& os, Battlefield const& field)	// displays battlefield witch color coding
 	{
 		std::string colour;
 		for (auto warrior = field.army.begin(); warrior != field.army.end(); warrior++)
@@ -241,7 +241,7 @@ public:
 		os << "\n";
 		return os;
 	}
-	std::string fieldForChoosing ()
+	std::string fieldForChoosing ()	// displays battlefield with numbers for possible positions for new warriors
 	{
 		std::stringstream ss;
 		std::string colour;
