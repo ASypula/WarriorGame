@@ -1,20 +1,25 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
-#include "Warriors.h"
-#define defSide Side::enemy		
+#include "Warriors.h"	
 
 
-void Warrior::isSpecial()
+std::ostream& operator<<(std::ostream& os, Side s)
 {
-	if (side == special)
-	{
-		this->health = 1;
-		this->initiative = 0;
-		this->power = 0;
-		this->identity = 'C';
-		this->name = "Civilian";
+	switch (s) {
+	case alive:
+		os << "Alive";
+		break;
+	case player:
+		os << "Ally";
+		break;
+	case enemy:
+		os << "Enemy";
+		break;
+	case special:
+		os << "Crucial";
 	}
+	return os;
 }
 
 std::ostream& operator<< (std::ostream& os, Warrior const& warrior)
@@ -36,6 +41,45 @@ std::ostream& operator<< (std::ostream& os, Warrior const& warrior)
 	return os;
 }
 
+Warrior::Warrior() {	side = Side::special;}
+
+Warrior::Warrior(Side s) { 	side = s; }
+
+Warrior::Warrior(Warrior& w) { side = w.side; }
+
+int Warrior::leftHealth() { return this->health; }
+
+int Warrior::getInitiative() { return this->initiative; }
+
+Side Warrior::getSide() { return this->side; }
+
+int Warrior::getPower() { return this->power; }
+
+int Warrior::getRange() { return this->range; }
+
+void Warrior::setSide(Side s) { side = s; }
+
+Direction Warrior::getDirection() { return this->direction; }
+
+void Warrior::wound(int damage) { this->health -= damage; }
+
+void Warrior::attack(Warrior& w) { w.wound(power); }
+
+char Warrior::identify() { return identity; }
+
+std::string Warrior::getName() { return name; }
+
+void Warrior::isSpecial()
+{
+	if (side == special)
+	{
+		this->health = 1;
+		this->initiative = 0;
+		this->power = 0;
+		this->identity = 'C';
+		this->name = "Civilian";
+	}
+}
 
 Archer::Archer(Side s)
 {

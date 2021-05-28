@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 #include "../Warriors/Warriors.h"
-#include "../Warriors/Warriors.cpp"
 #include "../Warriors/Battlefield.h"
+#include "../Warriors/Warriors.cpp"
 #include "../Warriors/AlliesList.h"
 #include "gameFunctions.h"
 
