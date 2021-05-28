@@ -12,8 +12,32 @@ template <typename T> bool isSubclass(Warrior* w) {
 	return false;
 }
 
+int levelSelection() //display level choice and collect player input
+{
+	std::cout << "Placeholder Game Name" << std::endl << std::endl;
+	std::cout << "Choose puzzle" << std::endl;
+	std::cout << "1. Civillian protection" << std::endl;
+	std::cout << "2. Enemy raid" << std::endl;
+	std::cout << "3. Battle mode" << std::endl << std::endl;
+	int puzzleNumber;
+	while (true) {
+		char c;
+		std::cin >> c;
+		if (!std::cin)
+			break;
+		if (!std::isdigit(c))
+			continue;
+		std::cin.unget();
+		std::cin >> puzzleNumber;
+		if (puzzleNumber > 3)
+			continue;
+		else
+			break;
+	}
+	return puzzleNumber;
+}
 
-template <typename T> void displayWarriorList(AlliesList& playersWarriors) {
+template <typename T> void displayWarriorList(AlliesList& playersWarriors) { 
 	std::cout << "Warrior list" << std::endl << std::endl;
 	std::string leftAttack = "Left attacking warriors: ";
 	std::string rightAttack = "Right attacking warriors: ";

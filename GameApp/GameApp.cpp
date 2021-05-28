@@ -7,32 +7,13 @@
 #include "gameFunctions.h"
 
 
-int main()
+int main() //demonstrative version
 {
-	std::cout << "Placeholder Game Name" << std::endl << std::endl;
-	std::cout << "Choose puzzle" << std::endl;
-	std::cout << "1. Civillian protection" << std::endl;
-	std::cout << "2. Enemy raid" << std::endl;
-	std::cout << "3. Battle mode" << std::endl << std::endl;
-	int puzzleNumber;
-	while (true) {
-		char c;
-		std::cin >> c;
-		if (!std::cin) 
-			break;
-		if (!std::isdigit(c)) 
-			continue;
-		std::cin.unget();
-		std::cin >> puzzleNumber;
-		if (puzzleNumber > 3) 
-			continue;
-		else 
-			break;
-	}
+	int puzzleNumber = levelSelection();
 	system("CLS");
 	switch(puzzleNumber)
 	{
-	case 1: 
+	case 1: //civilian protection
 	{
 		Battlefield<Paladin*> army;
 		army.addWarrior(new HolyPaladin());
@@ -47,7 +28,7 @@ int main()
 		army.protect();
 		break;
 	}
-	case 2:
+	case 2: //enemy raid
 	{
 		Battlefield<Warrior*> army;
 		army.addWarrior(new Paladin());
@@ -62,7 +43,7 @@ int main()
 		army.deathmatch();
 		break;
 	}
-	case 3:
+	case 3: //deathmatch
 	{
 		Battlefield<Warrior*> army;
 		AlliesList playersOptions;

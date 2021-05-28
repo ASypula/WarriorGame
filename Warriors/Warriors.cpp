@@ -230,9 +230,6 @@ void Viking::isSpecial()
 {
 	if (side == special)
 	{
-		this->health = 1;
-		this->initiative = 0;
-		this->power = 0;
 		this->identity = 'C';
 		this->name = "Capitan";
 	}
