@@ -34,22 +34,38 @@ template <typename T> void displayWarriorList(AlliesList& playersWarriors) {
 	std::cout << leftAttack << std::endl << rightAttack << std::endl;
 }
 
+template <typename T> void displayLevel(Battlefield<T>& army, int warriorPlacementsLeft, AlliesList& playersWarriors)
+{
+	std::cout << "*warrior name* or *warrior name first letter* - choose warrior to place\n";
+	std::cout << std::endl << army;
+	std::cout << "Warriors left to place: " << warriorPlacementsLeft << std::endl << std::endl;
+	std::cout << std::endl;
+	displayWarriorList<T>(playersWarriors);
+	std::cout << std::endl;
+}
+
+bool validPosition(int i, int size)
+{
+	return (((size == 0) && (i == 0)) || ((size == 1) && ((i == 0) || (i == 1))) || ((i > 0) && (i < size)));
+}
+
+ template <typename T> void displayWarriorChoice(Warrior* w, Battlefield<T>& army)
+{
+	std::cout << "You have chosen " << w->getName() << std::endl << std::endl;
+	std::cout << "\"Info\" or \"I\" - info on " << w->getName() << std::endl;
+	std::cout << "*number* - put " << w->getName() << " in desired place" << std::endl;
+	std::cout << "\"q\" - choose another warrior" << std::endl << std::endl;
+	std::cout << army.fieldForChoosing() << std::endl;
+}
 
 template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlacementsLeft, AlliesList& playersWarriors, Side s = Side::player) {
 	std::string userInput;
-	std::cout << "\"L\" or \"List\" - display warrior list\n*warrior name* or *warrior name first letter* - choose warrior to place\n";
-	std::cout << std::endl << army;
-	std::cout << "Warriors left to place: " << warriorPlacementsLeft << std::endl << std::endl;
+	displayLevel<T>(army, warriorPlacementsLeft, playersWarriors);
 	bool warriorChosen = false;
 	while (!warriorChosen) {
 		std::getline(std::cin, userInput);
 		if (!std::cin)
 			break;
-		if ((userInput == "List") || (userInput == "L")) {
-			std::cout << std::endl;
-			displayWarriorList<T>(playersWarriors);
-			std::cout << std::endl;
-		}
 		for (auto so = playersWarriors.soldiers.begin(); so != playersWarriors.soldiers.end(); ++so) {
 			Warrior* w = so->type;
 			if (!isSubclass<T>(w) or so->amount < 1)
@@ -58,12 +74,8 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 			shortcut.push_back(w->identify());
 			if ((userInput == w->getName()) || (shortcut == userInput)) {
 				system("CLS");
-				std::cout << "You have chosen " << w->getName() << std::endl << std::endl;
-				std::cout << "\"Info\" or \"I\" - info on " << w->getName() << std::endl;
-				std::cout << "*number* - put " << w->getName() << " in desired place" << std::endl;
-				std::cout << "\"q\" - choose another warrior" << std::endl << std::endl;
+				displayWarriorChoice<T>(w, army);
 				
-				std::cout << army.fieldForChoosing() << std::endl;
 				std::string warriorOptions;
 				while (true) {
 					std::cin >> warriorOptions;
@@ -71,9 +83,7 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 						break;
 					if ((warriorOptions == "q")) {
 						system("CLS");
-						std::cout << "\"L\" or \"List\" - display warrior list\n*warrior name* or *warrior name first letter* - choose warrior to place\n";
-						std::cout << std::endl << army;
-						std::cout << "Warriors left to place: " << warriorPlacementsLeft << std::endl << std::endl;
+						displayLevel<T>(army, warriorPlacementsLeft, playersWarriors);
 						break;
 					}
 					if ((warriorOptions == "I") || (warriorOptions == "Info")) {
@@ -83,23 +93,7 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 						int i = 0;
 						try {
 							i = stoi(warriorOptions);
-							if ((army.size() == 0) && (i == 0)) {
-								T newWarrior = dynamic_cast<T>(w)->copy();
-								newWarrior->setSide(s);
-								army.addWarrior(i, newWarrior);
-								so->amount--;
-								warriorChosen = true;
-								break;
-							}
-							if ((army.size() == 1) && ((i == 0) || (i == 1))) {
-								T newWarrior = dynamic_cast<T>(w)->copy();
-								newWarrior->setSide(s);
-								army.addWarrior(i, newWarrior);
-								so->amount--;
-								warriorChosen = true;
-								break;
-							}
-							if ((i > 0) && (i < army.size())) {
+							if (validPosition(i, army.size())) {
 								T newWarrior = dynamic_cast<T>(w)->copy();
 								newWarrior->setSide(s);
 								army.addWarrior(i, newWarrior);

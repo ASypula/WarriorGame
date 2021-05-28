@@ -1,7 +1,7 @@
 #pragma once
 #include <vector>
 #include <iostream>
-#define defSide Side::enemy
+#define defSide Side::enemy	//every class has default Side in constructor, here we can change it for every class at once
 
 enum Direction {left = -1, right = 1};
 enum Side {alive, player, enemy, special};
@@ -29,19 +29,18 @@ class Warrior
 protected:
 	int health = 1;
 	int power = 1;
-	int numberOfAttacks = 1;
 	int initiative = 1; // who will attack first
 	int range = 1;
 	char identity = 'W';
 	std::string name = "Warrior";
 	Direction direction = Direction::left;
 	Side side;
+	std::string specialPower = "None";
 public:
 	//powinniœmy przenieœæ definicje tych funkcji do cpp
 	Warrior() { side = Side::special; };
 	Warrior(Side s) { side = s; };	//to decide whether it is a friend or an enemy
 	Warrior(Warrior& w) { side = w.side; };
-	std::string specialPower = "None";
 	virtual ~Warrior() {};
 	int leftHealth() { return this->health; };
 	int getInitiative() { return this->initiative; };

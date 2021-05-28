@@ -2,7 +2,7 @@
 #include <ctime>
 #include <iomanip>
 #include "Warriors.h"
-#define defSide Side::enemy		//every class has default Side in constructor, here we can change it for every class at once
+#define defSide Side::enemy		
 
 
 void Warrior::isSpecial()
@@ -132,9 +132,8 @@ void Paladin::isSpecial()
 	}
 }
 
-HolyPaladin::HolyPaladin(Side s) : Paladin(s)
+HolyPaladin::HolyPaladin(Side s) 
 {
-
 	this->identity = 'H';
 	this->name = "Holy Paladin";
 	this->power = 2;

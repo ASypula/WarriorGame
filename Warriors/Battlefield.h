@@ -12,7 +12,6 @@ class Battlefield
 public:
 	~Battlefield()
 	{
-		std::cout << "Adios" << std::endl;
 		for (auto i = army.rbegin(); i != army.rend(); ++i)
 		{
 			delete *i;
@@ -82,49 +81,6 @@ public:
 			return *this;
 		}
 	};
-
-	class OrderIterator
-	{
-		friend Battlefield;
-	private:
-		typename std::vector<T>::iterator current;
-		std::vector<T>& collection;
-		OrderIterator(std::vector<T>& col, typename std::vector<T>::iterator const i) : collection(col)
-		{
-			current = i;
-		}
-	public:
-		T& operator*()
-		{
-			return *current;
-		}
-
-		T* operator->()
-		{
-			return current;
-		}
-
-		bool operator!=(OrderIterator const& i) const
-		{
-			return current != i.current;
-		}
-
-		OrderIterator& operator++()
-		{
-			++current;
-			return *this;
-		}
-	};
-
-	OrderIterator queueBegin()
-	{
-		return OrderIterator(army, army.begin());
-	}
-
-	OrderIterator queueEnd()
-	{
-		return OrderIterator(army, army.end());
-	}
 
 	WarIterator turnBegin()
 	{
@@ -220,7 +176,7 @@ public:
 	int getSideCount(Side s)
 	{
 		int sideCount = 0;
-		for (auto i = queueBegin(); i != queueEnd(); ++i) {
+		for (auto i = army.begin(); i != army.end(); ++i) {
 			if ((*i)->getSide() == s)
 				++sideCount;
 		}
@@ -257,7 +213,6 @@ public:
 	void protect()
 	{
 		std::cout << *this;
-		//int specialNumber = getSideCount(Side::special);
 		for (auto i = turnBegin(); i != turnEnd(); ++i) {
 			Side s = Turn(i);
 			if (s != Side::alive)
@@ -265,14 +220,7 @@ public:
 			if (s == Side::special) {
 				std::cout << "Player loses" << std::endl;
 				return;
-				//--specialNumber;
 			}
-			/*
-			if (specialNumber == 0) {
-				std::cout << "Player loses" << std::endl;
-				return;
-			}
-			*/
 		}
 		std::cout << "Player wins" << std::endl;
 	}

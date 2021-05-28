@@ -15,10 +15,9 @@ public:
 	std::vector<soldier> soldiers;
 	~AlliesList()
 	{
-		std::cout << "auf Wiederzehn" << std::endl;;
-		for (auto s : this->soldiers)
+		for  (auto s = soldiers.begin(); s != soldiers.end(); ++s)
 		{
-			delete s.type;
+			delete s->type;
 		}
 	}
 	void addUnit(Warrior* unit, int quantity)
