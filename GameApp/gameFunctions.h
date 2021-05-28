@@ -37,7 +37,7 @@ int levelSelection() //display level choice and collect player input
 	return puzzleNumber;
 }
 
-template <typename T> void displayWarriorList(AlliesList& playersWarriors) { 
+template <typename T> void displayWarriorList(AlliesList& playersWarriors) { //displays warriors left to place
 	std::cout << "Warrior list" << std::endl << std::endl;
 	std::string leftAttack = "Left attacking warriors: ";
 	std::string rightAttack = "Right attacking warriors: ";
@@ -57,7 +57,7 @@ template <typename T> void displayWarriorList(AlliesList& playersWarriors) {
 	std::cout << leftAttack << std::endl << rightAttack << std::endl;
 }
 
-template <typename T> void displayLevel(Battlefield<T>& army, int warriorPlacementsLeft, AlliesList& playersWarriors)
+template <typename T> void displayLevel(Battlefield<T>& army, int warriorPlacementsLeft, AlliesList& playersWarriors) //displays battlefield and list of warriors
 {
 	std::cout << "*warrior name* or *warrior name first letter* - choose warrior to place\n";
 	std::cout << std::endl << army;
@@ -67,12 +67,12 @@ template <typename T> void displayLevel(Battlefield<T>& army, int warriorPlaceme
 	std::cout << std::endl;
 }
 
-bool validPosition(int i, int size)
+bool validPosition(int i, int size)		// calculates if choosen position is appropriate for placing warrior
 {
 	return (((size == 0) && (i == 0)) || ((size == 1) && ((i == 0) || (i == 1))) || ((i > 0) && (i < size)));
 }
 
-template <typename T> void displayWarriorChoice(Warrior* w, Battlefield<T>& army)
+template <typename T> void displayWarriorChoice(Warrior* w, Battlefield<T>& army) //prompts when you choose warrior to place
 {
 	std::cout << "You have chosen " << w->getName() << std::endl << std::endl;
 	std::cout << "\"Info\" or \"I\" - info on " << w->getName() << std::endl;
@@ -81,7 +81,7 @@ template <typename T> void displayWarriorChoice(Warrior* w, Battlefield<T>& army
 	std::cout << army.fieldForChoosing() << std::endl;
 }
 
-template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlacementsLeft, AlliesList& playersWarriors, Side s = Side::player) {
+template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlacementsLeft, AlliesList& playersWarriors, Side s = Side::player) { //displays level, list and places warrior in legal position
 	std::string userInput;
 	displayLevel<T>(army, warriorPlacementsLeft, playersWarriors);
 	bool warriorChosen = false;
@@ -135,7 +135,7 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 }
 
 
-template <typename T> void managePlayersTeam(Battlefield<T>& army, int maxWarriorsNumber, AlliesList& playersWarriors) {
+template <typename T> void managePlayersTeam(Battlefield<T>& army, int maxWarriorsNumber, AlliesList& playersWarriors) { //manages correctly putting all your warriors on battlefield
 	int warriorPlacementsLeft = maxWarriorsNumber;
 	while (warriorPlacementsLeft != 0) {
 		placeWarrior(army, warriorPlacementsLeft, playersWarriors);
@@ -148,7 +148,7 @@ template <typename T> void managePlayersTeam(Battlefield<T>& army, int maxWarrio
 
 
 
-template <typename T> void battleMode(Battlefield<T>& army, AlliesList& playersWarriors) {
+template <typename T> void battleMode(Battlefield<T>& army, AlliesList& playersWarriors) { //special mode that allowes to experiment and create battles
 	std::string teamChoice;
 	int warriorPlacementsLeft = 99;
 	while (true) {
