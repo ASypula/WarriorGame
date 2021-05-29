@@ -1,6 +1,7 @@
 #include "CppUnitTest.h"
 #include "../Warriors/Battlefield.h"
 #include "../Warriors/Warriors.h"
+#include "../Warriors/AlliesList.h"
 #include "../Warriors/Warriors.cpp"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -179,6 +180,24 @@ namespace GameTests
 			Assert::AreEqual('V', army.getWarrior(2)->identify());
 		}
 
+		TEST_METHOD(CreateSoldier)
+		{
+			soldier s1{ new Paladin(), 2 };
+			Assert::AreEqual('P', s1.type->identify());
+			Assert::AreEqual(2, s1.amount);
+		}
+
+		TEST_METHOD(AddAlliesList)
+		{
+			AlliesList aList;
+			aList.addUnit(new Paladin(), 1);
+			aList.addUnit(new Viking(), 2);
+			soldier s1 = aList.soldiers[0];
+			Assert::AreEqual('P', aList.soldiers[0].type->identify());
+			Assert::AreEqual(1, aList.soldiers[0].amount);
+			Assert::AreEqual('V', aList.soldiers[1].type->identify());
+		}
+
 		TEST_METHOD(TurnBegin)
 		{
 			Battlefield<Warrior*> army;
@@ -212,34 +231,6 @@ namespace GameTests
 			Assert::AreEqual('A', (*i)->identify());
 			++i;
 			Assert::AreEqual('A', (*i)->identify());
-		}
-
-		TEST_METHOD(OrderQueueBegin)
-		{
-			Battlefield<Warrior*> army;
-			Warrior* x = new Viking();
-			Warrior* y = new Paladin();
-			Warrior* z = new HolyPaladin();
-			army.addWarrior(x);
-			army.addWarrior(y);
-			army.addWarrior(z);
-			auto i = army.queueBegin();
-			Assert::AreEqual('V', (*i)->identify());
-		}
-
-		TEST_METHOD(OrderOperatorIncrement)
-		{
-			Battlefield<Warrior*> army;
-			Warrior* x = new Viking();
-			Warrior* y = new Paladin();
-			Warrior* z = new HolyPaladin();
-			army.addWarrior(x);
-			army.addWarrior(y);
-			army.addWarrior(z);
-			auto i = army.queueBegin();
-			Assert::AreEqual('V', (*i)->identify());
-			++i;
-			Assert::AreEqual('P', (*i)->identify());
 		}
 
 		TEST_METHOD(CountEnemiesAndCivilians)
