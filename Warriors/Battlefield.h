@@ -154,6 +154,12 @@ public:
 			std::string attackedName = (*attacked)->getName();
 			std::cout << attackerSide << " " << attackerName << " attacks ";
 			std::cout << attackedSide << " " << attackedName << " for " << attackPower << " damage" << std::endl;
+			std::string attackerSP = (*attacker)->getSpecialPower();
+			std::string attackedSP = (*attacked)->getSpecialPower();
+			if (attackerSP != "None")
+				std::cout << attackerSide << " " << attackerSP << std::endl;
+			if (attackedSP != "None")
+				std::cout << attackedSide << " " << attackedSP << std::endl;
 			if ((*attacked)->leftHealth() <= 0) {
 				std::cout << attackedSide << " " << attackedName << " dies" << std::endl;
 				if (attackDirection == -1) {

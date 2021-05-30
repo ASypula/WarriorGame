@@ -20,7 +20,6 @@ protected:
 	Side side;
 	std::string specialPower = "None";
 public:
-	//powinniœmy przenieœæ definicje tych funkcji do cpp
 	Warrior();
 	Warrior(Side s);	//to decide whether it is a friend or an enemy
 	Warrior(Warrior& w);
@@ -32,6 +31,7 @@ public:
 	int getRange();
 	char identify();
 	std::string getName();
+	std::string getSpecialPower();
 	void setSide(Side s);
 	Direction getDirection();
 	virtual void wound(int damage);		//take damage
@@ -85,3 +85,58 @@ public:
 	void speciality() {};
 	void isSpecial();			//in contrary to other VIPs, he attacks and has health of a normal viking
 };
+
+
+class TankyWarrior : public Warrior
+{
+protected:
+	int absorptionRatio = 2;
+public:
+	void wound(int damage);		//takes part of the damage rounded up
+};
+
+class Knight : public TankyWarrior
+{
+public:
+	Knight(Side s = defSide);
+	Knight(Knight& k);
+	Knight* copy() { return new Knight(*this); };
+	void speciality() {};
+};
+
+class Templar : public TankyWarrior
+{
+public:
+	Templar(Side s = defSide);
+	Templar(Templar& t);
+	Templar* copy() { return new Templar(*this); };
+	void speciality() {};
+};
+
+class SwiftWarrior : public Warrior
+{
+protected:
+	int numberOfAttacks = 2;
+public:
+	void attack(Warrior& w);	//attacks multiple times
+};
+
+class Fencer : public SwiftWarrior 
+{
+public:
+	Fencer(Side s = defSide);
+	Fencer(Fencer& f);
+	Fencer* copy() { return new Fencer(*this); };
+	void speciality() {};
+};
+
+class Rogue : public SwiftWarrior
+{
+public:
+	Rogue(Side s = defSide);
+	Rogue(Rogue& r);
+	Rogue* copy() { return new Rogue(*this); };
+	void speciality() {};
+};
+
+

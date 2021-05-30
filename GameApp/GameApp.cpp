@@ -52,6 +52,10 @@ int main() //demonstrative version
 		playersOptions.addUnit(new Viking(), 99);
 		playersOptions.addUnit(new Archer(), 99);
 		playersOptions.addUnit(new HolyPaladin(), 99);
+		playersOptions.addUnit(new Knight(), 99);
+		playersOptions.addUnit(new Templar(), 99);
+		playersOptions.addUnit(new Fencer(), 99);
+		playersOptions.addUnit(new Rogue(), 99);
 		battleMode(army, playersOptions);
 		army.deathmatch();
 	}

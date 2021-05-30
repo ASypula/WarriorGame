@@ -69,6 +69,8 @@ char Warrior::identify() { return identity; }
 
 std::string Warrior::getName() { return name; }
 
+std::string Warrior::getSpecialPower() { return specialPower; }
+
 void Warrior::isSpecial()
 {
 	if (side == special)
@@ -91,7 +93,7 @@ Archer::Archer(Side s)
 	this->range = 2;
 	this->direction = Direction::left;
 	side = s;
-	this->specialPower = "Heals himself by 1 point when he attacks.";
+	this->specialPower = "Archer heals himself by 1 point when he attacks";
 	this->isSpecial();
 }
 void Archer::attack(Warrior& w) 
@@ -131,7 +133,6 @@ Archer::Archer(Archer& a)
 
 void Archer::speciality()
 {
-	std::cout << "Archer uses his speciality and heals himself." << std::endl;
 	this->health += 1;
 }
 
@@ -233,4 +234,128 @@ void Viking::isSpecial()
 		this->identity = 'C';
 		this->name = "Capitan";
 	}
+}
+
+void TankyWarrior::wound(int damage) 
+{
+	this->health -= damage/absorptionRatio;
+	if (damage % absorptionRatio)
+		this->health -= 1;
+}
+
+Knight::Knight(Side s)
+{
+	this->health = 3;
+	this->initiative = 2;
+	this->power = 2;
+	this->identity = 'K';
+	this->name = "Knight";
+	this->range = 1;
+	this->direction = Direction::right;
+	this->specialPower = "Knight takes half of the damage rounded up";
+	side = s;
+	
+}
+
+Knight::Knight(Knight& k)
+{
+	this->health = k.health;
+	this->initiative = k.initiative;
+	this->power = k.power;
+	this->identity = k.identity;
+	this->name = k.name;
+	this->range = k.range;
+	this->direction = k.direction;
+	this->absorptionRatio = k.absorptionRatio;
+	this->specialPower = k.specialPower;
+	side = k.side;
+}
+
+Templar::Templar(Side s)
+{
+	this->health = 3;
+	this->initiative = 1;
+	this->power = 3;
+	this->identity = 'T';
+	this->name = "Templar";
+	this->range = 1;
+	this->direction = Direction::left;
+	this->absorptionRatio = 3;
+	this->specialPower = "Templar takes the third of the damage rounded up";
+	side = s;
+}
+
+Templar::Templar(Templar& t)
+{
+	this->health = t.health;
+	this->initiative = t.initiative;
+	this->power = t.power;
+	this->identity = t.identity;
+	this->name = t.name;
+	this->range = t.range;
+	this->direction = t.direction;
+	this->absorptionRatio = t.absorptionRatio;
+	this->specialPower = t.specialPower;
+	side = t.side;
+}
+
+void SwiftWarrior::attack(Warrior& w) 
+{
+	for (int i = 0; i != numberOfAttacks; ++i)
+		w.wound(power);
+}
+
+Fencer::Fencer(Side s)
+{
+	this->health = 1;
+	this->initiative = 3;
+	this->power = 3;
+	this->identity = 'F';
+	this->name = "Fencer";
+	this->range = 1;
+	this->direction = Direction::left;
+	this->specialPower = "Fencer attacks targeted warrior two times";
+	side = s;
+}
+
+Fencer::Fencer(Fencer& f)
+{
+	this->health = f.health;
+	this->initiative = f.initiative;
+	this->power = f.power;
+	this->identity = f.identity;
+	this->name = f.name;
+	this->range = f.range;
+	this->direction = f.direction;
+	this->numberOfAttacks = f.numberOfAttacks;
+	this->specialPower = f.specialPower;
+	side = f.side;
+}
+
+Rogue::Rogue(Side s)
+{
+	this->health = 1;
+	this->initiative = 4;
+	this->power = 2;
+	this->identity = 'R';
+	this->name = "Rogue";
+	this->range = 1;
+	this->numberOfAttacks = 3;
+	this->direction = Direction::right;
+	this->specialPower = "Rogue attacks targeted warrior three times";
+	side = s;
+}
+
+Rogue::Rogue(Rogue& r)
+{
+	this->health = r.health;
+	this->initiative = r.initiative;
+	this->power = r.power;
+	this->identity = r.identity;
+	this->name = r.name;
+	this->range = r.range;
+	this->direction = r.direction;
+	this->specialPower = r.specialPower;
+	this->numberOfAttacks = r.numberOfAttacks;
+	side = r.side;
 }
