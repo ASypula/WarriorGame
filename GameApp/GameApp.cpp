@@ -37,6 +37,7 @@ int main() //demonstrative version
 		army.addWarrior(new Viking());
 		army.addWarrior(new Archer());
 		AlliesList playersOptions;
+		playersOptions.addUnit(new Archer(), 0);
 		playersOptions.addUnit(new Paladin(), 1);
 		playersOptions.addUnit(new Viking(), 2);
 		managePlayersTeam<Warrior*>(army, 3, playersOptions);

@@ -43,23 +43,32 @@ template <typename T> void displayWarriorList(AlliesList& playersWarriors) { //d
 	std::string rightAttack = "Right attacking warriors: ";
 	for (auto so : playersWarriors.soldiers) {
 		Warrior* w = so.type;
-		if (!isSubclass<T>(w) or so.amount < 1)
+		if (!isSubclass<T>(w) or so.amount < 0)
 			continue;
 		if (w->getDirection() == -1)
 			leftAttack.append(w->getName()).append(": ").append(std::to_string(so.amount)).append(", ");
 		if (w->getDirection() == 1)
 			rightAttack.append(w->getName()).append(": ").append(std::to_string(so.amount)).append(", ");
 	}
-	leftAttack.pop_back();
-	leftAttack.pop_back();
-	rightAttack.pop_back();
-	rightAttack.pop_back();
-	std::cout << leftAttack << std::endl << rightAttack << std::endl;
+	std::string warriorList;
+	if (leftAttack != "Left attacking warriors: ") {
+		leftAttack.pop_back();
+		leftAttack.pop_back();
+		leftAttack.append("\n");
+		warriorList.append(leftAttack);
+	}
+	if (rightAttack != "Right attacking warriors: ") {
+		rightAttack.pop_back();
+		rightAttack.pop_back();
+		rightAttack.append("\n");
+		warriorList.append(rightAttack);
+	}
+	std::cout << warriorList;
 }
 
 template <typename T> void displayLevel(Battlefield<T>& army, int warriorPlacementsLeft, AlliesList& playersWarriors) //displays battlefield and list of warriors
 {
-	std::cout << "*warrior name* or *warrior name first letter* - choose warrior to place\n";
+	std::cout << "*warrior name* or *warrior name first letter* - choose warrior to place or to get info on\n";
 	std::cout << std::endl << army;
 	std::cout << "Warriors left to place: " << warriorPlacementsLeft << std::endl << std::endl;
 	std::cout << std::endl;
@@ -91,41 +100,48 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 			break;
 		for (auto so = playersWarriors.soldiers.begin(); so != playersWarriors.soldiers.end(); ++so) {
 			Warrior* w = so->type;
-			if (!isSubclass<T>(w) or so->amount < 1)
+			if (!isSubclass<T>(w) or so->amount < 0) {
 				continue;
+			}
 			std::string shortcut;
 			shortcut.push_back(w->identify());
 			if ((userInput == w->getName()) || (shortcut == userInput)) {
 				system("CLS");
 				displayWarriorChoice<T>(w, army);
-
-				std::string warriorOptions;
-				while (true) {
-					std::cin >> warriorOptions;
-					if (!std::cin)
-						break;
-					if ((warriorOptions == "q")) {
-						system("CLS");
-						displayLevel<T>(army, warriorPlacementsLeft, playersWarriors);
-						break;
-					}
-					if ((warriorOptions == "I") || (warriorOptions == "Info")) {
-						std::cout << std::endl << *w << std::endl;
-					}
-					else {
-						int i = 0;
-						try {
-							i = stoi(warriorOptions);
-							if (validPosition(i, army.size())) {
-								T newWarrior = dynamic_cast<T>(w)->copy();
-								newWarrior->setSide(s);
-								army.addWarrior(i, newWarrior);
-								so->amount--;
-								warriorChosen = true;
-								break;
-							}
+				if (so->amount == 0) {
+					system("CLS");
+					displayLevel<T>(army, warriorPlacementsLeft, playersWarriors);
+					std::cout << *w << std::endl;
+				}
+				else{
+					std::string warriorOptions;
+					while (true) {
+						std::getline(std::cin, warriorOptions);
+						if (!std::cin)
+							break;
+						if ((warriorOptions == "q")) {
+							system("CLS");
+							displayLevel<T>(army, warriorPlacementsLeft, playersWarriors);
+							break;
 						}
-						catch (std::invalid_argument) {
+						if ((warriorOptions == "I") || (warriorOptions == "Info")) {
+							std::cout << std::endl << *w << std::endl;
+						}
+						else {
+							int i = 0;
+							try {
+								i = stoi(warriorOptions);
+								if (validPosition(i, army.size())) {
+									T newWarrior = dynamic_cast<T>(w)->copy();
+									newWarrior->setSide(s);
+									army.addWarrior(i, newWarrior);
+									so->amount--;
+									warriorChosen = true;
+									break;
+								}
+							}
+							catch (std::invalid_argument) {
+							}
 						}
 					}
 				}
