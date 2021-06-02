@@ -98,6 +98,8 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 		std::getline(std::cin, userInput);
 		if (!std::cin)
 			break;
+		if (userInput.length() == 1)	// in case of first letter of the warrior player can give either the capital or small letter
+			userInput = std::toupper(userInput[0]);
 		for (auto so = playersWarriors.soldiers.begin(); so != playersWarriors.soldiers.end(); ++so) {
 			Warrior* w = so->type;
 			if (!isSubclass<T>(w) or so->amount < 0) {
