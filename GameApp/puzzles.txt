@@ -1,0 +1,3 @@
+Civillian Protection;Paladin;H C H P C;;;   
+Enemy Raid;;P P A V A;;;
+Battle Mode;Warrior;;;;

@@ -5,6 +5,9 @@
 #include "../Warriors/Battlefield.h"
 #include "../Warriors/AlliesList.h"
 
+
+
+
 template <typename T> bool isSubclass(Warrior* w) {
 	if (dynamic_cast<T>(w)) {
 		return true;
@@ -12,13 +15,50 @@ template <typename T> bool isSubclass(Warrior* w) {
 	return false;
 }
 
-int levelSelection() //display level choice and collect player input
+template <typename T> void setupPuzzle(Battlefield<T>& army, AlliesList& possibleWarriors, std::string lineup = "") {
+	size_t pos = 0;
+	size_t prevPos = 0;
+	std::vector<std::string> words;
+	while (pos != std::string::npos) {
+		prevPos = pos;
+		pos = lineup.find(" ", pos);
+		std::string word = lineup.substr(prevPos, pos - prevPos);
+		if (!(word == " ") and !(word.empty()))
+			words.push_back(word);
+		if (pos != std::string::npos)
+			pos += 1;
+	}
+	for (auto shrt : words) {
+		for (auto so = possibleWarriors.soldiers.begin(); so != possibleWarriors.soldiers.end(); ++so) {
+			Warrior* warrior = so->type;
+			if (!isSubclass<T>(warrior)) {
+				continue;
+			}
+			std::string wShrt;
+			wShrt.push_back(warrior->identify());
+			if (wShrt == shrt) {
+				T newWarrior = dynamic_cast<T>(warrior)->copy();
+				army.addWarrior(newWarrior);
+			}
+		}
+	}
+}
+
+int levelSelection(std::vector<std::string> & fileArray) //display level choice and collect player input
 {
 	std::cout << "Placeholder Game Name" << std::endl << std::endl;
 	std::cout << "Choose puzzle" << std::endl;
-	std::cout << "1. Civillian protection" << std::endl;
-	std::cout << "2. Enemy raid" << std::endl;
-	std::cout << "3. Battle mode" << std::endl << std::endl;
+	int puzzleCount = 0;
+	for (auto line : fileArray) {
+		auto pos = line.find(";");
+		if (pos != std::string::npos) {
+			std::cout << ++puzzleCount << ". " << line.substr(0, pos) << std::endl;
+		}
+		else {
+
+		}
+	}
+	std::cout << std::endl;
 	int puzzleNumber;
 	while (true) {
 		char c;
@@ -29,7 +69,9 @@ int levelSelection() //display level choice and collect player input
 			continue;
 		std::cin.unget();
 		std::cin >> puzzleNumber;
-		if (puzzleNumber > 3)
+		if (puzzleNumber > puzzleCount)
+			continue;
+		if (puzzleNumber == 0)
 			continue;
 		else
 			break;
