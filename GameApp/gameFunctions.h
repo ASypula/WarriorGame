@@ -231,8 +231,11 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 }
 
 
-template <typename T> void managePlayersTeam(Battlefield<T>& army, int maxWarriorsNumber, AlliesList& playersWarriors) { //manages correctly putting all your warriors on battlefield
-	int warriorPlacementsLeft = maxWarriorsNumber;
+template <typename T> void managePlayersTeam(Battlefield<T>& army, AlliesList& playersWarriors) { //manages correctly putting all your warriors on battlefield
+	int warriorPlacementsLeft = 0;
+	for (auto warrior : playersWarriors.soldiers) {
+		warriorPlacementsLeft += warrior.amount;
+	}
 	while (warriorPlacementsLeft != 0) {
 		placeWarrior(army, warriorPlacementsLeft, playersWarriors);
 		system("CLS");
