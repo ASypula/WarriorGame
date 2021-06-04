@@ -57,7 +57,7 @@ int Warrior::getPower() { return this->power; }
 
 int Warrior::getRange() { return this->range; }
 
-void Warrior::setSide(Side s) { side = s; }
+void Warrior::setSide(Side s) { side = s; isSpecial(); }
 
 Direction Warrior::getDirection() { return this->direction; }
 

@@ -6,6 +6,15 @@
 #include "../Warriors/AlliesList.h"
 
 
+template <typename T> void playGame(Battlefield<T> & army, int gameType) {
+	if (gameType == 0) {
+		army.deathmatch();
+	}
+	else
+	{
+		army.protect();
+	}
+}
 
 
 template <typename T> bool isSubclass(Warrior* w) {
@@ -15,7 +24,8 @@ template <typename T> bool isSubclass(Warrior* w) {
 	return false;
 }
 
-template <typename T> void setupPuzzle(Battlefield<T>& army, AlliesList& possibleWarriors, std::string lineup = "") {
+template <typename T> int setupPuzzle(Battlefield<T>& army, AlliesList& possibleWarriors, std::string lineup = "") {
+	int gameType = 0;
 	size_t pos = 0;
 	size_t prevPos = 0;
 	std::vector<std::string> words;
@@ -29,6 +39,24 @@ template <typename T> void setupPuzzle(Battlefield<T>& army, AlliesList& possibl
 			pos += 1;
 	}
 	for (auto shrt : words) {
+		Side s = enemy;
+		size_t dotPos = shrt.find(".");
+		if (dotPos != std::string::npos) {
+			std::string prefix = shrt.substr(0, dotPos);
+			if (prefix == "P")
+				s = player;
+			else if (prefix == "E")
+				s = enemy;
+			else if (prefix == "C") {
+				s = special;
+				gameType = 1;
+			}	
+			else {
+				std::cout << "Incorrect prefix -> " << shrt;
+				exit(3);
+			}
+			shrt = shrt.substr(dotPos + 1);
+		}
 		for (auto so = possibleWarriors.soldiers.begin(); so != possibleWarriors.soldiers.end(); ++so) {
 			Warrior* warrior = so->type;
 			if (!isSubclass<T>(warrior)) {
@@ -38,11 +66,19 @@ template <typename T> void setupPuzzle(Battlefield<T>& army, AlliesList& possibl
 			wShrt.push_back(warrior->identify());
 			if (wShrt == shrt) {
 				T newWarrior = dynamic_cast<T>(warrior)->copy();
+				newWarrior->setSide(s);
 				army.addWarrior(newWarrior);
 			}
 		}
 	}
+	return gameType;
 }
+
+
+template <typename T> AlliesList playerChoices(Battlefield<T>& army, AlliesList& possibleWarriors, std::string lineup = "") {
+
+}
+
 
 int levelSelection(std::vector<std::string> & fileArray) //display level choice and collect player input
 {

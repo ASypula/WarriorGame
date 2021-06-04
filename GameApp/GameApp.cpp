@@ -34,8 +34,7 @@ int main() //demonstrative version
 		size_t secondSemiColon = line.find(";", firstSemiColon + 1);
 		size_t thirdSemiColon = line.find(";", secondSemiColon + 1);
 		size_t fourthSemiColon = line.find(";", thirdSemiColon + 1);
-		size_t fifthSemiColon = line.find(";", fourthSemiColon + 1);
-		if ((firstSemiColon == std::string::npos) or (secondSemiColon == std::string::npos) or (thirdSemiColon == std::string::npos) or (fourthSemiColon == std::string::npos) or (fifthSemiColon == std::string::npos)) {
+		if ((firstSemiColon == std::string::npos) or (secondSemiColon == std::string::npos) or (thirdSemiColon == std::string::npos) or (fourthSemiColon == std::string::npos)) {
 			std::cout << "One of the lines is incorrectly formatted" << std::endl;
 			exit(2);
 		}
@@ -50,7 +49,6 @@ int main() //demonstrative version
 	size_t secondSemiColon = chosenLine.find(";", firstSemiColon + 1);
 	size_t thirdSemiColon = chosenLine.find(";", secondSemiColon + 1);
 	size_t fourthSemiColon = chosenLine.find(";", thirdSemiColon + 1);
-	size_t fifthSemiColon = chosenLine.find(";", fourthSemiColon + 1);
 
 	AlliesList possibleClasses;
 	possibleClasses.addUnit(new Archer(), 0);
@@ -63,21 +61,21 @@ int main() //demonstrative version
 	std::string lineup = chosenLine.substr(secondSemiColon + 1, thirdSemiColon - secondSemiColon - 1);
 	if (containerType == "") {
  		Battlefield<Warrior*> army;
-		setupPuzzle<Warrior*>(army, possibleClasses, lineup);
+		int gameType = setupPuzzle<Warrior*>(army, possibleClasses, lineup);
 		//managePlayersTeam<Warrior*>(army, 2, playersOptions);
-		army.deathmatch();
+		playGame<Warrior*>(army, gameType);
 	}
 	else if (containerType == "Warrior") {
 		Battlefield<Warrior*> army;
-		setupPuzzle<Warrior*>(army, possibleClasses, lineup);
+		int gameType = setupPuzzle<Warrior*>(army, possibleClasses, lineup);
 		//managePlayersTeam<Warrior*>(army, 2, playersOptions);
-		army.deathmatch();
+		playGame<Warrior*>(army, gameType);
 	}
 	else if (containerType == "Paladin") {
 		Battlefield<Paladin*> army;
-		setupPuzzle<Paladin*>(army, possibleClasses, lineup);
+		int gameType = setupPuzzle<Paladin*>(army, possibleClasses, lineup);
 		//managePlayersTeam<Paladin*>(army, 2, playersOptions);
-		army.deathmatch();
+		playGame<Paladin*>(army, gameType);
 	}
 	else {
 		std::cout << "Container type not recognized" << std::endl;
