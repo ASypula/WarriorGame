@@ -109,6 +109,7 @@ AlliesList & getPlayerChoices(AlliesList possibleWarriors, AlliesList& playerCho
 			}
 		}
 	}
+	return playerChoices;
 }
 
 
