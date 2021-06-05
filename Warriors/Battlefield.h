@@ -270,6 +270,8 @@ public:
 			ss << "\x1B[" << colour << std::left << std::setw(3) << (*warrior)->identify() << "\033[0m";
 			count++;
 		}
+		if (army.size() == 1)
+			ss << "1";
 		ss << "\n";
 		return ss.str();
 	}
