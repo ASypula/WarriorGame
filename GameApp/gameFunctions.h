@@ -123,7 +123,7 @@ int levelSelection(std::vector<std::string> & fileArray) //display level choice 
 			std::cout << ++puzzleCount << ". " << line.substr(0, pos) << std::endl;
 		}
 	}
-	std::cout << std::endl;
+	std::cout << puzzleCount + 1 << ". Battle Mode" << std::endl << std::endl;
 	int puzzleNumber;
 	while (true) {
 		char c;
@@ -134,10 +134,12 @@ int levelSelection(std::vector<std::string> & fileArray) //display level choice 
 			continue;
 		std::cin.unget();
 		std::cin >> puzzleNumber;
-		if (puzzleNumber > puzzleCount)
+		if (puzzleNumber > puzzleCount + 1)
 			continue;
 		if (puzzleNumber == 0)
 			continue;
+		if (puzzleNumber == puzzleCount + 1)
+			return 0;
 		else
 			break;
 	}

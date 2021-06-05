@@ -44,6 +44,18 @@ int main() //demonstrative version
 	int puzzleNumber = levelSelection(fileLines) - 1;
 	system("CLS");
 
+	if (puzzleNumber == -1) {
+		Battlefield<Warrior*> army;
+		AlliesList playersOptions;
+		playersOptions.addUnit(new Paladin(), 25);
+		playersOptions.addUnit(new Viking(), 25);
+		playersOptions.addUnit(new Archer(), 25);
+		playersOptions.addUnit(new HolyPaladin(), 25);
+		battleMode(army, playersOptions);
+		army.deathmatch();
+		return 0;
+	}
+
 	std::string chosenLine = fileLines[puzzleNumber];
 	size_t firstSemiColon = chosenLine.find(";");
 	size_t secondSemiColon = chosenLine.find(";", firstSemiColon + 1);
@@ -57,7 +69,8 @@ int main() //demonstrative version
 	possibleClasses.addUnit(new HolyPaladin());
 
 
-	std::string containerType = chosenLine.substr(firstSemiColon + 1, secondSemiColon - firstSemiColon - 1);
+	std::string containerLine = chosenLine.substr(firstSemiColon + 1, secondSemiColon - firstSemiColon - 1);
+	std::string containerType = containerLine;
 	std::string lineup = chosenLine.substr(secondSemiColon + 1, thirdSemiColon - secondSemiColon - 1);
 	std::string choices = chosenLine.substr(thirdSemiColon + 1, fourthSemiColon - thirdSemiColon - 1);
 	if (containerType == "" or containerType == "Warrior") {

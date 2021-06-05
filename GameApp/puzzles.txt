@@ -1,3 +1,4 @@
-Civillian Protection;Paladin;H C.P H P C.H;P:1 H:1;
+Civillian Protection; Paladin;H C.P H P C.H;P:1 H:1;
 Enemy Raid;;P P.P A V A;V:2 P:1 A:0;
-Battle Mode;Warrior;;V:99 P:99 A:99 H:99;
+Showcase Battle; Warrior; E.V P.P P.H E.A P.V E.A; ;
+Showcase Protection; Paladin; E.H P.P C.H E.P C.H; ;
