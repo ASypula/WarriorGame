@@ -24,20 +24,26 @@ template <typename T> bool isSubclass(Warrior* w) {
 	return false;
 }
 
-template <typename T> int setupPuzzle(Battlefield<T>& army, AlliesList& possibleWarriors, std::string lineup = "") {
-	int gameType = 0;
+std::vector<std::string> getWords(std::string s) {
+	std::vector<std::string> words;
 	size_t pos = 0;
 	size_t prevPos = 0;
-	std::vector<std::string> words;
 	while (pos != std::string::npos) {
 		prevPos = pos;
-		pos = lineup.find(" ", pos);
-		std::string word = lineup.substr(prevPos, pos - prevPos);
+		pos = s.find(" ", pos);
+		std::string word = s.substr(prevPos, pos - prevPos);
 		if (!(word == " ") and !(word.empty()))
 			words.push_back(word);
 		if (pos != std::string::npos)
 			pos += 1;
 	}
+	return words;
+}
+
+
+template <typename T> int setupPuzzle(Battlefield<T>& army, AlliesList& possibleWarriors, std::string lineup = "") {
+	int gameType = 0;
+	std::vector<std::string> words = getWords(lineup);
 	for (auto shrt : words) {
 		Side s = enemy;
 		size_t dotPos = shrt.find(".");
@@ -75,8 +81,34 @@ template <typename T> int setupPuzzle(Battlefield<T>& army, AlliesList& possible
 }
 
 
-template <typename T> AlliesList playerChoices(Battlefield<T>& army, AlliesList& possibleWarriors, std::string lineup = "") {
-
+AlliesList & getPlayerChoices(AlliesList possibleWarriors, AlliesList& playerChoices, std::string choices = "") {
+	std::vector<std::string> words = getWords(choices);
+	for (auto declaration : words) {
+		int warriorAmount = 0;
+		size_t colonPos = declaration.find(":");
+		if (colonPos != std::string::npos) {
+			try {
+				warriorAmount = stoi(declaration.substr(colonPos+1));
+			}
+			catch (std::invalid_argument) {
+				std::cout << "Invalid warrior amount -> " << declaration;
+				exit(4);
+			}
+			if (warriorAmount < 0) {
+				std::cout << "Invalid warrior amount -> " << declaration;
+				exit(4);
+			}
+		}
+		std::string shrt = declaration.substr(0, colonPos);
+		for (auto so = possibleWarriors.soldiers.begin(); so != possibleWarriors.soldiers.end(); ++so) {
+			Warrior* warrior = so->type;
+			std::string wShrt;
+			wShrt.push_back(warrior->identify());
+			if (wShrt == shrt) {
+				playerChoices.addUnit(warrior->copy(), warriorAmount);
+			}
+		}
+	}
 }
 
 
@@ -89,9 +121,6 @@ int levelSelection(std::vector<std::string> & fileArray) //display level choice 
 		auto pos = line.find(";");
 		if (pos != std::string::npos) {
 			std::cout << ++puzzleCount << ". " << line.substr(0, pos) << std::endl;
-		}
-		else {
-
 		}
 	}
 	std::cout << std::endl;

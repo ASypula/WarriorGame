@@ -20,7 +20,7 @@ public:
 			delete s->type;
 		}
 	}
-	void addUnit(Warrior* unit, int quantity)
+	void addUnit(Warrior* unit, int quantity=0)
 	{
 		soldier s;
 		s.type = unit;

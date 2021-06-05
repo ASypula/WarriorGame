@@ -51,102 +51,34 @@ int main() //demonstrative version
 	size_t fourthSemiColon = chosenLine.find(";", thirdSemiColon + 1);
 
 	AlliesList possibleClasses;
-	possibleClasses.addUnit(new Archer(), 0);
-	possibleClasses.addUnit(new Paladin(), 0);
-	possibleClasses.addUnit(new Viking(), 0);
-	possibleClasses.addUnit(new HolyPaladin(), 0);
+	possibleClasses.addUnit(new Archer());
+	possibleClasses.addUnit(new Paladin());
+	possibleClasses.addUnit(new Viking());
+	possibleClasses.addUnit(new HolyPaladin());
 
 
 	std::string containerType = chosenLine.substr(firstSemiColon + 1, secondSemiColon - firstSemiColon - 1);
 	std::string lineup = chosenLine.substr(secondSemiColon + 1, thirdSemiColon - secondSemiColon - 1);
-	if (containerType == "") {
+	std::string choices = chosenLine.substr(thirdSemiColon + 1, fourthSemiColon - thirdSemiColon - 1);
+	if (containerType == "" or containerType == "Warrior") {
  		Battlefield<Warrior*> army;
 		int gameType = setupPuzzle<Warrior*>(army, possibleClasses, lineup);
-		//managePlayersTeam<Warrior*>(army, 2, playersOptions);
-		playGame<Warrior*>(army, gameType);
-	}
-	else if (containerType == "Warrior") {
-		Battlefield<Warrior*> army;
-		int gameType = setupPuzzle<Warrior*>(army, possibleClasses, lineup);
-		//managePlayersTeam<Warrior*>(army, 2, playersOptions);
+		AlliesList playersOptions;
+		getPlayerChoices(possibleClasses, playersOptions, choices);
+		managePlayersTeam<Warrior*>(army, playersOptions);
 		playGame<Warrior*>(army, gameType);
 	}
 	else if (containerType == "Paladin") {
 		Battlefield<Paladin*> army;
 		int gameType = setupPuzzle<Paladin*>(army, possibleClasses, lineup);
-		//managePlayersTeam<Paladin*>(army, 2, playersOptions);
+		AlliesList playersOptions;
+		getPlayerChoices(possibleClasses, playersOptions, choices);
+		managePlayersTeam<Paladin*>(army, playersOptions);
 		playGame<Paladin*>(army, gameType);
 	}
 	else {
 		std::cout << "Container type not recognized" << std::endl;
 		exit(2);
 	}
-	/*
-	else {
-		for (auto warrior : classRepresentations.soldiers) {
-			if (warrior.type->getName() == containerType) {
-				Battlefield<decltype(warrior.type)> army;
-				setupPuzzle<decltype(warrior.type)>(army, lineup);
-				army.deathmatch();
-			}
-		}
-	}
-	*/
-	
-	
-	
-	
-
-
-
-	/*switch(puzzleNumber)
-	{
-	case 1: //civilian protection
-	{
-		Battlefield<Paladin*> army;
-		army.addWarrior(new HolyPaladin());
-		army.addWarrior(new HolyPaladin(Side::special));
-		army.addWarrior(new HolyPaladin());
-		army.addWarrior(new Paladin());
-		army.addWarrior(new Paladin(Side::special));
-		AlliesList playersOptions;
-		playersOptions.addUnit(new Paladin(), 1);
-		playersOptions.addUnit(new HolyPaladin(), 1);
-		managePlayersTeam<Paladin*>(army, 2, playersOptions);
-		army.protect();
-		break;
-	}
-	case 2: //enemy raid
-	{
-		Battlefield<Warrior*> army;
-		army.addWarrior(new Paladin());
-		army.addWarrior(new Paladin());
-		army.addWarrior(new Archer());
-		army.addWarrior(new Viking());
-		army.addWarrior(new Archer());
-		AlliesList playersOptions;
-		playersOptions.addUnit(new Archer(), 0);
-		playersOptions.addUnit(new Paladin(), 1);
-		playersOptions.addUnit(new Viking(), 2);
-		managePlayersTeam<Warrior*>(army, 3, playersOptions);
-		army.deathmatch();
-		break;
-	}
-	case 3: //deathmatch
-	{
-		Battlefield<Warrior*> army;
-		AlliesList playersOptions;
-		playersOptions.addUnit(new Paladin(), 99);
-		playersOptions.addUnit(new Viking(), 99);
-		playersOptions.addUnit(new Archer(), 99);
-		playersOptions.addUnit(new HolyPaladin(), 99);
-		battleMode(army, playersOptions);
-		army.deathmatch();
-	}
-	}
-	*/
-	
-	
-	
 	return 0;
 }

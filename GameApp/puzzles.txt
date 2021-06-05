@@ -1,3 +1,3 @@
-Civillian Protection;Paladin;H C.P H P C.H;;;   
-Enemy Raid;;P P.P A V A;;;
-Battle Mode;Warrior;;;;
+Civillian Protection;Paladin;H C.P H P C.H;P:1 H:1;
+Enemy Raid;;P P.P A V A;V:2 P:1 A:0;
+Battle Mode;Warrior;;V:99 P:99 A:99 H:99;
