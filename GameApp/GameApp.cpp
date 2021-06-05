@@ -70,10 +70,16 @@ int main() //demonstrative version
 
 
 	std::string containerLine = chosenLine.substr(firstSemiColon + 1, secondSemiColon - firstSemiColon - 1);
-	std::string containerType = containerLine;
+	size_t firstNotSpace = containerLine.find_first_not_of(" ");
+	size_t lastNotSpace = containerLine.find_last_not_of(" ");
+	std::string containerType;
+	if (firstNotSpace != std::string::npos)
+		containerType = containerLine.substr(firstNotSpace, lastNotSpace - firstNotSpace + 1);
+	else
+		containerType = containerLine.substr(0, lastNotSpace);
 	std::string lineup = chosenLine.substr(secondSemiColon + 1, thirdSemiColon - secondSemiColon - 1);
 	std::string choices = chosenLine.substr(thirdSemiColon + 1, fourthSemiColon - thirdSemiColon - 1);
-	if (containerType == "" or containerType == "Warrior") {
+	if (containerType == "" or containerType == " " or containerType == "Warrior") {
  		Battlefield<Warrior*> army;
 		int gameType = setupPuzzle<Warrior*>(army, possibleClasses, lineup);
 		AlliesList playersOptions;
