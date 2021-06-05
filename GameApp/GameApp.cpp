@@ -71,27 +71,29 @@ int main() //demonstrative version
 	std::string containerType;
 	if (firstNotSpace != std::string::npos)
 		containerType = containerLine.substr(firstNotSpace, lastNotSpace - firstNotSpace + 1);
+	else if (std::count(containerLine.begin(), containerLine.end(), ' ') == containerLine.size())
+		containerType = " ";
 	else
-		containerType = containerLine.substr(0, lastNotSpace);
+		containerType = "";
 	std::string lineup = chosenLine.substr(secondSemiColon + 1, thirdSemiColon - secondSemiColon - 1);
 	std::string choices = chosenLine.substr(thirdSemiColon + 1, fourthSemiColon - thirdSemiColon - 1);
 
 
 	if (containerType == "" or containerType == " " or containerType == "Warrior") {
  		Battlefield<Warrior*> army;
-		int gameType = setupPuzzle<Warrior*>(army, possibleClasses, lineup);
+		int gameType = setupPuzzle(army, possibleClasses, lineup);
 		AlliesList playersOptions;
 		getPlayerChoices(possibleClasses, playersOptions, choices);
-		managePlayersTeam<Warrior*>(army, playersOptions);
-		playGame<Warrior*>(army, gameType);
+		managePlayersTeam(army, playersOptions);
+		playGame(army, gameType);
 	}
 	else if (containerType == "Paladin") {
 		Battlefield<Paladin*> army;
-		int gameType = setupPuzzle<Paladin*>(army, possibleClasses, lineup);
+		int gameType = setupPuzzle(army, possibleClasses, lineup);
 		AlliesList playersOptions;
 		getPlayerChoices(possibleClasses, playersOptions, choices);
-		managePlayersTeam<Paladin*>(army, playersOptions);
-		playGame<Paladin*>(army, gameType);
+		managePlayersTeam(army, playersOptions);
+		playGame(army, gameType);
 	}
 	else {
 		std::cout << "Container type not recognized" << std::endl;
