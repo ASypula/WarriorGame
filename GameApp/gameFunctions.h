@@ -26,8 +26,8 @@ template <typename T> bool isSubclass(Warrior* w) {
 
 std::vector<std::string> getWords(std::string s) {
 	std::vector<std::string> words;
-	size_t pos = 0;
-	size_t prevPos = 0;
+	std::size_t pos = 0;
+	std::size_t prevPos = 0;
 	while (pos != std::string::npos) {
 		prevPos = pos;
 		pos = s.find(" ", pos);
@@ -46,7 +46,7 @@ template <typename T> int setupPuzzle(Battlefield<T>& army, AlliesList& possible
 	std::vector<std::string> words = getWords(lineup);
 	for (auto shrt : words) {
 		Side s = enemy;
-		size_t dotPos = shrt.find(".");
+		std::size_t dotPos = shrt.find(".");
 		if (dotPos != std::string::npos) {
 			std::string prefix = shrt.substr(0, dotPos);
 			if (prefix == "P")
@@ -81,22 +81,22 @@ template <typename T> int setupPuzzle(Battlefield<T>& army, AlliesList& possible
 }
 
 
-AlliesList & getPlayerChoices(AlliesList possibleWarriors, AlliesList& playerChoices, std::string choices = "") {
+void getPlayerChoices(AlliesList & possibleWarriors, AlliesList& playerChoices, std::string choices = "") {
 	std::vector<std::string> words = getWords(choices);
 	for (auto declaration : words) {
 		int warriorAmount = 0;
-		size_t colonPos = declaration.find(":");
+		std::size_t colonPos = declaration.find(":");
 		if (colonPos != std::string::npos) {
 			try {
 				warriorAmount = stoi(declaration.substr(colonPos+1));
 			}
 			catch (std::invalid_argument) {
 				std::cout << "Invalid warrior amount -> " << declaration;
-				exit(2);
+				std::exit(2);
 			}
 			if (warriorAmount < 0) {
 				std::cout << "Invalid warrior amount -> " << declaration;
-				exit(2);
+				std::exit(2);
 			}
 		}
 		std::string shrt = declaration.substr(0, colonPos);
@@ -109,7 +109,6 @@ AlliesList & getPlayerChoices(AlliesList possibleWarriors, AlliesList& playerCho
 			}
 		}
 	}
-	return playerChoices;
 }
 
 
@@ -131,7 +130,7 @@ int levelSelection(std::vector<std::string> & fileArray) //display level choice 
 		std::getline(std::cin, userInput);
 		try
 		{
-			puzzleNumber = stoi(userInput);
+			puzzleNumber = std::stoi(userInput);
 		}
 		catch (std::invalid_argument) 
 		{
@@ -243,7 +242,7 @@ template <typename T> void placeWarrior(Battlefield<T>& army, int warriorPlaceme
 						else {
 							int i = 0;
 							try {
-								i = stoi(warriorOptions);
+								i = std::stoi(warriorOptions);
 								if (validPosition(i, army.size())) {
 									T newWarrior = dynamic_cast<T>(w)->copy();
 									newWarrior->setSide(s);

@@ -30,14 +30,14 @@ int main() //demonstrative version
 	file.close();
 
 	for (auto line : fileLines) {
-		size_t breaks = std::count(line.begin(), line.end(), ';');
+		std::size_t breaks = std::count(line.begin(), line.end(), ';');
 		if (breaks != 4) {
 			std::cout << "One of the lines is incorrectly formatted" << std::endl;
-			exit(2);
+			std::exit(2);
 		}
 	}
 
-
+	
 	int puzzleNumber = levelSelection(fileLines) - 1;
 	system("CLS");
 
@@ -61,13 +61,13 @@ int main() //demonstrative version
 	possibleClasses.addUnit(new HolyPaladin());
 
 	std::string chosenLine = fileLines[puzzleNumber];
-	size_t firstSemiColon = chosenLine.find(";");
-	size_t secondSemiColon = chosenLine.find(";", firstSemiColon + 1);
-	size_t thirdSemiColon = chosenLine.find(";", secondSemiColon + 1);
-	size_t fourthSemiColon = chosenLine.find(";", thirdSemiColon + 1);
+	std::size_t firstSemiColon = chosenLine.find(";");
+	std::size_t secondSemiColon = chosenLine.find(";", firstSemiColon + 1);
+	std::size_t thirdSemiColon = chosenLine.find(";", secondSemiColon + 1);
+	std::size_t fourthSemiColon = chosenLine.find(";", thirdSemiColon + 1);
 	std::string containerLine = chosenLine.substr(firstSemiColon + 1, secondSemiColon - firstSemiColon - 1);
-	size_t firstNotSpace = containerLine.find_first_not_of(" ");
-	size_t lastNotSpace = containerLine.find_last_not_of(" ");
+	std::size_t firstNotSpace = containerLine.find_first_not_of(" ");
+	std::size_t lastNotSpace = containerLine.find_last_not_of(" ");
 	std::string containerType;
 	if (firstNotSpace != std::string::npos)
 		containerType = containerLine.substr(firstNotSpace, lastNotSpace - firstNotSpace + 1);
@@ -95,7 +95,7 @@ int main() //demonstrative version
 	}
 	else {
 		std::cout << "Container type not recognized" << std::endl;
-		exit(2);
+		std::exit(2);
 	}
 	return 0;
 }
