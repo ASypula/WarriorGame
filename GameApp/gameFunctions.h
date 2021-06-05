@@ -59,7 +59,7 @@ template <typename T> int setupPuzzle(Battlefield<T>& army, AlliesList& possible
 			}	
 			else {
 				std::cout << "Incorrect prefix -> " << shrt;
-				exit(3);
+				exit(2);
 			}
 			shrt = shrt.substr(dotPos + 1);
 		}
@@ -92,11 +92,11 @@ AlliesList & getPlayerChoices(AlliesList possibleWarriors, AlliesList& playerCho
 			}
 			catch (std::invalid_argument) {
 				std::cout << "Invalid warrior amount -> " << declaration;
-				exit(4);
+				exit(2);
 			}
 			if (warriorAmount < 0) {
 				std::cout << "Invalid warrior amount -> " << declaration;
-				exit(4);
+				exit(2);
 			}
 		}
 		std::string shrt = declaration.substr(0, colonPos);
@@ -281,8 +281,11 @@ template <typename T> void managePlayersTeam(Battlefield<T>& army, AlliesList& p
 
 template <typename T> void battleMode(Battlefield<T>& army, AlliesList& playersWarriors) { //special mode that allowes to experiment and create battles
 	std::string teamChoice;
-	int warriorPlacementsLeft = 99;
-	while (true) {
+	int warriorPlacementsLeft = 0;
+	for (auto warrior : playersWarriors.soldiers) {
+		warriorPlacementsLeft += warrior.amount;
+	}
+	while (warriorPlacementsLeft != 0) {
 		std::cout << "\"Enemy\" or \"E\"- place enemy warrior" << std::endl;
 		std::cout << "\"Player\" or \"P\"- place ally warrior" << std::endl;
 		std::cout << "\"Fight\" or \"F\"- begin battle" << std::endl;
