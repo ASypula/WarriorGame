@@ -124,16 +124,18 @@ int levelSelection(std::vector<std::string> & fileArray) //display level choice 
 		}
 	}
 	std::cout << puzzleCount + 1 << ". Battle Mode" << std::endl << std::endl;
-	int puzzleNumber;
+	int puzzleNumber = 0;
+	std::string userInput;
 	while (true) {
-		char c;
-		std::cin >> c;
-		if (!std::cin)
-			break;
-		if (!std::isdigit(c))
-			continue;
-		std::cin.unget();
-		std::cin >> puzzleNumber;
+		std::getline(std::cin, userInput);
+		try
+		{
+			puzzleNumber = stoi(userInput);
+		}
+		catch (std::invalid_argument) 
+		{
+			puzzleNumber = 0;
+		}
 		if (puzzleNumber > puzzleCount + 1)
 			continue;
 		if (puzzleNumber == 0)
@@ -141,9 +143,8 @@ int levelSelection(std::vector<std::string> & fileArray) //display level choice 
 		if (puzzleNumber == puzzleCount + 1)
 			return 0;
 		else
-			break;
+			return puzzleNumber;
 	}
-	return puzzleNumber;
 }
 
 template <typename T> void displayWarriorList(AlliesList& playersWarriors) { //displays warriors left to place
